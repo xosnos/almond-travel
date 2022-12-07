@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-// import './App.css';
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -12,10 +11,12 @@ import {
 import { firebaseConfig } from '../lib/firebase';
 import { selectUser, saveUser } from '../features/auth/authSlice';
 import Navigation from '../components/navigation';
-import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/auth/LoginPage';
-import RegisterPage from '../pages/auth/RegisterPage';
-import ResetPage from '../pages/auth/ResetPage';
+import {
+  RegisterPage,
+  LoginPage,
+  ResetPage,
+  HomePage,
+} from '../pages';
 import Footer from '../components/footer';
 
 function App() {

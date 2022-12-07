@@ -5,7 +5,7 @@ import {
   Container
 } from 'react-bootstrap';
 
-const LoginPage = () => {
+export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
@@ -47,5 +47,3 @@ const LoginPage = () => {
     </Container>
   );
 };
-
-export default LoginPage;

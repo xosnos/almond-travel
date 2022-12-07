@@ -44,7 +44,7 @@ const cards = [
   },
 ];
 
-const HomePage = () => {
+export const HomePage = () => {
   return (
     <Container>
       <Row>
@@ -76,6 +76,4 @@ const HomePage = () => {
       </Row>
     </Container>
   );
-}
-
-export default HomePage;
+};

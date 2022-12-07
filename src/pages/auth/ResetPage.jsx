@@ -4,7 +4,7 @@ import {
   Container
 } from 'react-bootstrap';
 
-const Reset = () => {
+export const ResetPage = () => {
   const [email, setEmail] = useState("");
   const auth = getAuth();
   const handleReset = () => {
@@ -33,5 +33,3 @@ const Reset = () => {
     </Container>
   );
 };
-
-export default Reset;
