@@ -1,33 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Logo from '../assets/logo.svg';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../features/auth/authSlice';
-// import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
+import { handleLogout } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 export const Navigation = () => {
-  const user = useSelector(selectUser);
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const handleSignOut = () => {
-    // signOut(auth)
-    // .then(() => {
-    // console.log('user signed out');
-    // })
-    // .catch((error) => {
-    //   console.log('error signing out');
-    // });
-  }
-
-  // useEffect(() => {
-  //   if (user) {
-  //     setLoggedIn(true);
-  //     console.log(user);
-  //   } else {
-  //     setLoggedIn(false);
-  //   }
-  // }, [auth, user]);
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -54,10 +35,10 @@ export const Navigation = () => {
             </Nav>
             <Nav>
               {
-                loggedIn ? (
+                user ? (
                   <LinkContainer to='/'>
                     <Nav.Link
-                      onClick={handleSignOut}
+                      onClick={() => dispatch(handleLogout())}
                     >Logout</Nav.Link>
                   </LinkContainer>
                 ) : (

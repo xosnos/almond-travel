@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
-// import { onAuthStateChanged } from "firebase/auth";
-// import { useSelector, useDispatch } from "react-redux";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from 'react-router-dom';
-// import { selectUser, saveUser } from '../features/auth/authSlice';
+import { onAuthStateChanged } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { auth } from '../lib/firebase';
+import { saveUser } from '../features/auth/authSlice';
 import {
   Navigation,
   Footer,
@@ -20,14 +17,13 @@ import {
 } from '../pages';
 
 function App() {
-  // const user = useSelector(selectUser);
-  // console.log("User: ", user);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => user ?
-  //     dispatch(saveUser(user.refreshToken))
-  //     : dispatch(saveUser(null)))
-  // }, [auth, dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    onAuthStateChanged(auth,
+      (user) => user ?
+      dispatch(saveUser({email: user.email, uid: user.uid })) :
+      dispatch(saveUser(null)));
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <Navigation />

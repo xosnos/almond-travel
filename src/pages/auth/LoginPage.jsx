@@ -9,7 +9,7 @@ import {
   Form
 } from 'react-bootstrap';
 import Google from '../../assets/google.svg';
-import { handleLoginEmailAndPassword, handleLoginGoogle, selectUser } from "../../features/auth/authSlice";
+import { handleLoginEmailAndPassword, handleLoginGoogle } from "../../features/auth/authSlice";
 
 
 export const LoginPage = () => {
@@ -17,14 +17,13 @@ export const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const user = useSelector(selectUser);
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
+  const { user } = useSelector((state) => state.auth);
+
   useEffect(() => {
-    if (user !== undefined) {
+    if (user) {
       navigate("/");
     }
   }, [user, navigate]);

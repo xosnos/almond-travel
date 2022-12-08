@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   sendPasswordResetEmail,
+  signOut,
 } from "firebase/auth";
 import {
   auth,
@@ -56,11 +57,23 @@ export const handleReset = createAsyncThunk(
   'user/handleReset',
   async (email) => {
     try {
-      const response = await sendPasswordResetEmail(auth, email);
+      await sendPasswordResetEmail(auth, email);
       console.log('Password reset email sent.');
     } catch (error) {
       // const email = error.email;
       // const credential = GoogleAuthProvider.credentialFromError(error);
+      console.log("Error: ", error.code, error.message);
+    }
+  }
+);
+
+export const handleLogout = createAsyncThunk(
+  'user/handleLogout',
+  async () => {
+    try {
+      await signOut(auth);
+      console.log('Signed out user.');
+    } catch (error) {
       console.log("Error: ", error.code, error.message);
     }
   }
@@ -71,7 +84,7 @@ export const authSlice = createSlice({
   initialState: {},
   reducers: {
     saveUser: (state, action) => {
-      state.value = action.payload;
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -120,27 +133,19 @@ export const authSlice = createSlice({
       state.status = 'failed';
       state.error = action.error.message;
     });
+    builder.addCase(handleLogout.pending, (state, action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(handleLogout.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.user = undefined;
+    });
+    builder.addCase(handleLogout.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    });
   },
 });
 
-export const selectUser = (state) => state.user;
-
 export const { saveUser } = authSlice.actions;
 export default authSlice.reducer;
-    // const handleLoginGoogleRedirect = () => {
-  //   signInWithRedirect(auth, providerGoogle);
-  //   getRedirectResult(auth)
-  //     .then((result) => {
-  //       const credential = GoogleAuthProvider.credentialFromResult(result);
-  //       const token = credential.accessToken;
-  //       const user = result.user;
-  //       console.log("Singed in user: ", user);
-  //       navigate("/dashboard");
-  //     }).catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       const email = error.customData.email;
-  //       const credential = GoogleAuthProvider.credentialFromError(error);
-  //       console.log("An error occured: ", errorCode, errorMessage, email, credential);
-  //     });
-  // }
