@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <Container fluid className="py-2 bg-dark fixed-bottom">
       <Row>
@@ -38,5 +38,3 @@ const Footer = () => {
     </Container>
   );
 };
-
-export default Footer;

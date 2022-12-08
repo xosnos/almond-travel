@@ -1,35 +1,46 @@
 import React, { useState } from "react";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import {
-  Container
-} from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Container, Button, Form } from 'react-bootstrap';
+import { handleReset } from "../../features/auth/authSlice";
 
 export const ResetPage = () => {
   const [email, setEmail] = useState("");
-  const auth = getAuth();
-  const handleReset = () => {
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        console.log("success");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("An error has occured: ", errorCode, errorMessage);
-      });
-  };
+  const [sent, setSent] = useState(false);
+
+  const handleResetSubmit = () => {
+    dispatch(handleReset(email));
+    setSent(true);
+  }
+
+  const dispatch = useDispatch();
+
   return (
     <Container>
-      <h1>Reset password</h1>
-      Email:
+      <h1>Reset Password</h1><br />
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="my-4">
+          <Button
+            variant={sent ? "success" : "primary"}
+            onClick={handleResetSubmit}
+            disabled={sent}
+          >
+            {sent ? 'Password reset email sent' : 'Send password reset email'}
+          </Button>
+        </Form.Group>
+      </Form>
       <br />
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      Go back to <Link to="/login">login</Link>
       <br />
-      <button onClick={handleReset}>Reset password</button>
     </Container>
   );
 };

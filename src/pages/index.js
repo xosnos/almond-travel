@@ -3,3 +3,5 @@ export { RegisterPage } from './auth/RegisterPage';
 export { ResetPage } from './auth/ResetPage';
 
 export { HomePage } from './HomePage';
+
+export { ArticlesPage } from './ArticlesPage';

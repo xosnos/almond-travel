@@ -1,52 +1,61 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import {
-  Container
-} from 'react-bootstrap';
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Container, Button, Form } from 'react-bootstrap';
+import { handleRegister } from "../../features/auth/authSlice";
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const auth = getAuth();
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
-  const handleRegister = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log("Registered user: ", user);
-        setEmail("");
-        setPassword("");
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("Error code: ", errorCode);
-        console.log("Error message: ", errorMessage);
-      });
-  };
+  const dispatch = useDispatch();
   return (
     <Container>
-      <h1>Register</h1>
-      Email:
+      <h1>Register</h1><br />
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check
+            type="checkbox"
+            label="Show password"
+            onChange={(e) => setShowPassword(!showPassword)}
+          />
+        </Form.Group>
+        <Form.Group className="my-4">
+          <Button
+            variant="primary"
+          onClick={() => dispatch(handleRegister({ email, password }))}
+          >
+            Sign up
+          </Button>
+        </Form.Group>
+      </Form>
       <br />
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      Have an account? <Link to="/login">Sign in</Link>
       <br />
-      Password:
-      <br />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br />
-      <button onClick={handleRegister}>Register</button>
     </Container>
   );
 };

@@ -1,37 +1,33 @@
 import React, { useEffect } from 'react';
-import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useSelector, useDispatch } from "react-redux";
+// import { onAuthStateChanged } from "firebase/auth";
+// import { useSelector, useDispatch } from "react-redux";
 import {
   BrowserRouter,
   Routes,
   Route,
 } from 'react-router-dom';
-import { firebaseConfig } from '../lib/firebase';
-import { selectUser, saveUser } from '../features/auth/authSlice';
-import Navigation from '../components/navigation';
+// import { selectUser, saveUser } from '../features/auth/authSlice';
+import {
+  Navigation,
+  Footer,
+} from '../components';
 import {
   RegisterPage,
   LoginPage,
   ResetPage,
   HomePage,
+  ArticlesPage
 } from '../pages';
-import Footer from '../components/footer';
 
 function App() {
-  // const app = initializeApp(firebaseConfig);
-  // const analytics = getAnalytics(app);
-  initializeApp(firebaseConfig);
-  const auth = getAuth();
-  const user = useSelector(selectUser);
-  console.log("User: ", user);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => user ?
-      dispatch(saveUser(user.refreshToken))
-      : dispatch(saveUser(null)))
-  }, [auth, dispatch]);
+  // const user = useSelector(selectUser);
+  // console.log("User: ", user);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => user ?
+  //     dispatch(saveUser(user.refreshToken))
+  //     : dispatch(saveUser(null)))
+  // }, [auth, dispatch]);
   return (
     <BrowserRouter>
       <Navigation />
@@ -42,6 +38,8 @@ function App() {
         <Route exact path='/login' element={<LoginPage />} />
         <Route exact path='/register' element={<RegisterPage />} />
         <Route exact path='/reset' element={<ResetPage />} />
+
+        <Route exact path='/articles' element={<ArticlesPage />} />
 
         <Route exact path='/dashboard' element={<h1>Dashboard</h1>} />
 

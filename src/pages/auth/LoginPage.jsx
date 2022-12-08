@@ -1,49 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  Container
+  Container,
+  Row,
+  Col,
+  Button,
+  Form
 } from 'react-bootstrap';
+import Google from '../../assets/google.svg';
+import { handleLoginEmailAndPassword, handleLoginGoogle, selectUser } from "../../features/auth/authSlice";
+
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const auth = getAuth();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const user = useSelector(selectUser);
+
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("Singed in user: ", user);
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("An error occured: ", errorCode, errorMessage);
-      });
-  };
+
+  useEffect(() => {
+    if (user !== undefined) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+    
+
   return (
     <Container>
-      <h1>Login</h1>
-      Email:
+      <h1>Login</h1><br />
+      <Row>
+        <Col>
+          <Button
+            variant="dark"
+            onClick={() => dispatch(handleLoginGoogle({email, password}))}
+          >
+            <img
+              alt="Google"
+              src={Google}
+              width="20"
+              height="20"
+              className="d-inline-block align-top"
+            />{' '}
+            Sign in with Google
+          </Button>
+        </Col>
+      </Row>
+      <p className="text-center">or</p>
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Form.Text>
+            <Link to="/reset">Forgot password?</Link>
+          </Form.Text>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check
+            type="checkbox"
+            label="Show password"
+            onChange={(e) => setShowPassword(!showPassword)}
+          />
+        </Form.Group>
+        <Form.Group className="my-4">
+          <Button
+            variant="primary"
+            onClick={() => dispatch(handleLoginEmailAndPassword({email, password}))}
+          >
+            Sign in
+          </Button>
+        </Form.Group>
+      </Form>
       <br />
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      Don't have an account? <Link to="/register">Create one</Link>
       <br />
-      Password:
-      <br />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br />
-      <button onClick={handleLogin}>Log In</button>
-      <Link to="/register">Register</Link>
     </Container>
   );
 };
