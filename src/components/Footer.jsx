@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
-    <Container fluid className="py-2 bg-dark fixed-bottom">
+    <Container fluid className="py-2 bg-dark">
       <Row>
         <p className="col-lg-6 text-center text-white">
           &copy; 2022 The Almonds

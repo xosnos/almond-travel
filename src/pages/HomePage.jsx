@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Container,
   Row,
   Col,
   Card,
-  Button,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import Test from '../components/search/test';
 
 const cards = [
   {
@@ -15,28 +13,32 @@ const cards = [
     image: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     alt: '',
     text: 'Create a new trip and start planning your next adventure!',
-    link: '/new'
+    link: '/new',
+    border: 'success'
   },
   {
     title: 'Manage Existing Trip',
-    image: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1421&q=80',
     alt: '',
     text: 'Create a new trip and start planning your next adventure!',
-    link: '/trips'
+    link: '/trips',
+    border: 'primary'
   },
   {
     title: 'Resources',
-    image: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://images.unsplash.com/photo-1598618589929-b1433d05cfc6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     alt: '',
     text: 'Create a new trip and start planning your next adventure!',
-    link: '/resources'
+    link: '/resources',
+    border: 'warning'
   },
   {
     title: 'Articles',
-    image: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+    image: 'https://images.unsplash.com/photo-1521295121783-8a321d551ad2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     alt: '',
     text: 'Create a new trip and start planning your next adventure!',
-    link: '/articles'
+    link: '/articles',
+    border: 'danger'
   },
 ];
 
@@ -54,8 +56,8 @@ export const HomePage = () => {
           cards.map((card, index) => (
             <Col key={index}>
               <LinkContainer to={card.link}>
-                <Card className="bg-dark text-white" style={{}}>
-                <Card.Img src={card.image} alt={card.alt} width={100} />
+                <Card border={card.border} style={{}}>
+                <Card.Img className="opacity-25"src={card.image} alt={card.alt} height={'300vw'}/>
                   <Card.ImgOverlay>
                     <Card.Title>{card.title}</Card.Title>
                     <Card.Text>{card.text}</Card.Text>

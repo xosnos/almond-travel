@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Container, Button, Form } from 'react-bootstrap';
-import { handleRegister } from "../../features/auth/authSlice";
+import { handleRegister } from "../../features/auth/authAPI";
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
   return (
     <Container>
       <h1>Register</h1><br />

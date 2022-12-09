@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Container, Button, Form } from 'react-bootstrap';
-import { handleReset } from "../../features/auth/authSlice";
+import { handleReset } from "../../features/auth/authAPI";
 
 export const ResetPage = () => {
   const [email, setEmail] = useState("");

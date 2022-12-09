@@ -3,7 +3,7 @@ import Logo from '../assets/logo.svg';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
-import { handleLogout } from '../features/auth/authSlice';
+import { handleLogout } from '../features/auth/authAPI';
 import { useDispatch } from 'react-redux';
 
 export const Navigation = () => {
@@ -36,11 +36,16 @@ export const Navigation = () => {
             <Nav>
               {
                 user ? (
-                  <LinkContainer to='/'>
-                    <Nav.Link
-                      onClick={() => dispatch(handleLogout())}
-                    >Logout</Nav.Link>
-                  </LinkContainer>
+                  <>
+                    <LinkContainer to='/profile'>
+                      <Nav.Link>Profile</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to='/'>
+                      <Nav.Link
+                        onClick={() => dispatch(handleLogout())}
+                      >Logout</Nav.Link>
+                    </LinkContainer>
+                  </>
                 ) : (
                   <LinkContainer to='/login'>
                     <Nav.Link>Login</Nav.Link>
