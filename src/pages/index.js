@@ -5,8 +5,11 @@ export { ResetPage } from './auth/ResetPage';
 export { HomePage } from './HomePage';
 export { ProfilePage } from './ProfilePage';
 
-export { ArticlesPage } from './ArticlesPage';
-
 export { NewTripPage } from './NewTripPage';
 
-export { AboutPage } from './AboutPage';
+export { ForumsPage } from './ForumsPage';
+export { ArticlesPage } from './ArticlesPage';
+
+export { AboutPage } from './static/AboutPage';
+export { FeaturesPage } from './static/FeaturesPage';
+export { FaqPage } from './static/FaqPage';

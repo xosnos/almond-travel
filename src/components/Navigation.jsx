@@ -35,8 +35,8 @@ export const Navigation = () => {
               <LinkContainer to='/trips'>
                 <Nav.Link>Trips</Nav.Link>
               </LinkContainer>
-              <LinkContainer to='/resources'>
-                <Nav.Link>Resources</Nav.Link>
+              <LinkContainer to='/forums'>
+                <Nav.Link>Forums</Nav.Link>
               </LinkContainer>
               <LinkContainer to='/articles'>
                 <Nav.Link>Articles</Nav.Link>

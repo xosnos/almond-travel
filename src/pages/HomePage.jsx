@@ -25,11 +25,11 @@ const cards = [
     border: 'primary'
   },
   {
-    title: 'Resources',
+    title: 'Forums',
     image: 'https://images.unsplash.com/photo-1598618589929-b1433d05cfc6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     alt: '',
-    text: 'Create a new trip and start planning your next adventure!',
-    link: '/resources',
+    text: 'Join our community and talk to other travelers about their experiences!',
+    link: '/forums',
     border: 'warning'
   },
   {

@@ -16,8 +16,11 @@ import {
   HomePage,
   ProfilePage,
   ArticlesPage,
+  ForumsPage,
   NewTripPage,
   AboutPage,
+  FeaturesPage,
+  FaqPage,
 } from '../pages';
 
 function App() {
@@ -34,7 +37,6 @@ function App() {
       <Container className="min-vh-100">
         <Routes>
           <Route path='/' element={<HomePage />} />
-          
 
           <Route exact path='/login' element={<LoginPage />} />
           <Route exact path='/register' element={<RegisterPage />} />
@@ -44,15 +46,17 @@ function App() {
           <Route path='/new' element={<NewTripPage />} />
           <Route path='/trips' element={<h1>Edit Trip</h1>} />
           <Route path='/trips/:tripId' element={<h1>Edit Trip</h1>} />
-          <Route path='/resources' element={<h1>Resources</h1>} />
+
+          <Route exact path='/forums' element={<ForumsPage />} />
           <Route exact path='/articles' element={<ArticlesPage />} />
 
           <Route exact path='/profile' element={<ProfilePage />} />
 
           <Route path='/about' element={<AboutPage />} />
-          <Route path='/features' element={<h1>Features</h1>} />
-          <Route path='/faq' element={<h1>FAQ</h1>} />
+          <Route path='/features' element={<FeaturesPage />} />
+          <Route path='/faq' element={<FaqPage />} />
 
+          <Route path='*' element={<h1>Error 404: Page Not Found</h1>} />
         </Routes>
       </Container>
       <Footer />
