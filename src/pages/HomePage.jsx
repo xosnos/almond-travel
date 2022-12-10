@@ -36,7 +36,7 @@ const cards = [
     title: 'Articles',
     image: 'https://images.unsplash.com/photo-1521295121783-8a321d551ad2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     alt: '',
-    text: 'Create a new trip and start planning your next adventure!',
+    text: 'Learn more about traveling to the United States and how to plan your trip!',
     link: '/articles',
     border: 'danger'
   },

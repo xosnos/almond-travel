@@ -6,3 +6,5 @@ export {
   HotelSearchWidget,
   CarHireWidget,
 } from './SkyScannerWidgets';
+
+export { FlightForm } from './newTrip/FlightForm';

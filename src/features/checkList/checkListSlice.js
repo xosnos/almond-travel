@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addCheckList } from './checkListAPI';
 
-export const checkListSlice = createSlice({
+const checkListSlice = createSlice({
   name: 'checkList',
   initialState: {},
   reducers: {},

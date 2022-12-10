@@ -22,9 +22,6 @@ export const ProfilePage = () => {
       <Row>
         <Col>
           <h1>Profile</h1>
-          <p>
-            This is a dashboard page. You can only access this page if you are logged in.
-          </p>
           <h2>Email: {user ? user.email : undefined}</h2>
           <h2>UID: {user ? user.uid : undefined}</h2>
         </Col>

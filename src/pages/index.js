@@ -6,3 +6,7 @@ export { HomePage } from './HomePage';
 export { ProfilePage } from './ProfilePage';
 
 export { ArticlesPage } from './ArticlesPage';
+
+export { NewTripPage } from './NewTripPage';
+
+export { AboutPage } from './AboutPage';

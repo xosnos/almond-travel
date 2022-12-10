@@ -15,7 +15,9 @@ import {
   ResetPage,
   HomePage,
   ProfilePage,
-  ArticlesPage
+  ArticlesPage,
+  NewTripPage,
+  AboutPage,
 } from '../pages';
 
 function App() {
@@ -39,7 +41,7 @@ function App() {
           <Route exact path='/reset' element={<ResetPage />} />
 
 
-          <Route path='/new' element={<h1>New Trip</h1>} />
+          <Route path='/new' element={<NewTripPage />} />
           <Route path='/trips' element={<h1>Edit Trip</h1>} />
           <Route path='/trips/:tripId' element={<h1>Edit Trip</h1>} />
           <Route path='/resources' element={<h1>Resources</h1>} />
@@ -47,7 +49,7 @@ function App() {
 
           <Route exact path='/profile' element={<ProfilePage />} />
 
-          <Route path='/about' element={<h1>About</h1>} />
+          <Route path='/about' element={<AboutPage />} />
           <Route path='/features' element={<h1>Features</h1>} />
           <Route path='/faq' element={<h1>FAQ</h1>} />
 

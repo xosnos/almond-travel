@@ -1,52 +1,59 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Container,
   Row,
   Col,
-  Button,
+  Card,
+  Tabs,
+  Tab,
 } from 'react-bootstrap';
-import { addCheckList } from '../features/checkList/checkListAPI';
-import {
-  FlightSearchWidget,
-  HotelSearchWidget,
-  CarHireWidget
-} from '../components';
+import { useDispatch } from 'react-redux';
+import { fetchArticles } from '../features';
 
-const articles = [
-  {
-    title: 'How to Enter the United States | USAGov',
-    url: 'https://www.usa.gov/enter-us',
-  },
-  {
-    title: 'How to Immigrate to the United States',
-    url: 'https://www.boundless.com/immigration-resources/us-immigration-explained/'
-  },
-  {
-    title: 'Immigrate',
-    url: 'https://travel.state.gov/content/travel/en/us-visas/immigrate.html'
-  },
-]
+const categories = ['visa', 'immigration', 'citizenship', 'tips'];
 
 export const ArticlesPage = () => {
+  const articles = useSelector(state => state.articles.articles);
   const dispatch = useDispatch();
+  const [key, setKey] = useState('visa');
+  useEffect (() => {
+    dispatch(fetchArticles(key));
+  }, [key, dispatch]);
   return (
     <Container>
       <h1>Articles</h1>
-      <FlightSearchWidget />
-      <HotelSearchWidget />
-      <CarHireWidget />
-      {
-        articles.map((article, index) => (
-          <Row key={index}>
-            <Col>
-              <h2>{article.title}</h2>
-              <h3>{article.url}</h3>
-            </Col>
-          </Row>
-        ))
-      }
-      <Button onClick={() => dispatch(addCheckList())}>Test</Button>
+      <Tabs
+        className="mb-3"
+        onSelect={(key) => setKey(key)}
+        fill
+      >
+        {
+          categories.map((category, index) => (
+            <Tab eventKey={category} title={category}>
+              {
+                articles.map((article, index) => (
+                  <Row key={index}>
+                    <Col>
+                      <Card>
+                        <Card.Body>
+                          <Card.Title>{article.title}</Card.Title>
+                          <Card.Link
+                            href={article.url}
+                            target="_blank"
+                          >
+                              {article.url}
+                          </Card.Link>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </Row>
+                ))
+              }
+            </Tab>
+          ))
+        }
+      </Tabs>
     </Container>
   );
 };

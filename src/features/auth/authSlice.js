@@ -8,7 +8,7 @@ import {
 } from './authAPI';
 
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: 'user',
   initialState: {},
   reducers: {
