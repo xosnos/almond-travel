@@ -4,15 +4,17 @@ import {
   Row,
   Col,
   Card,
+  Alert,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 const cards = [
   {
     title: 'Create New Trip',
     image: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     alt: '',
-    text: 'Create a new trip and start planning your next adventure!',
+    text: 'Start booking your next trip to the United States!',
     link: '/new',
     border: 'success'
   },
@@ -20,7 +22,7 @@ const cards = [
     title: 'Manage Existing Trip',
     image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1421&q=80',
     alt: '',
-    text: 'Create a new trip and start planning your next adventure!',
+    text: 'Manage your existing trip and see all your bookings!',
     link: '/trips',
     border: 'primary'
   },
@@ -48,7 +50,6 @@ export const HomePage = () => {
       <Row>
         <Col>
           <h1>Welcome to Almond Travel!</h1>
-          <p>Your place to organize all your travel necesities! Check out our hotel and flight booking pages, or read up on our blog page to see what people think about our popular travel destinations!</p>
         </Col>
       </Row>
       <Row xs={1} md={2}>

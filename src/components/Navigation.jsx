@@ -56,9 +56,14 @@ export const Navigation = () => {
                     </LinkContainer>
                   </>
                 ) : (
-                  <LinkContainer to='/login'>
-                    <Nav.Link>Login</Nav.Link>
-                  </LinkContainer>
+                  <>
+                    <LinkContainer to='/login'>
+                      <Nav.Link>Login</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to='/register'>
+                      <Nav.Link>Register</Nav.Link>
+                    </LinkContainer>
+                  </>
                 )
               }
             </Nav>

@@ -18,9 +18,12 @@ import {
   ArticlesPage,
   ForumsPage,
   NewTripPage,
+  TripsPage,
+  TripPage,
   AboutPage,
   FeaturesPage,
   FaqPage,
+  ErrorPage,
 } from '../pages';
 
 function App() {
@@ -44,8 +47,8 @@ function App() {
 
 
           <Route path='/new' element={<NewTripPage />} />
-          <Route path='/trips' element={<h1>Edit Trip</h1>} />
-          <Route path='/trips/:tripId' element={<h1>Edit Trip</h1>} />
+          <Route path='/trips' element={<TripsPage />} />
+          <Route path='/trips/:tripId' element={<TripPage />} />
 
           <Route exact path='/forums' element={<ForumsPage />} />
           <Route exact path='/articles' element={<ArticlesPage />} />
@@ -56,7 +59,7 @@ function App() {
           <Route path='/features' element={<FeaturesPage />} />
           <Route path='/faq' element={<FaqPage />} />
 
-          <Route path='*' element={<h1>Error 404: Page Not Found</h1>} />
+          <Route path='*' element={<ErrorPage />} />
         </Routes>
       </Container>
       <Footer />
