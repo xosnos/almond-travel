@@ -7,4 +7,14 @@ export {
   CarHireWidget,
 } from './SkyScannerWidgets';
 
-export { FlightForm } from './newTrip/FlightForm';
+export {
+  ActivitySearchBar,
+  ActivityMap
+} from './ActivitySearch';
+
+export { FlightsForm } from './newTrip/FlightsForm';
+export { HotelsForm } from './newTrip/HotelsForm';
+export { CarsForm } from './newTrip/CarsForm';
+export { ActivitiesForm } from './newTrip/ActivitiesForm';
+export { ChecklistForm } from './newTrip/ChecklistForm';
+export { TripSummary } from './newTrip/TripSummary';

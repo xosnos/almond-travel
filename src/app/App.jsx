@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
 import { auth } from '../lib/firebase';
 import { saveUser } from '../features/auth/authSlice';
 import {
@@ -37,7 +36,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navigation />
-      <Container className="min-vh-100">
+      <div className="min-vh-100">
         <Routes>
           <Route path='/' element={<HomePage />} />
 
@@ -61,7 +60,7 @@ function App() {
 
           <Route path='*' element={<ErrorPage />} />
         </Routes>
-      </Container>
+      </div>
       <Footer />
     </BrowserRouter>
   );
