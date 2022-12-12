@@ -124,7 +124,7 @@ export const Forums = () => {
         <h1>{state}</h1>
         <Button
           onClick={handleCreatePost}
-          variant="outline-success"
+          variant={user ? "outline-success" : "outline-primary"}
         >
           {user ? 'Create Post': 'Login to post'}
         </Button>
