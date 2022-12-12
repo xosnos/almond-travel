@@ -29,12 +29,16 @@ export const NewTripPage = () => {
   const handleNext = () => {
     setNow(now + 20);
     if (now === 100) {
-      dispatch(addTrip({
-        uid: user.uid,
-        trip: trip,
-      }));
-      dispatch(clearTrip());
-      navigate('/');
+      if (user && user.uid) {
+        dispatch(addTrip({
+          uid: user.uid,
+          trip: trip,
+        }));
+        dispatch(clearTrip());
+        navigate('/');
+      } else {
+        navigate('/login');
+      }
     }
   }
 
@@ -57,16 +61,18 @@ export const NewTripPage = () => {
 
   return (
     <Container>
-      <h1>New Trip</h1>
-      <div className='d-flex justify-content-between'>
-        <Button onClick={handleBack}>
+      <div className='d-flex justify-content-between align-items-start'>
+        <Button
+          onClick={handleBack}
+          variant="outline-primary"
+        >
           {now === 0 ? 'Home' : 'Back'}
         </Button>
-        <Button variant={now === 100 ? 'warning' : 'primary'} onClick={handleNext}>
+        <h1>New Trip</h1>
+        <Button variant={now === 100 ? 'outline-warning' : 'outline-primary'} onClick={handleNext}>
           {now === 100 ? 'Submit' : 'Next'}
         </Button>
       </div>
-      <br />
       <ProgressBar animated now={now} label={`${now}%`} />
       <br />
       <NewTripForm

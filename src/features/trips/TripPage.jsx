@@ -71,16 +71,18 @@ export const TripPage = () => {
     <Container>
     {trip ? (
       <>
-        <h1>Trip Page</h1>
-        <div className='d-flex justify-content-between'>
-          <Button onClick={handleCancel}>
+        <div className='d-flex justify-content-between align-items-start'>
+          <Button
+            onClick={handleCancel}
+            variant="outline-danger"
+          >
             Cancel
           </Button>
-          <Button variant="warning" onClick={handleSave}>
+          <h1>Trip: {trip.name}</h1>
+          <Button variant="outline-warning" onClick={handleSave}>
             Save
           </Button>
         </div>
-        <br />
         <Summary
           name={trip.name}
           location={trip.location}

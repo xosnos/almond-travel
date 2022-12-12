@@ -20,8 +20,10 @@ export const TripsPage = () => {
     if (user) {
       const uid = user.uid;
       dispatch(fetchTrips(uid));
+    } else {
+      navigate('/login');
     }
-  }, [user, dispatch]);
+  }, [user, navigate, dispatch]);
 
   const handleView = (index) => {
     navigate(`/trips/${index}`);
@@ -35,7 +37,21 @@ export const TripsPage = () => {
 
   return (
     <Container>
-      <h1>Trips Page</h1>
+      <div className='d-flex justify-content-between align-items-start'>
+        <Button
+          onClick={() => navigate('/')}
+          variant="outline-primary"
+        >
+          Home
+        </Button>
+        <h1>My Trips</h1>
+        <Button
+          onClick={() => navigate('/new')}
+          variant="outline-success"
+        >
+          Create New Trip
+        </Button>
+      </div>
       {
         trips.map((trip, index) => (
           <Card key={index}>
@@ -54,7 +70,7 @@ export const TripsPage = () => {
                     variant="outline-primary"
                     onClick={() => handleView(index)}
                   >
-                    View
+                    View & Edit
                   </Button>
                   <Button
                     variant="outline-danger"
