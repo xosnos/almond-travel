@@ -46,13 +46,13 @@ export const addTrip = createAsyncThunk(
 
 export const removeTrip = createAsyncThunk(
   "trips/removeTrip",
-  async ({uid, tripId}) => {
+  async ({uid, index}) => {
     try {
       const docRef = doc(db, "trips", uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const trips = docSnap.data().trips;
-        const newTrips = trips.filter((trip) => trip.id !== tripId);
+        const newTrips = trips.filter((trip, i) => i !== index);
         await setDoc(docRef, { trips: newTrips });
         return newTrips;
       }
@@ -64,17 +64,17 @@ export const removeTrip = createAsyncThunk(
 
 export const updateTrip = createAsyncThunk(
   "trips/updateTrip",
-  async ({uid, tripId, trip}) => {
+  async ({uid, tripIndex, trip}) => {
     try {
       const docRef = doc(db, "trips", uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const trips = docSnap.data().trips;
-        const newTrips = trips.map((trip) => {
-          if (trip.id === tripId) {
+        const newTrips = trips.map((t, i) => {
+          if (i === tripIndex) {
             return trip;
           } else {
-            return trip;
+            return t;
           }
         });
         await setDoc(docRef, { trips: newTrips });

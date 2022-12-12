@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   SkyScannerWidget,
+  ActivitySearch,
   Flights,
   Hotels,
   Cars,
@@ -13,7 +14,7 @@ import {
   addItem,
   removeItem,
   updateItem
-} from '..';
+} from './tripSlice';
 import { itemBuilder } from './itemBuilder';
 
 export const NewTripForm = ({ type }) => {
@@ -42,45 +43,48 @@ export const NewTripForm = ({ type }) => {
     <>
       <h2>{type.toUpperCase()}</h2>
       {type === 'flights' &&
-        <>
-          <SkyScannerWidget type='flights' />
-          <Flights
-            items={items}
-            handleAdd={handleAdd}
-            handleRemove={handleRemove}
-            handleUpdate={handleUpdate}
-          />
-        </>
+      <>
+        <SkyScannerWidget type='flights' />
+        <Flights
+          items={items}
+          handleAdd={handleAdd}
+          handleRemove={handleRemove}
+          handleUpdate={handleUpdate}
+        />
+      </>
       }
       {type === 'hotels' &&
-        <>
-          <SkyScannerWidget type='hotels' />
-          <Hotels
-            items={items}
-            handleAdd={handleAdd}
-            handleRemove={handleRemove}
-            handleUpdate={handleUpdate}
-          />
-        </>
+      <>
+        <SkyScannerWidget type='hotels' />
+        <Hotels
+          items={items}
+          handleAdd={handleAdd}
+          handleRemove={handleRemove}
+          handleUpdate={handleUpdate}
+        />
+      </>
       }
       {type === 'cars' &&
-        <>
-          <SkyScannerWidget type='cars' />
-          <Cars
-            items={items}
-            handleAdd={handleAdd}
-            handleRemove={handleRemove}
-            handleUpdate={handleUpdate}
-          />
-        </>
+      <>
+        <SkyScannerWidget type='cars' />
+        <Cars
+          items={items}
+          handleAdd={handleAdd}
+          handleRemove={handleRemove}
+          handleUpdate={handleUpdate}
+        />
+      </>
       }
       {type === 'activities' &&
+      <>
+        <ActivitySearch />
         <Activities
           items={items}
           handleAdd={handleAdd}
           handleRemove={handleRemove}
           handleUpdate={handleUpdate}
         />
+      </>
       }
       {type === 'checklist' &&
         <Checklist

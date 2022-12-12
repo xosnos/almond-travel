@@ -1,6 +1,7 @@
 export { Navigation } from './Navigation';
 export { Footer } from './Footer';
 export { SkyScannerWidget } from './SkyScannerWidget';
+export { ActivitySearch } from './ActivitySearch';
 export { Summary } from './trip/Summary';
 export { Flights } from './trip/Flights';
 export { Hotels } from './trip/Hotels';

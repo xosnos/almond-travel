@@ -8,6 +8,7 @@ import {
 export const Checklist = ({ items, handleAdd, handleRemove, handleUpdate }) => {
   return (
     <>
+      <br />
       {
         items.map((item, index) => (
           <Form key={index} className="d-flex justify-content-between">

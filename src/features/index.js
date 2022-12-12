@@ -11,15 +11,8 @@ export { default as forumsReducer } from './forums/forumsSlice';
 export { ForumsPage } from './forums/ForumsPage';
 
 export { default as tripReducer } from './trip/tripSlice';
-export {
-  addItem,
-  removeItem,
-  updateItem,
-  clearTrip,
-} from './trip/tripSlice';
 export { NewTripPage } from './trip/NewTripPage';
 
 export { default as tripsReducer } from './trips/tripsSlice';
-export { addTrip } from './trips/tripsAPI';
 export { TripsPage } from './trips/TripsPage';
 export { TripPage } from './trips/TripPage';

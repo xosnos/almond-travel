@@ -5,36 +5,12 @@ import {
   Row,
   Form
 } from 'react-bootstrap';
-import {
-  ActivitySearchBar,
-  ActivityMap
-} from '../ActivitySearch';
 
 export const Activities = ({
   items, handleAdd, handleRemove, handleUpdate
 }) => {
-  const [location, setLocation] = useState("");
-  const [url, setUrl] = useState(null);
-  const handleChange = ({ target }) => setLocation(target.value);
-  const handleSearch = (e) => {
-    const apiKey = 'AIzaSyB0qdRFw4Xumv1D109bFq65JVA6jhKbdVs';
-    const prefix = `https://www.google.com/maps/embed/v1/search?key=${apiKey}&q=things+to+do+in+`
-    const param = (
-      location
-        .replaceAll(',', '')
-        .replace(/\s/g, '+')
-    );
-    setUrl(prefix + param);
-  }
-
   return (
     <>
-      <ActivitySearchBar
-        location={location}
-        handleChange={handleChange}
-        handleSearch={handleSearch}
-      />
-      <ActivityMap url={url} />
       <br />
       {
         items.map((activity, index) => (

@@ -1,12 +1,123 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  Container
+  Container,
+  Button
 } from 'react-bootstrap';
+import {
+  Summary,
+  Flights,
+  Hotels,
+  Cars,
+  Activities,
+  Checklist,
+} from '../../components';
+import {
+  addTripItem,
+  removeTripItem,
+  updateTripItem,
+} from './tripsSlice';
+import { itemBuilder } from '../trip/itemBuilder';
+import { updateTrip } from './tripsAPI';
 
 export const TripPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const tripIndex = parseInt(location.pathname.substring(7));
+  const trip = useSelector(state => state.trips.trips[tripIndex]);
+  const uid = useSelector(state => state.auth.user.uid);
+
+  const handleCancel = () => {
+    navigate('/trips');
+  }
+
+  const handleSave = () => {
+    dispatch(updateTrip({
+      uid, tripIndex, trip
+    }));
+    navigate('/trips');
+  }
+
+  const handleAdd = (type) => () => {
+    dispatch(addTripItem({
+      tripIndex, type, item: itemBuilder[type]
+    }))
+  }
+
+  const handleRemove = (type) => (index) => {
+    dispatch(removeTripItem({
+      tripIndex, type, index
+    }))
+  }
+
+  const handleUpdate = (type) => (index, key, value) => {
+    dispatch(updateTripItem({
+      tripIndex, type, index, key, value
+    }))
+  }
+
+  const handleSummary = (type, value) => {
+    dispatch(updateTripItem({
+      tripIndex, type, index: '', key: '', value
+    }))
+  }
+
   return (
     <Container>
-      <h1>Trip Page</h1>
+    {trip ? (
+      <>
+        <h1>Trip Page</h1>
+        <div className='d-flex justify-content-between'>
+          <Button onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="warning" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
+        <br />
+        <Summary
+          name={trip.name}
+          location={trip.location}
+          handleUpdate={handleSummary}
+        />
+        <Flights
+          items={trip.flights}
+          handleAdd={handleAdd('flights')}
+          handleRemove={handleRemove('flights')}
+          handleUpdate={handleUpdate('flights')}
+        />
+        <Hotels
+          items={trip.hotels}
+          handleAdd={handleAdd('hotels')}
+          handleRemove={handleRemove('hotels')}
+          handleUpdate={handleUpdate('hotels')}
+        />
+        <Cars
+          items={trip.cars}
+          handleAdd={handleAdd('cars')}
+          handleRemove={handleRemove('cars')}
+          handleUpdate={handleUpdate('cars')}
+        />
+        <Activities
+          items={trip.activities}
+          handleAdd={handleAdd('activities')}
+          handleRemove={handleRemove('activities')}
+          handleUpdate={handleUpdate('activities')}
+        />
+        <Checklist
+          items={trip.checklist}
+          handleAdd={handleAdd('checklist')}
+          handleRemove={handleRemove('checklist')}
+          handleUpdate={handleUpdate('checklist')}
+        />
+      </>
+      ) : (
+        <h1>404: Trip Not Found</h1>
+      )
+    }
     </Container>
   );
 }

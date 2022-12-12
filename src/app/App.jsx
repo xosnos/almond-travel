@@ -54,7 +54,7 @@ function App() {
 
           <Route path='/new' element={<NewTripPage />} />
           <Route path='/trips' element={<TripsPage />} />
-          <Route path='/trips/:tripId' element={<TripPage />} />
+          <Route path='/trips/:tripIndex' element={<TripPage />} />
 
           <Route exact path='/forums' element={<ForumsPage />} />
           <Route exact path='/articles' element={<ArticlesPage />} />

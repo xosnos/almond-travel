@@ -7,13 +7,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import {
-  NewTripForm,
-} from './NewTripForm';
-import {
-  addTrip,
-  clearTrip,
-} from '../';
+import { NewTripForm } from './NewTripForm';
+import { clearTrip } from './tripSlice';
+import { addTrip } from '../trips/tripsAPI';
 
 export const NewTripPage = () => {
   const navigate = useNavigate();
@@ -25,6 +21,7 @@ export const NewTripPage = () => {
   const handleBack = () => {
     setNow(now - 20);
     if (now === 0) {
+      dispatch(clearTrip());
       navigate('/');
     }
   }
