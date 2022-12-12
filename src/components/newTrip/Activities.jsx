@@ -10,7 +10,9 @@ import {
   ActivityMap
 } from '..';
 
-export const ActivitiesForm = ({ activities, setActivities }) => {
+export const Activities = ({
+  items, handleAdd, handleRemove, handleUpdate
+}) => {
   const [location, setLocation] = useState("");
   const [url, setUrl] = useState(null);
   const handleChange = ({ target }) => setLocation(target.value);
@@ -25,43 +27,24 @@ export const ActivitiesForm = ({ activities, setActivities }) => {
     setUrl(prefix + param);
   }
 
-  const addActivity = () => {
-    setActivities([...activities, {
-      id: activities.length,
-      name: '',
-      location: '',
-      date: '',
-      time: '',
-      notes: '',
-    }]);
-  }
-
-  const removeActivity = () => {
-    const newActivities = [...activities];
-    newActivities.pop();
-    setActivities(newActivities);
-  }
-
-  const updateActivity = (index, key, value) => {
-    const newActivities = [...activities];
-    newActivities[index][key] = value;
-    setActivities(newActivities);
-  }
-
   return (
     <>
-      <h2>Search for Activities</h2>
       <ActivitySearchBar
         location={location}
         handleChange={handleChange}
         handleSearch={handleSearch}
       />
       <ActivityMap url={url} />
-      <h2>Things to do</h2>
+      <br />
       {
-        activities.map((activity, index) => (
+        items.map((activity, index) => (
           <Form key={index}>
-            <h3>Activity # {index + 1}</h3>
+            <div className='d-flex justify-content-between'>
+              <h3>Activity # {index + 1}</h3>
+              <Button className="rounded-circle" variant="outline-danger" onClick={() => handleRemove(index)}>
+                ✕
+              </Button>
+            </div>
             <Row>
               <Col xs={6} md={3}>
                 <Form.Group controlId="formGroupActivityName">
@@ -70,7 +53,7 @@ export const ActivitiesForm = ({ activities, setActivities }) => {
                     type="text"
                     placeholder='University of Michigan Museum of Art'
                     value={activity.name}
-                    onChange={(e) => updateActivity(index, 'name', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'name', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -81,7 +64,7 @@ export const ActivitiesForm = ({ activities, setActivities }) => {
                     type="text"
                     placeholder='525 S State St, Ann Arbor, MI 48109'
                     value={activity.location}
-                    onChange={(e) => updateActivity(index, 'location', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'location', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -91,7 +74,7 @@ export const ActivitiesForm = ({ activities, setActivities }) => {
                   <Form.Control
                     type="date"
                     value={activity.date}
-                    onChange={(e) => updateActivity(index, 'date', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'date', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -101,7 +84,7 @@ export const ActivitiesForm = ({ activities, setActivities }) => {
                   <Form.Control
                     type="time"
                     value={activity.time}
-                    onChange={(e) => updateActivity(index, 'time', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'time', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -115,7 +98,7 @@ export const ActivitiesForm = ({ activities, setActivities }) => {
                     placeholder="Don't forget to check out the cafe! It closes at 5pm"
                     rows={1}
                     value={activity.notes}
-                    onChange={(e) => updateActivity(index, 'notes', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'notes', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -124,16 +107,9 @@ export const ActivitiesForm = ({ activities, setActivities }) => {
           </Form>
         ))
       }
-      <div className="d-flex justify-content-between">
-        <Button variant="success" onClick={addActivity}>Add an Activity</Button>
-        {
-          activities.length ? (
-            <Button variant="danger" onClick={removeActivity}>
-              Remove Activity
-            </Button>
-          ) : null
-        }
-      </div>
+      <Button onClick={() => handleAdd()}>
+        Add an Activity
+      </Button>
       <br />
     </>
   );

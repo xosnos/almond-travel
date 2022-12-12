@@ -2,19 +2,22 @@ import React from 'react';
 import {
   Form
 } from 'react-bootstrap';
+import {
+  Flight
+} from '..';
 
-export const TripSummary = ({name, setName, location, setLocation}) => {
+export const NewTripSummary = () => {
   return (
     <>
-      <h2>Enter Trip Details</h2>
+      <h2>SUMMARY</h2>
       <Form>
         <Form.Group controlId="formGroupName">
           <Form.Label>Trip Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter trip name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={{}}
+            // onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formGroupLocation">
@@ -22,8 +25,8 @@ export const TripSummary = ({name, setName, location, setLocation}) => {
           <Form.Control
             type="text"
             placeholder="Enter trip location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            value={{}}
+            // onChange={(e) => setLocation(e.target.value)}
           />
         </Form.Group>
       </Form>

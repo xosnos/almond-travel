@@ -1,53 +1,26 @@
 import React from 'react';
 import {
-  Button,
-  Col,
+  Form,
   Row,
-  Form
+  Col,
+  Button
 } from 'react-bootstrap';
-import {
-  FlightSearchWidget
-} from '..';
 
-export const FlightsForm = ({flights, setFlights}) => {
-
-  const addFlight = () => {
-    setFlights([...flights, {
-      id: flights.length,
-      departureDate: '',
-      departureTime: '',
-      departureAirport: '',
-      departureCity: '',
-      arrivalDate: '',
-      arrivalTime: '',
-      arrivalAirport: '',
-      arrivalCity: '',
-    }]);
-  }
-
-  const removeFlight = () => {
-    const newFlights = [...flights];
-    newFlights.pop();
-    setFlights(newFlights);
-  }
-
-  const updateFlight = (index, key, value) => {
-    const newFlights = [...flights];
-    newFlights[index][key] = value;
-    setFlights(newFlights);
-  }
-
+export const Flights = ({
+  items, handleAdd, handleRemove, handleUpdate
+}) => {
   return (
     <>
-      <h2>Search & Book Flights</h2>
-      <Row>
-        <FlightSearchWidget />
-      </Row>
-      <h2>Flights Itinerary</h2>
+      <br />
       {
-        flights.map((flight, index) => (
+        items.map((flight, index) => (
           <Form key={index}>
-            <h3>Flight # {index + 1}</h3>
+            <div className='d-flex justify-content-between'>
+              <h3>Flight # {index + 1}</h3>
+              <Button className="rounded-circle" variant="outline-danger" onClick={() => handleRemove(index)}>
+                ✕
+              </Button>
+            </div>
             <Row>
               <Col xs={6} md={3}>
                 <Form.Group controlId="formGroupDepartureDate">
@@ -55,7 +28,7 @@ export const FlightsForm = ({flights, setFlights}) => {
                   <Form.Control
                     type="date"
                     value={flight.departureDate}
-                    onChange={(e) => updateFlight(index, 'departureDate', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'departureDate', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -65,7 +38,7 @@ export const FlightsForm = ({flights, setFlights}) => {
                   <Form.Control
                     type="time"
                     value={flight.departureTime}
-                    onChange={(e) => updateFlight(index, 'departureTime', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'departureTime', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -77,7 +50,7 @@ export const FlightsForm = ({flights, setFlights}) => {
                     type="text"
                     placeholder="SGN"
                     value={flight.departureAirport}
-                    onChange={(e) => updateFlight(index, 'departureAirport', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'departureAirport', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -88,7 +61,7 @@ export const FlightsForm = ({flights, setFlights}) => {
                     type="text"
                     placeholder="Ho Chi Minh City"
                     value={flight.departureCity}
-                    onChange={(e) => updateFlight(index, 'departureCity', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'departureCity', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -100,7 +73,7 @@ export const FlightsForm = ({flights, setFlights}) => {
                   <Form.Control
                     type="date"
                     value={flight.arrivalDate}
-                    onChange={(e) => updateFlight(index, 'arrivalDate', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'arrivalDate', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -110,7 +83,7 @@ export const FlightsForm = ({flights, setFlights}) => {
                   <Form.Control
                     type="time"
                     value={flight.arrivalTime}
-                    onChange={(e) => updateFlight(index, 'arrivalTime', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'arrivalTime', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -121,7 +94,7 @@ export const FlightsForm = ({flights, setFlights}) => {
                     type="text"
                     placeholder="GRR"
                     value={flight.arrivalAirport}
-                    onChange={(e) => updateFlight(index, 'arrivalAirport', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'arrivalAirport', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -132,7 +105,7 @@ export const FlightsForm = ({flights, setFlights}) => {
                     type="text"
                     placeholder="Grand Rapids"
                     value={flight.arrivalCity}
-                    onChange={(e) => updateFlight(index, 'arrivalCity', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'arrivalCity', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -141,19 +114,10 @@ export const FlightsForm = ({flights, setFlights}) => {
           </Form>
         ))
       }
-      <div className="d-flex justify-content-between">
-        <Button variant="success" onClick={addFlight}>
-          Add a Flight
-        </Button>
-        {
-          flights.length ? (
-            <Button variant="danger" onClick={removeFlight}>
-              Remove flight
-            </Button>
-          ) : null
-        }
-      </div>
+      <Button onClick={() => handleAdd()}>
+        Add a Flight
+      </Button>
       <br />
     </>
-  );
+  )
 }

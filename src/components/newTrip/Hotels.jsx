@@ -5,46 +5,22 @@ import {
   Form,
   Row
 } from 'react-bootstrap';
-import {
-  HotelSearchWidget
-} from '..';
 
-export const HotelsForm = ({hotels, setHotels}) => {
-
-  const addHotel = () => {
-    setHotels([...hotels, {
-      id: hotels.length,
-      checkInDate: '',
-      checkOutDate: '',
-      hotelName: '',
-      hotelAddress: '',
-      hotelCity: '',
-    }]);
-  }
-
-  const removeHotel = () => {
-    const newHotels = [...hotels];
-    newHotels.pop();
-    setHotels(newHotels);
-  }
-
-  const updateHotel = (index, key, value) => {
-    const newHotels = [...hotels];
-    newHotels[index][key] = value;
-    setHotels(newHotels);
-  }
-
+export const Hotels = ({
+  items, handleAdd, handleRemove, handleUpdate
+}) => {
   return (
     <>
-      <h2>Search & Book Hotels</h2>
-      <Row>
-        <HotelSearchWidget />
-      </Row>
-      <h2>Hotels Itinerary</h2>
+      <br />
       {
-        hotels.map((hotel, index) => (
+        items.map((hotel, index) => (
           <Form key={index}>
-            <h3>Hotel # {index + 1}</h3>
+            <div className='d-flex justify-content-between'>
+              <h3>Hotel # {index + 1}</h3>
+              <Button className="rounded-circle" variant="outline-danger" onClick={() => handleRemove(index)}>
+                ✕
+              </Button>
+            </div>
             <Row>
               <Col xs={6}>
                 <Form.Group controlId="formGroupCheckInDate">
@@ -52,7 +28,7 @@ export const HotelsForm = ({hotels, setHotels}) => {
                   <Form.Control
                     type="date"
                     value={hotel.checkInDate}
-                    onChange={(e) => updateHotel(index, 'checkInDate', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'checkInDate', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -62,7 +38,7 @@ export const HotelsForm = ({hotels, setHotels}) => {
                   <Form.Control
                     type="date"
                     value={hotel.checkOutDate}
-                    onChange={(e) => updateHotel(index, 'checkOutDate', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'checkOutDate', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -75,7 +51,7 @@ export const HotelsForm = ({hotels, setHotels}) => {
                     type="text"
                     placeholder='The Plaza'
                     value={hotel.hotelName}
-                    onChange={(e) => updateHotel(index, 'hotelName', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'hotelName', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -86,7 +62,7 @@ export const HotelsForm = ({hotels, setHotels}) => {
                     type="text"
                     placeholder='768 5th Ave'
                     value={hotel.hotelAddress}
-                    onChange={(e) => updateHotel(index, 'hotelAddress', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'hotelAddress', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -97,7 +73,7 @@ export const HotelsForm = ({hotels, setHotels}) => {
                     type="text"
                     placeholder='New York'
                     value={hotel.hotelCity}
-                    onChange={(e) => updateHotel(index, 'hotelCity', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'hotelCity', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -106,18 +82,9 @@ export const HotelsForm = ({hotels, setHotels}) => {
           </Form>
         ))
       }
-      <div className="d-flex justify-content-between">
-        <Button variant="success" onClick={addHotel}>
-          Add a Hotel
-        </Button>
-        {
-          hotels.length ? (
-            <Button variant="danger" onClick={removeHotel}>
-              Remove Hotel
-            </Button>
-          ) : null
-        }
-      </div>
+      <Button onClick={() => handleAdd()}>
+        Add a Hotel
+      </Button>
       <br />
     </>
   );

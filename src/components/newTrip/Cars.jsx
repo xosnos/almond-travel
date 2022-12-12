@@ -5,48 +5,22 @@ import {
   Row,
   Form
 } from 'react-bootstrap';
-import {
-  CarHireWidget
-} from '..';
 
-export const CarsForm = ({cars, setCars}) => {
-
-  const addCar = () => {
-    setCars([...cars, {
-      id: cars.length,
-      pickUpDate: '',
-      pickUpTime: '',
-      pickUpLocation: '',
-      returnDate: '',
-      returnTime: '',
-      returnLocation: '',
-      carMakeModelYear: '',
-    }]);
-  }
-
-  const removeCar = () => {
-    const newCars = [...cars];
-    newCars.pop();
-    setCars(newCars);
-  }
-
-  const updateCar = (index, key, value) => {
-    const newCars = [...cars];
-    newCars[index][key] = value;
-    setCars(newCars);
-  }
-
+export const Cars = ({
+  items, handleAdd, handleRemove, handleUpdate
+}) => {
   return (
     <>
-      <h2>Search & Book Cars</h2>
-      <Row>
-        <CarHireWidget />
-      </Row>
-      <h2>Cars Itinerary</h2>
+      <br />
       {
-        cars.map((car, index) => (
+        items.map((car, index) => (
           <Form key={index}>
-            <h3>Car # {index + 1}</h3>
+            <div className='d-flex justify-content-between'>
+              <h3>Car # {index + 1}</h3>
+              <Button className="rounded-circle" variant="outline-danger" onClick={() => handleRemove(index)}>
+                ✕
+              </Button>
+            </div>
             <Row>
               <Col xs={6} md={4}>
                 <Form.Group controlId="formGroupPickUpDate">
@@ -54,7 +28,7 @@ export const CarsForm = ({cars, setCars}) => {
                   <Form.Control
                     type="date"
                     value={car.pickUpDate}
-                    onChange={(e) => updateCar(index, 'pickUpDate', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'pickUpDate', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -64,7 +38,7 @@ export const CarsForm = ({cars, setCars}) => {
                   <Form.Control
                     type="time"
                     value={car.pickUpTime}
-                    onChange={(e) => updateCar(index, 'pickUpTime', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'pickUpTime', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -75,7 +49,7 @@ export const CarsForm = ({cars, setCars}) => {
                     type="text"
                     placeholder='LAX Parking Garage A'
                     value={car.pickUpLocation}
-                    onChange={(e) => updateCar(index, 'pickUpLocation', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'pickUpLocation', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -87,7 +61,7 @@ export const CarsForm = ({cars, setCars}) => {
                   <Form.Control
                     type="date"
                     value={car.returnDate}
-                    onChange={(e) => updateCar(index, 'returnDate', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'returnDate', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -97,7 +71,7 @@ export const CarsForm = ({cars, setCars}) => {
                   <Form.Control
                     type="time"
                     value={car.returnTime}
-                    onChange={(e) => updateCar(index, 'returnTime', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'returnTime', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -108,7 +82,7 @@ export const CarsForm = ({cars, setCars}) => {
                     type="text"
                     placeholder='Hae Jang Chon KBBQ Restaurant in Koreatown'
                     value={car.returnLocation}
-                    onChange={(e) => updateCar(index, 'returnLocation', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'returnLocation', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -119,7 +93,7 @@ export const CarsForm = ({cars, setCars}) => {
                     type="text"
                     placeholder='Tesla Model S 2023'
                     value={car.carMakeModelYear}
-                    onChange={(e) => updateCar(index, 'carMakeModelYear', e.target.value)}
+                    onChange={(e) => handleUpdate(index, 'carMakeModelYear', e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -128,14 +102,9 @@ export const CarsForm = ({cars, setCars}) => {
           </Form>
         ))
       }
-      <div className="d-flex justify-content-between">
-        <Button variant="success" onClick={addCar}>Add a Car</Button>
-        {
-          cars.length ? (
-            <Button variant="danger" onClick={removeCar}>Remove Car</Button>
-          ) : null
-        }
-      </div>
+      <Button onClick={() => handleAdd()}>
+        Add a Car
+      </Button>
       <br />
     </>
   );

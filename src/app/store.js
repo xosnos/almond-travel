@@ -4,6 +4,7 @@ import {
   authReducer,
   forumsReducer,
   tripsReducer,
+  tripReducer,
 } from '../features';
 
 export const store = configureStore({
@@ -12,5 +13,6 @@ export const store = configureStore({
     auth: authReducer,
     forums: forumsReducer,
     trips: tripsReducer,
+    trip: tripReducer,
   },
 });

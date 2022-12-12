@@ -6,15 +6,6 @@ const tripsSlice = createSlice({
   initialState: {
     trips: [],
   },
-  reducers: {
-    updateFlight (state, action) {
-      const { id, flights } = action.payload;
-      const exisitingTrip = state.trips.find((trip) => trip.id === id);
-      if (exisitingTrip) {
-        exisitingTrip.flights = flights;
-      }
-    },
-  },
   extraReducers: (builder) => {
     builder.addCase(addTrip.fulfilled, (state, action) => {
       state.trips.push(action.payload);
