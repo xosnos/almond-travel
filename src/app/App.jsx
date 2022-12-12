@@ -25,6 +25,8 @@ import {
   ResetPage,
   // forums
   ForumsPage,
+  Forums,
+  Forum,
   // new trip
   NewTripPage,
   // trips
@@ -57,6 +59,8 @@ function App() {
           <Route path='/trips/:tripIndex' element={<TripPage />} />
 
           <Route exact path='/forums' element={<ForumsPage />} />
+          <Route exact path='/forums/:state' element={<Forums />} />
+          <Route exact path='/forums/:state/:index' element={<Forum />} />
           <Route exact path='/articles' element={<ArticlesPage />} />
 
           <Route exact path='/profile' element={<ProfilePage />} />

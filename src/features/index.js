@@ -9,6 +9,8 @@ export { ResetPage } from './auth/ResetPage';
 
 export { default as forumsReducer } from './forums/forumsSlice';
 export { ForumsPage } from './forums/ForumsPage';
+export { Forums } from './forums/Forums';
+export { Forum } from './forums/Forum';
 
 export { default as tripReducer } from './trip/tripSlice';
 export { NewTripPage } from './trip/NewTripPage';

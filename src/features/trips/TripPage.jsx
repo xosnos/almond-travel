@@ -27,17 +27,20 @@ export const TripPage = () => {
   const dispatch = useDispatch();
   const tripIndex = parseInt(location.pathname.substring(7));
   const trip = useSelector(state => state.trips.trips[tripIndex]);
-  const uid = useSelector(state => state.auth.user.uid);
+  const user = useSelector(state => state.auth.user);
 
   const handleCancel = () => {
     navigate('/trips');
   }
 
   const handleSave = () => {
-    dispatch(updateTrip({
-      uid, tripIndex, trip
-    }));
-    navigate('/trips');
+    if (user) {
+      const uid = user.uid;
+      dispatch(updateTrip({
+        uid, tripIndex, trip
+      }));
+      navigate('/trips');
+    }
   }
 
   const handleAdd = (type) => () => {
