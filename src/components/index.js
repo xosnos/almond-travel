@@ -8,10 +8,10 @@ export {
   ActivityMap
 } from './ActivitySearch';
 
-export { NewTripForm } from './newTrip/NewTripForm';
-export { NewTripSummary } from './newTrip/NewTripSummary';
-export { Flights } from './newTrip/Flights';
-export { Hotels } from './newTrip/Hotels';
-export { Cars } from './newTrip/Cars';
-export { Activities } from './newTrip/Activities';
-export { Checklist } from './newTrip/Checklist';
+export { NewTripForm } from './trip/NewTripForm';
+export { Summary } from './trip/Summary';
+export { Flights } from './trip/Flights';
+export { Hotels } from './trip/Hotels';
+export { Cars } from './trip/Cars';
+export { Activities } from './trip/Activities';
+export { Checklist } from './trip/Checklist';

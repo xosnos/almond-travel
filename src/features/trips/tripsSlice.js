@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addTrip } from './tripsAPI';
+import {
+  addTrip,
+  removeTrip,
+} from './tripsAPI';
 
 const tripsSlice = createSlice({
   name: 'trips',
@@ -8,7 +11,10 @@ const tripsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addTrip.fulfilled, (state, action) => {
-      state.trips.push(action.payload);
+      state.trips = action.payload;
+    });
+    builder.addCase(removeTrip.fulfilled, (state, action) => {
+      state.trips = action.payload;
     });
   }
 });

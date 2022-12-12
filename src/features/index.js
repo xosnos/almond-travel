@@ -11,5 +11,6 @@ export { default as tripReducer } from './trip/tripSlice';
 export {
   addItem,
   removeItem,
-  updateItem
+  updateItem,
+  clearTrip,
 } from './trip/tripSlice';

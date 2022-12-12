@@ -9,10 +9,10 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
   NewTripForm,
-  NewTripSummary,
 } from '../components';
 import {
   addTrip,
+  clearTrip,
 } from '../features';
 
 export const NewTripPage = () => {
@@ -36,6 +36,7 @@ export const NewTripPage = () => {
         uid: user.uid,
         trip: trip,
       }));
+      dispatch(clearTrip());
       navigate('/');
     }
   }
@@ -53,7 +54,7 @@ export const NewTripPage = () => {
       case 80:
         return 'checklist';
       default:
-        return;
+        return 'summary';
     }
   }
 
@@ -71,15 +72,9 @@ export const NewTripPage = () => {
       <br />
       <ProgressBar animated now={now} label={`${now}%`} />
       <br />
-      {
-        now === 100 ? (
-          <NewTripSummary />
-        ) : (
-          <NewTripForm
-            type={renderForm()}
-          />
-        )
-      }
+      <NewTripForm
+        type={renderForm()}
+      />
       <br />
     </Container>
   );

@@ -7,6 +7,7 @@ import {
   Cars,
   Activities,
   Checklist,
+  Summary,
 } from '..';
 import {
   addItem,
@@ -17,6 +18,8 @@ import { itemBuilder } from '../../util';
 
 export const NewTripForm = ({type}) => {
   const dispatch = useDispatch();
+  const name = useSelector(state => state.trip.name);
+  const location = useSelector(state => state.trip.location);
   const items = useSelector(state => state.trip[type]);
   
   const handleAdd = () => {
@@ -29,6 +32,10 @@ export const NewTripForm = ({type}) => {
 
   const handleUpdate = (index, key, value) => {
     dispatch(updateItem({type, index, key, value}));
+  }
+
+  const handleSummary = (type, value) => {
+    dispatch(updateItem({type, index: '', key: '', value}));
   }
 
   return (
@@ -81,6 +88,14 @@ export const NewTripForm = ({type}) => {
           handleAdd={handleAdd}
           handleRemove={handleRemove}
           handleUpdate={handleUpdate}
+        />
+      }
+      {
+        type === 'summary' &&
+        <Summary
+          name={name}
+          location={location}
+          handleUpdate={handleSummary}
         />
       }
     </>

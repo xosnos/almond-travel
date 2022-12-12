@@ -21,13 +21,22 @@ const tripSlice = createSlice({
       state[type].splice(index, 1);
     },
     updateItem (state, action) {
-      const { type } = action.payload;
+      const { type, value } = action.payload;
       if (type === 'name' || type === 'location') {
-        state[type] = action.payload.value;
+        state[type] = value;
       } else {
-        const { index, key, value } = action.payload;
+        const { index, key } = action.payload;
         state[type][index][key] = value;
       }
+    },
+    clearTrip (state) {
+      state.name = '';
+      state.location = '';
+      state.flights = [];
+      state.hotels = [];
+      state.cars = [];
+      state.activities = [];
+      state.checklist = [];
     },
   }
 });
@@ -35,6 +44,7 @@ const tripSlice = createSlice({
 export const {
   addItem,
   removeItem,
-  updateItem
+  updateItem,
+  clearTrip,
 } = tripSlice.actions;
 export default tripSlice.reducer;
