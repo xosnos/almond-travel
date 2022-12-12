@@ -8,7 +8,7 @@ import {
 import {
   ActivitySearchBar,
   ActivityMap
-} from '..';
+} from '../ActivitySearch';
 
 export const Activities = ({
   items, handleAdd, handleRemove, handleUpdate

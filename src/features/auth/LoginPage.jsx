@@ -9,7 +9,7 @@ import {
   Form
 } from 'react-bootstrap';
 import Google from '../../assets/google.svg';
-import { handleLoginEmailAndPassword, handleLoginGoogle } from "../../features/auth/authAPI";
+import { handleLoginEmailAndPassword, handleLoginGoogle } from "./authAPI";
 
 
 export const LoginPage = () => {

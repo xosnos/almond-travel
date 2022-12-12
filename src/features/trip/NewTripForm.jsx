@@ -8,71 +8,71 @@ import {
   Activities,
   Checklist,
   Summary,
-} from '..';
+} from '../../components';
 import {
   addItem,
   removeItem,
   updateItem
-} from '../../features';
-import { itemBuilder } from '../../util';
+} from '..';
+import { itemBuilder } from './itemBuilder';
 
-export const NewTripForm = ({type}) => {
+export const NewTripForm = ({ type }) => {
   const dispatch = useDispatch();
   const name = useSelector(state => state.trip.name);
   const location = useSelector(state => state.trip.location);
   const items = useSelector(state => state.trip[type]);
-  
+
   const handleAdd = () => {
-    dispatch(addItem({type, item: itemBuilder[type]}));
+    dispatch(addItem({ type, item: itemBuilder[type] }));
   }
 
   const handleRemove = (index) => {
-    dispatch(removeItem({type, index}));
+    dispatch(removeItem({ type, index }));
   }
 
   const handleUpdate = (index, key, value) => {
-    dispatch(updateItem({type, index, key, value}));
+    dispatch(updateItem({ type, index, key, value }));
   }
 
   const handleSummary = (type, value) => {
-    dispatch(updateItem({type, index: '', key: '', value}));
+    dispatch(updateItem({ type, index: '', key: '', value }));
   }
 
   return (
     <>
       <h2>{type.toUpperCase()}</h2>
       {type === 'flights' &&
-      <>
-        <SkyScannerWidget type='flights' />
-        <Flights
-          items={items}
-          handleAdd={handleAdd}
-          handleRemove={handleRemove}
-          handleUpdate={handleUpdate}
-        />
-      </>
+        <>
+          <SkyScannerWidget type='flights' />
+          <Flights
+            items={items}
+            handleAdd={handleAdd}
+            handleRemove={handleRemove}
+            handleUpdate={handleUpdate}
+          />
+        </>
       }
       {type === 'hotels' &&
-      <>
-        <SkyScannerWidget type='hotels' />
-        <Hotels
-          items={items}
-          handleAdd={handleAdd}
-          handleRemove={handleRemove}
-          handleUpdate={handleUpdate}
-        />
-      </>
+        <>
+          <SkyScannerWidget type='hotels' />
+          <Hotels
+            items={items}
+            handleAdd={handleAdd}
+            handleRemove={handleRemove}
+            handleUpdate={handleUpdate}
+          />
+        </>
       }
       {type === 'cars' &&
-      <>
-        <SkyScannerWidget type='cars' />
-        <Cars
-          items={items}
-          handleAdd={handleAdd}
-          handleRemove={handleRemove}
-          handleUpdate={handleUpdate}
-        />
-      </>
+        <>
+          <SkyScannerWidget type='cars' />
+          <Cars
+            items={items}
+            handleAdd={handleAdd}
+            handleRemove={handleRemove}
+            handleUpdate={handleUpdate}
+          />
+        </>
       }
       {type === 'activities' &&
         <Activities

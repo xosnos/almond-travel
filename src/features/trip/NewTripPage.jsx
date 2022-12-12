@@ -9,11 +9,11 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
   NewTripForm,
-} from '../components';
+} from './NewTripForm';
 import {
   addTrip,
   clearTrip,
-} from '../features';
+} from '../';
 
 export const NewTripPage = () => {
   const navigate = useNavigate();

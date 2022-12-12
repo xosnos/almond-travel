@@ -9,21 +9,28 @@ import {
   Footer,
 } from '../components';
 import {
-  RegisterPage,
-  LoginPage,
-  ResetPage,
   HomePage,
-  ProfilePage,
-  ArticlesPage,
-  ForumsPage,
-  NewTripPage,
-  TripsPage,
-  TripPage,
   AboutPage,
   FeaturesPage,
   FaqPage,
   ErrorPage,
 } from '../pages';
+import {
+  // articles
+  ArticlesPage,
+  // auth
+  LoginPage,
+  ProfilePage,
+  RegisterPage,
+  ResetPage,
+  // forums
+  ForumsPage,
+  // new trip
+  NewTripPage,
+  // trips
+  TripsPage,
+  TripPage,
+} from '../features'
 
 function App() {
   const dispatch = useDispatch();

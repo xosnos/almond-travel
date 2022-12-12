@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Button, Form } from 'react-bootstrap';
-import { handleRegister } from "../../features/auth/authAPI";
+import { handleRegister } from "./authAPI";
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");

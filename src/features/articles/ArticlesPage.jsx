@@ -9,7 +9,7 @@ import {
   Tab,
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { fetchArticles } from '../features';
+import { fetchArticles } from './articlesAPI';
 
 const categories = ['visa', 'immigration', 'citizenship', 'tips'];
 
@@ -30,7 +30,7 @@ export const ArticlesPage = () => {
       >
         {
           categories.map((category, index) => (
-            <Tab eventKey={category} title={category}>
+            <Tab key={index} eventKey={category} title={category}>
               {
                 articles.map((article, index) => (
                   <Row key={index}>

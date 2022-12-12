@@ -4,9 +4,12 @@ import {
 } from 'react-bootstrap';
 
 export const TripsPage = () => {
+  
+
   return (
     <Container>
       <h1>Trips Page</h1>
+
     </Container>
   );
 }
