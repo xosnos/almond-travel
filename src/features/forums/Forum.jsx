@@ -38,33 +38,36 @@ export const ResponseBuilder = () => {
     }));
   }
 
-  return (
+  return user ? (
     <Card>
       <Card.Body>
-          <Form.Group controlId="formDescription">
-            <Form.Control
-              as="textarea"
-              rows={2}
-              placeholder="Enter a response"
-              value={newResponse.description}
-              onChange={(e) => handleUpdate('description', e.target.value)}
-            />
-          </Form.Group>
-          <br />
-          <Button
-            variant="outline-warning"
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
+        <Form.Group controlId="formDescription">
+          <Form.Control
+            as="textarea"
+            rows={2}
+            placeholder="Enter a response"
+            value={newResponse.description}
+            onChange={(e) => handleUpdate('description', e.target.value)}
+          />
+        </Form.Group>
+        <br />
+        <Button
+          variant="outline-warning"
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
       </Card.Body>
     </Card>
-  );
+  ) : (
+    null
+  )
 }
 
 export const Forum = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const user = useSelector(state => state.auth.user);
   const state = location.pathname.split('/')[2].replaceAll('%20', ' ');
   const index = location.pathname.split('/')[3];
   const forum = useSelector(state => state.forums.forums[index]);
@@ -86,8 +89,10 @@ export const Forum = () => {
         </Button>
         <h1>{state}</h1>
         <Button
-          variant="white"
+          variant={user ? "white" : "outline-primary"}
+          onClick={() => navigate('/login')}
         >
+          {user ? '' : 'Login to post'}
         </Button>
       </div>
       {
