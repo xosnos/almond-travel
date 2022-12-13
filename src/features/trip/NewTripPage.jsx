@@ -70,7 +70,7 @@ export const NewTripPage = () => {
         </Button>
         <h1>New Trip</h1>
         <Button variant={now === 100 ? 'outline-warning' : 'outline-primary'} onClick={handleNext}>
-          {now === 100 ? 'Submit' : 'Next'}
+          {now === 100 ? (user ? 'Submit' : 'Login to submit') : 'Next'}
         </Button>
       </div>
       <ProgressBar animated now={now} label={`${now}%`} />
