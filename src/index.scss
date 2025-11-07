@@ -1,10 +1,83 @@
 @import "~bootstrap/scss/bootstrap";
+@import './styles/theme.scss';
+@import './styles/utilities.scss';
 
-h1 {
-  text-align: center;
-  margin-bottom: 3rem;
+// Global styles
+* {
+  box-sizing: border-box;
 }
 
-// * {
-//   border: 1px solid red;
-// }
+body {
+  font-family: $font-family-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $gray-900;
+  background-color: $gray-50;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  margin-bottom: $space-4;
+  color: $gray-900;
+}
+
+h1 {
+  font-size: $font-size-4xl;
+  text-align: center;
+  margin-bottom: 3rem;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+h2 {
+  font-size: $font-size-3xl;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+h3 {
+  font-size: $font-size-2xl;
+}
+
+p {
+  line-height: $line-height-relaxed;
+  margin-bottom: $space-4;
+}
+
+a {
+  color: $primary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $primary-dark;
+  }
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: $gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $gray-400;
+  border-radius: $radius-full;
+
+  &:hover {
+    background: $gray-500;
+  }
+}
