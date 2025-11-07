@@ -1,6 +1,8 @@
+'use client'
+
 import React, { FC } from 'react';
 import { Col, Container, Image, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import Logo from '../assets/logo.svg';
 import './Footer.scss';
 
@@ -31,7 +33,7 @@ const FooterLink: FC<FooterLinkProps> = ({
   }
 
   return (
-    <Link to={to || '#'} className="footer-link">
+    <Link href={to || '#'} className="footer-link">
       {label}
     </Link>
   );
@@ -88,21 +90,24 @@ export const Footer: FC = () => {
               <div className="links-column">
                 <h5 className="footer-links-title">Navigation</h5>
                 <div className="footer-links-list">
-                  <FooterLink to="/about" label="About Us" />
-                  <FooterLink to="/features" label="Features" />
-                  <FooterLink to="/faq" label="FAQ" />
+                  <Link href="/about" className="footer-link">About Us</Link>
+                  <Link href="/features" className="footer-link">Features</Link>
+                  <Link href="/faq" className="footer-link">FAQ</Link>
                 </div>
               </div>
               <div className="links-column">
                 <h5 className="footer-links-title">Connect</h5>
                 <div className="footer-links-list">
-                  <FooterLink
+                  <a
                     href="mailto:steyen@umich.edu"
-                    label="Contact Us"
-                    external
-                  />
-                  <FooterLink to="/forums" label="Community" />
-                  <FooterLink to="/articles" label="Articles" />
+                    className="footer-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Contact Us
+                  </a>
+                  <Link href="/forums" className="footer-link">Community</Link>
+                  <Link href="/articles" className="footer-link">Articles</Link>
                 </div>
               </div>
             </div>
@@ -121,10 +126,10 @@ export const Footer: FC = () => {
           </Col>
           <Col md={6} className="footer-legal">
             <div className="legal-links">
-              <Link to="#" className="legal-link">
+              <Link href="#" className="legal-link">
                 Privacy Policy
               </Link>
-              <Link to="#" className="legal-link">
+              <Link href="#" className="legal-link">
                 Terms of Service
               </Link>
             </div>

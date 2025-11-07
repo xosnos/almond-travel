@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect } from 'react';
 import {
   Container,
@@ -8,7 +10,7 @@ import {
   Spinner,
   Alert
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch.ts';
 import { handleLogout } from './authAPI.ts';
 import { User } from '../../types';
@@ -16,18 +18,18 @@ import { User } from '../../types';
 export const ProfilePage: React.FC = () => {
   const { user, loading, error } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Protected route logic - redirect to login if not authenticated
   useEffect(() => {
     if (!user && !loading) {
-      navigate("/login");
+      router.push("/login");
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, router]);
 
   const handleLogoutClick = () => {
     dispatch(handleLogout()).then(() => {
-      navigate("/login");
+      router.push("/login");
     });
   };
 
@@ -85,7 +87,7 @@ export const ProfilePage: React.FC = () => {
               <Button
                 variant="outline-primary"
                 size="lg"
-                onClick={() => navigate('/trips')}
+                onClick={() => router.push('/trips')}
                 style={{ transition: "all 0.3s ease" }}
               >
                 View My Trips

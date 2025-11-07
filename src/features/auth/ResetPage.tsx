@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Container, Row, Col, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { handleReset } from "./authAPI.ts";
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
@@ -135,7 +137,7 @@ export const ResetPage: React.FC = () => {
 
             <div className="text-center mt-4">
               Go back to{' '}
-              <Link to="/login" className="text-decoration-none">
+              <Link href="/login" className="text-decoration-none">
                 login
               </Link>
             </div>

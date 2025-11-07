@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useState, useEffect, FormEvent } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Container,
   Row,
@@ -21,15 +24,15 @@ export const LoginPage: React.FC = () => {
   const [passwordError, setPasswordError] = useState<string>("");
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const { user, loading, error } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      router.push("/");
     }
-  }, [user, navigate]);
+  }, [user, router]);
 
   const validateEmail = (email: string): boolean => {
     if (!email) {
@@ -163,7 +166,7 @@ export const LoginPage: React.FC = () => {
                   {passwordError}
                 </Form.Control.Feedback>
                 <Form.Text>
-                  <Link to="/reset" className="text-decoration-none">
+                  <Link href="/reset" className="text-decoration-none">
                     Forgot password?
                   </Link>
                 </Form.Text>
@@ -208,7 +211,7 @@ export const LoginPage: React.FC = () => {
 
             <div className="text-center mt-4">
               Don't have an account?{' '}
-              <Link to="/register" className="text-decoration-none">
+              <Link href="/register" className="text-decoration-none">
                 Create one
               </Link>
             </div>

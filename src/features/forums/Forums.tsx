@@ -1,6 +1,8 @@
+'use client'
+
 import React, { FC, useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
+import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import {
   Container,
   Button,
@@ -32,8 +34,8 @@ const ForumBuilder: FC<ForumBuilderProps> = ({ show, handleModal }) => {
   const newPost = useAppSelector((state) => state.forums.forum);
   const loading = useAppSelector((state) => state.forums.loading);
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const state = location.pathname.split('/')[2].replaceAll('%20', ' ');
+  const pathname = usePathname();
+  const state = pathname.split('/')[2].replaceAll('%20', ' ');
 
   const handleUpdate = (key: string, value: string) => {
     dispatch(updateForum({ key, value }));
@@ -123,15 +125,15 @@ const ForumBuilder: FC<ForumBuilderProps> = ({ show, handleModal }) => {
 
 export const Forums: FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const handleModal = () => setShow(!show);
   const user = useAppSelector((state) => state.auth.user);
   const forums = useAppSelector((state) => state.forums.forums);
   const loading = useAppSelector((state) => state.forums.loading);
   const error = useAppSelector((state) => state.forums.error);
-  const location = useLocation();
-  const state = location.pathname.split('/')[2].replaceAll('%20', ' ');
+  const pathname = usePathname();
+  const state = pathname.split('/')[2].replaceAll('%20', ' ');
 
   useEffect(() => {
     dispatch(clearForums());
@@ -142,7 +144,7 @@ export const Forums: FC = () => {
     if (user) {
       handleModal();
     } else {
-      navigate('/login');
+      router.push('/login');
     }
   };
 
@@ -159,7 +161,7 @@ export const Forums: FC = () => {
     <Container className="py-5">
       <div className='d-flex justify-content-between align-items-center mb-4'>
         <Button
-          onClick={() => navigate('/forums')}
+          onClick={() => router.push('/forums')}
           variant="outline-primary"
           size="lg"
         >
@@ -216,10 +218,11 @@ export const Forums: FC = () => {
             </Badge>
           </div>
           {forums.map((forum, index) => (
-            <LinkContainer
-              to={`/forums/${state}/${index}`}
+            <Link
+              href={`/forums/${state}/${index}`}
               key={forum.id || index}
               className="mb-3"
+              style={{ textDecoration: 'none' }}
             >
               <Card className="card-modern cursor-pointer">
                 <Card.Body>
@@ -248,7 +251,7 @@ export const Forums: FC = () => {
                   </div>
                 </Card.Footer>
               </Card>
-            </LinkContainer>
+            </Link>
           ))}
         </>
       )}

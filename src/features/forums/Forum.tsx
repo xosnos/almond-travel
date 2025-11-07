@@ -1,5 +1,7 @@
+'use client'
+
 import React, { FC, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useRouter, usePathname } from 'next/navigation';
 import {
   Container,
   Button,
@@ -19,9 +21,9 @@ export const ResponseBuilder: FC = () => {
   const newResponse = useAppSelector((state) => state.forums.response);
   const loading = useAppSelector((state) => state.forums.loading);
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const state = location.pathname.split('/')[2].replaceAll('%20', ' ');
-  const index = parseInt(location.pathname.split('/')[3]);
+  const pathname = usePathname();
+  const state = pathname.split('/')[2].replaceAll('%20', ' ');
+  const index = parseInt(pathname.split('/')[3]);
 
   const handleUpdate = (key: string, value: string) => {
     dispatch(updateResponse({ key, value }));
@@ -94,20 +96,20 @@ export const ResponseBuilder: FC = () => {
 };
 
 export const Forum: FC = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
-  const state = location.pathname.split('/')[2].replaceAll('%20', ' ');
-  const index = parseInt(location.pathname.split('/')[3]);
+  const state = pathname.split('/')[2].replaceAll('%20', ' ');
+  const index = parseInt(pathname.split('/')[3]);
   const forum = useAppSelector((state) => state.forums.forums[index]);
   const loading = useAppSelector((state) => state.forums.loading);
   const error = useAppSelector((state) => state.forums.error);
 
   useEffect(() => {
     if (!forum && !loading) {
-      navigate(`/forums/${state}`);
+      router.push(`/forums/${state}`);
     }
-  }, [forum, navigate, state, loading]);
+  }, [forum, router, state, loading]);
 
   const formatDate = (dateString: string) => {
     try {
@@ -133,7 +135,7 @@ export const Forum: FC = () => {
     <Container className="py-5">
       <div className='d-flex justify-content-between align-items-center mb-4'>
         <Button
-          onClick={() => navigate(`/forums/${state}`)}
+          onClick={() => router.push(`/forums/${state}`)}
           variant="outline-primary"
           size="lg"
         >
@@ -143,7 +145,7 @@ export const Forum: FC = () => {
         <Button
           variant={user ? 'outline-secondary' : 'outline-primary'}
           size="lg"
-          onClick={() => !user && navigate('/login')}
+          onClick={() => !user && router.push('/login')}
           disabled={!!user}
         >
           {user ? 'Logged In' : 'Login to Reply'}
@@ -227,7 +229,7 @@ export const Forum: FC = () => {
         <Card className="card-modern text-center py-4">
           <Card.Body>
             <p className="text-muted mb-3">You must be logged in to post a reply</p>
-            <Button variant="primary" size="lg" onClick={() => navigate('/login')}>
+            <Button variant="primary" size="lg" onClick={() => router.push('/login')}>
               Login to Reply
             </Button>
           </Card.Body>

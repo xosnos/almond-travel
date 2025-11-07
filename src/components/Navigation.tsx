@@ -1,7 +1,9 @@
+'use client';
+
 import React, { FC } from 'react';
+import Link from 'next/link';
 import Logo from '../assets/logo.svg';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { handleLogout } from '../features/auth/authAPI';
 import './Navigation.scss';
@@ -13,14 +15,14 @@ interface NavLinkItemProps {
 }
 
 const NavLinkItem: FC<NavLinkItemProps> = ({ to, label, onClick }) => (
-  <LinkContainer to={to}>
+  <Link href={to} passHref legacyBehavior>
     <Nav.Link
       onClick={onClick}
       className="nav-link-custom"
     >
       {label}
     </Nav.Link>
-  </LinkContainer>
+  </Link>
 );
 
 export const Navigation: FC = () => {
@@ -39,7 +41,7 @@ export const Navigation: FC = () => {
       className="navbar-modern glass-dark"
     >
       <Container fluid className="px-4">
-        <LinkContainer to="/">
+        <Link href="/" passHref legacyBehavior>
           <Navbar.Brand className="brand-logo">
             <img
               alt="Almond Travel Logo"
@@ -50,7 +52,7 @@ export const Navigation: FC = () => {
             />
             <span className="brand-text">Almond Travel</span>
           </Navbar.Brand>
-        </LinkContainer>
+        </Link>
 
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
@@ -80,9 +82,9 @@ export const Navigation: FC = () => {
             ) : (
               <>
                 <NavLinkItem to="/register" label="Register" />
-                <LinkContainer to="/login">
+                <Link href="/login" passHref legacyBehavior>
                   <Nav.Link className="nav-link-login">Login</Nav.Link>
-                </LinkContainer>
+                </Link>
               </>
             )}
           </Nav>

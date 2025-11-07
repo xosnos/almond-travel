@@ -6,7 +6,7 @@ export { Footer } from './Footer';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as LoadingSpinner } from './LoadingSpinner';
 
-// Other Components
+// Widgets
 export { SkyScannerWidget } from './SkyScannerWidget';
 export { ActivitySearch } from './ActivitySearch';
 

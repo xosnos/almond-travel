@@ -1,5 +1,7 @@
+'use client'
+
 import React, { FC, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import {
   Container,
   Row,
@@ -41,7 +43,7 @@ export const ArticlesPage: FC = () => {
   const loading = useAppSelector((state) => state.articles.loading);
   const error = useAppSelector((state) => state.articles.error);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [key, setKey] = useState<string>('visa');
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export const ArticlesPage: FC = () => {
     <Container className="py-5">
       <div className='d-flex justify-content-between align-items-center mb-5'>
         <Button
-          onClick={() => navigate('/')}
+          onClick={() => router.push('/')}
           variant="outline-primary"
           size="lg"
         >
