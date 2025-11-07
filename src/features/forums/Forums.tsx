@@ -35,7 +35,7 @@ const ForumBuilder: FC<ForumBuilderProps> = ({ show, handleModal }) => {
   const loading = useAppSelector((state) => state.forums.loading);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
-  const state = pathname.split('/')[2].replaceAll('%20', ' ');
+  const state = (pathname || '').split('/')[2]?.replace(/%20/g, ' ') || '';
 
   const handleUpdate = (key: string, value: string) => {
     dispatch(updateForum({ key, value }));
@@ -133,7 +133,7 @@ export const Forums: FC = () => {
   const loading = useAppSelector((state) => state.forums.loading);
   const error = useAppSelector((state) => state.forums.error);
   const pathname = usePathname();
-  const state = pathname.split('/')[2].replaceAll('%20', ' ');
+  const state = (pathname || '').split('/')[2]?.replace(/%20/g, ' ') || '';
 
   useEffect(() => {
     dispatch(clearForums());
@@ -217,7 +217,7 @@ export const Forums: FC = () => {
               {forums.length} {forums.length === 1 ? 'Post' : 'Posts'}
             </Badge>
           </div>
-          {forums.map((forum, index) => (
+          {forums.map((forum: Forum, index: number) => (
             <Link
               href={`/forums/${state}/${index}`}
               key={forum.id || index}

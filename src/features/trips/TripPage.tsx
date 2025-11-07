@@ -34,7 +34,7 @@ export const TripPage: FC = () => {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const tripIndex = parseInt(pathname.substring(7));
+  const tripIndex = parseInt((pathname || '').substring(7) || '0');
   const trip = useAppSelector((state) => state.trips.trips[tripIndex]);
   const loading = useAppSelector((state) => state.trips.loading);
   const [isSaving, setIsSaving] = useState<boolean>(false);
@@ -94,7 +94,7 @@ export const TripPage: FC = () => {
     }));
   };
 
-  const handleUpdate = (type: 'flights' | 'hotels' | 'cars' | 'activities' | 'checklist') => (index: number, key: string, value: string) => {
+  const handleUpdate = (type: 'flights' | 'hotels' | 'cars' | 'activities' | 'checklist') => (index: number, key: string, value: string | boolean) => {
     dispatch(updateTripItem({
       tripIndex,
       type,

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../src/index.scss';
+import '../index.scss';
 import { StoreProvider } from './providers/StoreProvider';
 import { AuthProvider } from './providers/AuthProvider';
 

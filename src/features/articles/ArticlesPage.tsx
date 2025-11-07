@@ -16,6 +16,7 @@ import {
 } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { fetchArticles } from './articlesAPI';
+import { Article } from '../../types';
 
 const categories: string[] = ['visa', 'immigration', 'citizenship', 'tips'];
 
@@ -140,7 +141,7 @@ export const ArticlesPage: FC = () => {
                 </Card>
               ) : (
                 <Row xs={1} md={2} lg={3} className="g-4">
-                  {articles.map((article, index) => (
+                  {articles.map((article: Article, index: number) => (
                     <Col key={article.id || index}>
                       <Card className="card-modern h-100">
                         {article.imageUrl && (

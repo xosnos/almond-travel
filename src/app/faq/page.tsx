@@ -69,7 +69,7 @@ export default function FaqPage() {
         <Row>
           <Col lg={8} className="mx-auto">
             <div className="space-y-3">
-              {faqItems.map((item, index) => (
+              {faqItems.map((item) => (
                 <Card
                   key={item.id}
                   className="card-modern shadow-sm border-0 mb-3 overflow-hidden"

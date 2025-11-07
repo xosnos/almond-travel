@@ -22,8 +22,8 @@ export const ResponseBuilder: FC = () => {
   const loading = useAppSelector((state) => state.forums.loading);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
-  const state = pathname.split('/')[2].replaceAll('%20', ' ');
-  const index = parseInt(pathname.split('/')[3]);
+  const state = (pathname || '').split('/')[2]?.replace(/%20/g, ' ') || '';
+  const index = parseInt((pathname || '').split('/')[3] || '0');
 
   const handleUpdate = (key: string, value: string) => {
     dispatch(updateResponse({ key, value }));
@@ -99,8 +99,8 @@ export const Forum: FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
-  const state = pathname.split('/')[2].replaceAll('%20', ' ');
-  const index = parseInt(pathname.split('/')[3]);
+  const state = (pathname || '').split('/')[2]?.replace(/%20/g, ' ') || '';
+  const index = parseInt((pathname || '').split('/')[3] || '0');
   const forum = useAppSelector((state) => state.forums.forums[index]);
   const loading = useAppSelector((state) => state.forums.loading);
   const error = useAppSelector((state) => state.forums.error);
@@ -198,7 +198,7 @@ export const Forum: FC = () => {
             <i className="bi bi-chat-left-text me-2"></i>
             Responses
           </h4>
-          {forum.responses.map((response, idx) => (
+          {forum.responses.map((response: ForumResponse, idx: number) => (
             <Card key={response.id || idx} className="card-modern mb-3">
               <Card.Body className="p-4">
                 <Card.Text style={{ whiteSpace: 'pre-wrap' }}>

@@ -3,8 +3,8 @@
 import React, { useState, FormEvent } from "react";
 import Link from "next/link";
 import { Container, Row, Col, Button, Form, Alert, Spinner } from 'react-bootstrap';
-import { handleReset } from "./authAPI.ts";
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
+import { handleReset } from "./authAPI";
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 
 export const ResetPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -36,7 +36,7 @@ export const ResetPage: React.FC = () => {
         .then(() => {
           setSent(true);
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           console.error("Failed to send reset email:", error);
         });
     }

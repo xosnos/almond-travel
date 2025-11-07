@@ -13,7 +13,7 @@ interface RemoveItemPayload {
 
 interface UpdateItemPayload {
   type: 'flights' | 'hotels' | 'cars' | 'activities' | 'checklist' | 'name' | 'location';
-  value: string;
+  value: string | boolean;
   index?: number;
   key?: string;
 }
@@ -43,7 +43,9 @@ const tripSlice = createSlice({
     updateItem(state, action: PayloadAction<UpdateItemPayload>) {
       const { type, value } = action.payload;
       if (type === 'name' || type === 'location') {
-        state[type] = value;
+        if (typeof value === 'string') {
+          state[type] = value;
+        }
       } else {
         const { index, key } = action.payload;
         if (index !== undefined && key) {

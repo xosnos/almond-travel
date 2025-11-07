@@ -166,7 +166,7 @@ export const TripsPage: FC = () => {
         ) : (
           /* Trip list */
           <Row xs={1} md={2} lg={2} className="g-4">
-            {trips.map((trip, index) => {
+            {trips.map((trip: Trip, index: number) => {
               const itemCount = getTripItemCount(trip);
               return (
                 <Col key={index}>

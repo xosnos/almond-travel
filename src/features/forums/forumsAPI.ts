@@ -99,7 +99,7 @@ export const removeForum = createAsyncThunk<Forum[], RemoveForumParams>(
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const forums = docSnap.data().forums as Forum[];
-        const newForums = forums.filter((forum, i) => i !== index);
+        const newForums = forums.filter((_, i) => i !== index);
         await setDoc(docRef, { forums: newForums });
         return newForums;
       }
