@@ -1,6 +1,8 @@
+'use client'
+
 import React, { FC } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Container,
   Card,
@@ -12,13 +14,13 @@ import {
 import { states } from './states';
 
 export const ForumsPage: FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <Container className="py-5">
       <div className='d-flex justify-content-between align-items-center mb-5'>
         <Button
-          onClick={() => navigate('/')}
+          onClick={() => router.push('/')}
           variant="outline-primary"
           size="lg"
         >
@@ -40,7 +42,7 @@ export const ForumsPage: FC = () => {
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
         {states.map((state) => (
           <Col key={state}>
-            <LinkContainer to={`/forums/${state}`}>
+            <Link href={`/forums/${state}`} style={{ textDecoration: 'none' }}>
               <Card className="card-modern h-100 cursor-pointer">
                 <Card.Body className="d-flex align-items-center justify-content-center p-4">
                   <Card.Title className="mb-0 text-center fw-semibold">
@@ -48,7 +50,7 @@ export const ForumsPage: FC = () => {
                   </Card.Title>
                 </Card.Body>
               </Card>
-            </LinkContainer>
+            </Link>
           </Col>
         ))}
       </Row>

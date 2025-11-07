@@ -1,3 +1,5 @@
+'use client'
+
 import React, { FC, useEffect, useState } from 'react';
 import {
   Container,
@@ -9,14 +11,14 @@ import {
   Badge,
   Alert,
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { fetchTrips, removeTrip } from './tripsAPI';
 import { Trip } from '../../types';
 
 export const TripsPage: FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
   const trips = useAppSelector((state) => state.trips.trips);
   const loading = useAppSelector((state) => state.trips.loading);
@@ -26,15 +28,15 @@ export const TripsPage: FC = () => {
   // Protected route - redirect if not logged in
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      router.push('/login');
     } else {
       const uid = user.uid;
       dispatch(fetchTrips(uid));
     }
-  }, [user, navigate, dispatch]);
+  }, [user, router, dispatch]);
 
   const handleView = (index: number) => {
-    navigate(`/trips/${index}`);
+    router.push(`/trips/${index}`);
   };
 
   const handleRemove = async (index: number) => {
@@ -90,7 +92,7 @@ export const TripsPage: FC = () => {
           <Card.Body className="p-4">
             <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
               <Button
-                onClick={() => navigate('/')}
+                onClick={() => router.push('/')}
                 variant="outline-primary"
                 className="px-4"
                 style={{ borderRadius: '25px', fontWeight: '600' }}
@@ -106,7 +108,7 @@ export const TripsPage: FC = () => {
                 </p>
               </div>
               <Button
-                onClick={() => navigate('/new')}
+                onClick={() => router.push('/new')}
                 variant="success"
                 className="px-4"
                 style={{ borderRadius: '25px', fontWeight: '600' }}
@@ -151,7 +153,7 @@ export const TripsPage: FC = () => {
                 Start planning your next adventure by creating your first trip!
               </p>
               <Button
-                onClick={() => navigate('/new')}
+                onClick={() => router.push('/new')}
                 variant="primary"
                 size="lg"
                 className="px-5"

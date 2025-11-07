@@ -1,5 +1,7 @@
+'use client'
+
 import React, { FC, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useRouter, usePathname } from 'next/navigation';
 import {
   Container,
   Button,
@@ -28,11 +30,11 @@ import { updateTrip } from './tripsAPI';
 import { TripItem } from '../../types';
 
 export const TripPage: FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const tripIndex = parseInt(location.pathname.substring(7));
+  const tripIndex = parseInt(pathname.substring(7));
   const trip = useAppSelector((state) => state.trips.trips[tripIndex]);
   const loading = useAppSelector((state) => state.trips.loading);
   const [isSaving, setIsSaving] = useState<boolean>(false);
@@ -41,16 +43,16 @@ export const TripPage: FC = () => {
   // Protected route - redirect if not logged in
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      router.push('/login');
     }
-  }, [user, navigate]);
+  }, [user, router]);
 
   const handleCancel = () => {
     const confirmCancel = window.confirm(
       'Are you sure you want to cancel? Any unsaved changes will be lost.'
     );
     if (confirmCancel) {
-      navigate('/trips');
+      router.push('/trips');
     }
   };
 
@@ -67,7 +69,7 @@ export const TripPage: FC = () => {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          navigate('/trips');
+          router.push('/trips');
         }, 1500);
       } catch (error) {
         console.error('Failed to update trip:', error);
@@ -167,7 +169,7 @@ export const TripPage: FC = () => {
                 The trip you're looking for doesn't exist or may have been deleted.
               </p>
               <Button
-                onClick={() => navigate('/trips')}
+                onClick={() => router.push('/trips')}
                 variant="primary"
                 size="lg"
                 className="px-5"

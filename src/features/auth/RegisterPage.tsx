@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useState, useEffect, FormEvent } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Container, Row, Col, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { handleRegister } from "./authAPI.ts";
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
@@ -14,15 +17,15 @@ export const RegisterPage: React.FC = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const { user, loading, error } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      router.push("/");
     }
-  }, [user, navigate]);
+  }, [user, router]);
 
   const validateEmail = (email: string): boolean => {
     if (!email) {
@@ -192,7 +195,7 @@ export const RegisterPage: React.FC = () => {
 
             <div className="text-center mt-4">
               Have an account?{' '}
-              <Link to="/login" className="text-decoration-none">
+              <Link href="/login" className="text-decoration-none">
                 Sign in
               </Link>
             </div>

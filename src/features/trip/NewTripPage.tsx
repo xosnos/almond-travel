@@ -1,3 +1,5 @@
+'use client'
+
 import React, { FC, useState, useEffect } from 'react';
 import {
   Container,
@@ -6,7 +8,7 @@ import {
   Spinner,
   Card,
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { NewTripForm } from './NewTripForm';
 import { clearTrip } from './tripSlice';
@@ -15,7 +17,7 @@ import { addTrip } from '../trips/tripsAPI';
 type FormType = 'flights' | 'hotels' | 'cars' | 'activities' | 'checklist' | 'summary';
 
 export const NewTripPage: FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [now, setNow] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -26,14 +28,14 @@ export const NewTripPage: FC = () => {
   // Protected route - redirect if not logged in
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      router.push('/login');
     }
-  }, [user, navigate]);
+  }, [user, router]);
 
   const handleBack = () => {
     if (now === 0) {
       dispatch(clearTrip());
-      navigate('/');
+      router.push('/');
     } else {
       setNow(now - 20);
     }
@@ -49,13 +51,13 @@ export const NewTripPage: FC = () => {
             trip: trip,
           })).unwrap();
           dispatch(clearTrip());
-          navigate('/trips');
+          router.push('/trips');
         } catch (error) {
           console.error('Failed to add trip:', error);
           setIsSubmitting(false);
         }
       } else {
-        navigate('/login');
+        router.push('/login');
       }
     } else {
       setNow(now + 20);

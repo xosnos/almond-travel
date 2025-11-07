@@ -1,7 +1,9 @@
+'use client';
+
 import React, { FC } from 'react';
-import Logo from '../assets/logo.svg';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { handleLogout } from '../features/auth/authAPI';
 import './Navigation.scss';
@@ -13,14 +15,14 @@ interface NavLinkItemProps {
 }
 
 const NavLinkItem: FC<NavLinkItemProps> = ({ to, label, onClick }) => (
-  <LinkContainer to={to}>
-    <Nav.Link
-      onClick={onClick}
-      className="nav-link-custom"
-    >
-      {label}
-    </Nav.Link>
-  </LinkContainer>
+  <Nav.Link
+    as={Link}
+    href={to}
+    onClick={onClick}
+    className="nav-link-custom"
+  >
+    {label}
+  </Nav.Link>
 );
 
 export const Navigation: FC = () => {
@@ -39,18 +41,16 @@ export const Navigation: FC = () => {
       className="navbar-modern glass-dark"
     >
       <Container fluid className="px-4">
-        <LinkContainer to="/">
-          <Navbar.Brand className="brand-logo">
-            <img
-              alt="Almond Travel Logo"
-              src={Logo}
-              width="32"
-              height="32"
-              className="d-inline-block align-top me-2 logo-img"
-            />
-            <span className="brand-text">Almond Travel</span>
-          </Navbar.Brand>
-        </LinkContainer>
+        <Navbar.Brand as={Link} href="/" className="brand-logo">
+          <Image
+            alt="Almond Travel Logo"
+            src="/almond-travel-icon.png"
+            width={32}
+            height={32}
+            className="d-inline-block align-top me-2 logo-img"
+          />
+          <span className="brand-text">Almond Travel</span>
+        </Navbar.Brand>
 
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
@@ -80,9 +80,9 @@ export const Navigation: FC = () => {
             ) : (
               <>
                 <NavLinkItem to="/register" label="Register" />
-                <LinkContainer to="/login">
-                  <Nav.Link className="nav-link-login">Login</Nav.Link>
-                </LinkContainer>
+                <Nav.Link as={Link} href="/login" className="nav-link-login">
+                  Login
+                </Nav.Link>
               </>
             )}
           </Nav>
