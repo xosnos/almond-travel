@@ -93,6 +93,7 @@ export interface Article {
   content: string;
   author: string;
   imageUrl?: string;
+  url?: string;
   createdAt: string;
   updatedAt?: string;
 }

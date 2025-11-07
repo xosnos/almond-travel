@@ -46,7 +46,7 @@ export const NewTripForm: FC<NewTripFormProps> = ({ type }) => {
     }
   };
 
-  const handleUpdate = (index: number, key: string, value: string) => {
+  const handleUpdate = (index: number, key: string, value: string | boolean) => {
     if (type !== 'summary') {
       dispatch(updateItem({ type, index, key, value }));
     }

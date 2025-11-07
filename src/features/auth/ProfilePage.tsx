@@ -11,9 +11,8 @@ import {
   Alert
 } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
-import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch.ts';
-import { handleLogout } from './authAPI.ts';
-import { User } from '../../types';
+import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch';
+import { handleLogout } from './authAPI';
 
 export const ProfilePage: React.FC = () => {
   const { user, loading, error } = useAppSelector((state) => state.auth);

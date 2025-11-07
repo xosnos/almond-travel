@@ -4,8 +4,8 @@ import React, { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Container, Row, Col, Button, Form, Alert, Spinner } from 'react-bootstrap';
-import { handleRegister } from "./authAPI.ts";
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
+import { handleRegister } from "./authAPI";
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 
 export const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");

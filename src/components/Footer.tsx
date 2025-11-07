@@ -5,39 +5,6 @@ import { Col, Container, Image, Row } from 'react-bootstrap';
 import Link from 'next/link';
 import './Footer.scss';
 
-interface FooterLinkProps {
-  to?: string;
-  href?: string;
-  label: string;
-  external?: boolean;
-}
-
-const FooterLink: FC<FooterLinkProps> = ({
-  to,
-  href,
-  label,
-  external = false,
-}) => {
-  if (external && href) {
-    return (
-      <a
-        href={href}
-        className="footer-link"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {label}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={to || '#'} className="footer-link">
-      {label}
-    </Link>
-  );
-};
-
 export const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
 

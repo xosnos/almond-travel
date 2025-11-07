@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Form, Spinner } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import { TripItem } from '../../types/index';
 
 interface ChecklistProps {

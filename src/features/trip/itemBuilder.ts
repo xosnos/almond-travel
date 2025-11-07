@@ -2,6 +2,8 @@ import { TripItem } from '../../types';
 
 export const itemBuilder: Record<string, TripItem> = {
   flight: {
+    id: '',
+    name: '',
     type: 'flight',
     origin: '',
     destination: '',
@@ -12,6 +14,7 @@ export const itemBuilder: Record<string, TripItem> = {
     url: '',
   },
   hotel: {
+    id: '',
     type: 'hotel',
     name: '',
     location: '',
@@ -21,6 +24,8 @@ export const itemBuilder: Record<string, TripItem> = {
     url: '',
   },
   car: {
+    id: '',
+    name: '',
     type: 'car',
     company: '',
     pickupLocation: '',
@@ -31,6 +36,7 @@ export const itemBuilder: Record<string, TripItem> = {
     url: '',
   },
   activity: {
+    id: '',
     type: 'activity',
     name: '',
     location: '',
@@ -40,6 +46,8 @@ export const itemBuilder: Record<string, TripItem> = {
     url: '',
   },
   checklist: {
+    id: '',
+    name: '',
     type: 'checklist',
     item: '',
     completed: false,

@@ -12,8 +12,8 @@ import {
   Alert,
   Spinner
 } from 'react-bootstrap';
-import { handleLoginEmailAndPassword, handleLoginGoogle } from "./authAPI.ts";
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
+import { handleLoginEmailAndPassword, handleLoginGoogle } from "./authAPI";
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 
 export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
