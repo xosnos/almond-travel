@@ -1,0 +1,202 @@
+@import './theme.scss';
+
+// Custom utility classes
+
+// Glass morphism effect
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Gradient backgrounds
+.gradient-primary {
+  background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, $secondary 0%, $secondary-light 100%);
+}
+
+.gradient-sunset {
+  background: linear-gradient(135deg, $accent 0%, $danger 100%);
+}
+
+// Card styles
+.card-modern {
+  border: none;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-md;
+  transition: all $transition-base;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+}
+
+.card-flat {
+  border: 1px solid $gray-200;
+  border-radius: $radius-lg;
+  transition: all $transition-base;
+
+  &:hover {
+    border-color: $primary;
+    box-shadow: $shadow-sm;
+  }
+}
+
+// Button enhancements
+.btn {
+  font-weight: $font-weight-medium;
+  border-radius: $radius-lg;
+  padding: $space-3 $space-6;
+  transition: all $transition-fast;
+  border: none;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-primary {
+  background: $primary;
+  color: $white;
+
+  &:hover {
+    background: $primary-hover;
+  }
+}
+
+.btn-secondary {
+  background: $secondary;
+  color: $white;
+
+  &:hover {
+    background: $secondary-dark;
+  }
+}
+
+.btn-outline-primary {
+  border: 2px solid $primary;
+  color: $primary;
+  background: transparent;
+
+  &:hover {
+    background: $primary;
+    color: $white;
+    border-color: $primary;
+  }
+}
+
+// Form controls
+.form-control, .form-select {
+  border: 1px solid $gray-300;
+  border-radius: $radius-lg;
+  padding: $space-3 $space-4;
+  transition: all $transition-fast;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+}
+
+// Loading spinner
+.spinner-modern {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: $white;
+  animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+  to { transform: rotate(360deg); }
+}
+
+// Fade in animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn $transition-slow ease-out;
+}
+
+// Hover scale effect
+.hover-scale {
+  transition: transform $transition-base;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// Cursor utilities
+.cursor-pointer {
+  cursor: pointer;
+}
+
+// Text utilities
+.text-gradient {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Badge modern
+.badge-modern {
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-sm;
+}
+
+// Container max-width
+.container-narrow {
+  max-width: 720px;
+}
+
+.container-medium {
+  max-width: 960px;
+}
+
+// Spacing utilities
+.section-padding {
+  padding: $space-16 0;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $space-12 0;
+  }
+}
+
+.section-padding-sm {
+  padding: $space-10 0;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $space-8 0;
+  }
+}
