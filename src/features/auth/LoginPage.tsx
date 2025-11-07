@@ -12,7 +12,6 @@ import {
   Alert,
   Spinner
 } from 'react-bootstrap';
-import Google from '../../assets/google.svg';
 import { handleLoginEmailAndPassword, handleLoginGoogle } from "./authAPI.ts";
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch.ts';
 
@@ -97,7 +96,7 @@ export const LoginPage: React.FC = () => {
             >
               <img
                 alt="Google"
-                src={Google}
+                src="/google.svg"
                 width="20"
                 height="20"
                 className="me-2"

@@ -3,7 +3,6 @@
 import React, { FC } from 'react';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import Link from 'next/link';
-import Logo from '../assets/logo.svg';
 import './Footer.scss';
 
 interface FooterLinkProps {
@@ -52,7 +51,7 @@ export const Footer: FC = () => {
             <div className="footer-brand-content">
               <div className="footer-brand-header">
                 <Image
-                  src={Logo}
+                  src="/almond-travel-icon.png"
                   alt="Almond Travel"
                   width="36"
                   height="36"
@@ -75,7 +74,7 @@ export const Footer: FC = () => {
           <Col lg={2} md={6} className="d-flex justify-content-center align-items-center mb-4 mb-lg-0">
             <div className="footer-logo-center">
               <Image
-                src={Logo}
+                src="/almond-travel-icon.png"
                 alt="Almond Travel"
                 width="48"
                 height="48"

@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react';
 import Link from 'next/link';
-import Logo from '../assets/logo.svg';
+import Image from 'next/image';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { handleLogout } from '../features/auth/authAPI';
@@ -15,14 +15,14 @@ interface NavLinkItemProps {
 }
 
 const NavLinkItem: FC<NavLinkItemProps> = ({ to, label, onClick }) => (
-  <Link href={to} passHref legacyBehavior>
-    <Nav.Link
-      onClick={onClick}
-      className="nav-link-custom"
-    >
-      {label}
-    </Nav.Link>
-  </Link>
+  <Nav.Link
+    as={Link}
+    href={to}
+    onClick={onClick}
+    className="nav-link-custom"
+  >
+    {label}
+  </Nav.Link>
 );
 
 export const Navigation: FC = () => {
@@ -41,18 +41,16 @@ export const Navigation: FC = () => {
       className="navbar-modern glass-dark"
     >
       <Container fluid className="px-4">
-        <Link href="/" passHref legacyBehavior>
-          <Navbar.Brand className="brand-logo">
-            <img
-              alt="Almond Travel Logo"
-              src={Logo}
-              width="32"
-              height="32"
-              className="d-inline-block align-top me-2 logo-img"
-            />
-            <span className="brand-text">Almond Travel</span>
-          </Navbar.Brand>
-        </Link>
+        <Navbar.Brand as={Link} href="/" className="brand-logo">
+          <Image
+            alt="Almond Travel Logo"
+            src="/almond-travel-icon.png"
+            width={32}
+            height={32}
+            className="d-inline-block align-top me-2 logo-img"
+          />
+          <span className="brand-text">Almond Travel</span>
+        </Navbar.Brand>
 
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
@@ -82,9 +80,9 @@ export const Navigation: FC = () => {
             ) : (
               <>
                 <NavLinkItem to="/register" label="Register" />
-                <Link href="/login" passHref legacyBehavior>
-                  <Nav.Link className="nav-link-login">Login</Nav.Link>
-                </Link>
+                <Nav.Link as={Link} href="/login" className="nav-link-login">
+                  Login
+                </Nav.Link>
               </>
             )}
           </Nav>
