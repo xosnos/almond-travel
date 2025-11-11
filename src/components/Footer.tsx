@@ -1,107 +1,112 @@
 'use client'
 
 import React, { FC } from 'react';
-import { Col, Container, Image, Row } from 'react-bootstrap';
+import Image from 'next/image';
 import Link from 'next/link';
-import './Footer.scss';
+import { Separator } from './ui/separator';
+import { Badge } from './ui/badge';
 
 export const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="footer-modern">
-      <Container fluid className="footer-container">
+    <footer className="w-full border-t glass-card mt-auto">
+      <div className="container mx-auto px-4">
         {/* Main Footer Content */}
-        <Row className="footer-content py-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 py-12">
           {/* Brand Section */}
-          <Col lg={5} md={6} className="footer-brand mb-4 mb-lg-0">
-            <div className="footer-brand-content">
-              <div className="footer-brand-header">
-                <Image
-                  src="/almond-travel-icon.png"
-                  alt="Almond Travel"
-                  width="36"
-                  height="36"
-                  className="footer-logo"
-                />
-                <h3 className="footer-brand-title">Almond Travel</h3>
-              </div>
-              <p className="footer-brand-description">
-                Discover the world's most beautiful destinations with seamless
-                trip planning and community insights.
-              </p>
-              <div className="footer-badge-container">
-                <span className="footer-badge">Trusted by Travelers</span>
-                <span className="footer-badge">Global Community</span>
-              </div>
-            </div>
-          </Col>
-
-          {/* Logo Center Section */}
-          <Col lg={2} md={6} className="d-flex justify-content-center align-items-center mb-4 mb-lg-0">
-            <div className="footer-logo-center">
+          <div className="lg:col-span-5 space-y-4">
+            <div className="flex items-center space-x-3">
               <Image
                 src="/almond-travel-icon.png"
                 alt="Almond Travel"
-                width="48"
-                height="48"
-                className="footer-logo-large"
+                width={36}
+                height={36}
+                className="rounded-md"
+              />
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                Almond Travel
+              </h3>
+            </div>
+            <p className="text-muted-foreground max-w-md">
+              Discover the world's most beautiful destinations with seamless
+              trip planning and community insights.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary">Trusted by Travelers</Badge>
+              <Badge variant="secondary">Global Community</Badge>
+            </div>
+          </div>
+
+          {/* Logo Center Section */}
+          <div className="hidden lg:flex lg:col-span-2 justify-center items-center">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent opacity-20 blur-2xl rounded-full"></div>
+              <Image
+                src="/almond-travel-icon.png"
+                alt="Almond Travel"
+                width={64}
+                height={64}
+                className="relative rounded-xl shadow-lg"
               />
             </div>
-          </Col>
+          </div>
 
           {/* Links Section */}
-          <Col lg={5} md={12} className="footer-links">
-            <div className="links-grid">
-              <div className="links-column">
-                <h5 className="footer-links-title">Navigation</h5>
-                <div className="footer-links-list">
-                  <Link href="/about" className="footer-link">About Us</Link>
-                  <Link href="/features" className="footer-link">Features</Link>
-                  <Link href="/faq" className="footer-link">FAQ</Link>
-                </div>
-              </div>
-              <div className="links-column">
-                <h5 className="footer-links-title">Connect</h5>
-                <div className="footer-links-list">
-                  <a
-                    href="mailto:steyen@umich.edu"
-                    className="footer-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Contact Us
-                  </a>
-                  <Link href="/forums" className="footer-link">Community</Link>
-                  <Link href="/articles" className="footer-link">Articles</Link>
-                </div>
+          <div className="lg:col-span-5 grid grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h5 className="text-sm font-semibold uppercase tracking-wider">Navigation</h5>
+              <div className="flex flex-col space-y-2">
+                <Link href="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  About Us
+                </Link>
+                <Link href="/features" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Features
+                </Link>
+                <Link href="/faq" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  FAQ
+                </Link>
               </div>
             </div>
-          </Col>
-        </Row>
+            <div className="space-y-4">
+              <h5 className="text-sm font-semibold uppercase tracking-wider">Connect</h5>
+              <div className="flex flex-col space-y-2">
+                <a
+                  href="mailto:steyen@umich.edu"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Contact Us
+                </a>
+                <Link href="/forums" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Community
+                </Link>
+                <Link href="/articles" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Articles
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        {/* Divider */}
-        <div className="footer-divider"></div>
+        <Separator className="my-6" />
 
         {/* Footer Bottom */}
-        <Row className="footer-bottom py-4">
-          <Col md={6} className="footer-copyright">
-            <p>
-              &copy; {currentYear} The Almonds | xosnos. All rights reserved.
-            </p>
-          </Col>
-          <Col md={6} className="footer-legal">
-            <div className="legal-links">
-              <Link href="#" className="legal-link">
-                Privacy Policy
-              </Link>
-              <Link href="#" className="legal-link">
-                Terms of Service
-              </Link>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+        <div className="flex flex-col md:flex-row justify-between items-center py-6 gap-4">
+          <p className="text-sm text-muted-foreground">
+            &copy; {currentYear} The Almonds | xosnos. All rights reserved.
+          </p>
+          <div className="flex space-x-6">
+            <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 };

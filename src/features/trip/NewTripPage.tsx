@@ -1,18 +1,15 @@
 'use client'
 
 import React, { FC, useState, useEffect } from 'react';
-import {
-  Container,
-  ProgressBar,
-  Button,
-  Spinner,
-  Card,
-} from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { NewTripForm } from './NewTripForm';
 import { clearTrip } from './tripSlice';
 import { addTrip } from '../trips/tripsAPI';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardHeader, CardFooter } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
+import { Spinner } from '../../components/ui/spinner';
 
 type FormType = 'flights' | 'hotels' | 'cars' | 'activities' | 'checklist' | 'summary';
 
@@ -94,65 +91,48 @@ export const NewTripPage: FC = () => {
 
   if (!user) {
     return (
-      <Container className="py-5 text-center">
-        <Spinner animation="border" variant="primary" />
-        <p className="mt-3">Redirecting to login...</p>
-      </Container>
+      <div className="container mx-auto py-12 text-center">
+        <Spinner className="mx-auto mb-4" />
+        <p className="text-muted-foreground">Redirecting to login...</p>
+      </div>
     );
   }
 
   return (
-    <div className="min-vh-100 py-5" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-      <Container>
+    <div className="min-h-screen py-12" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+      <div className="container mx-auto px-4">
         <Card
-          className="shadow-lg border-0 overflow-hidden"
+          className="shadow-lg border-0 overflow-hidden rounded-2xl"
           style={{
-            borderRadius: '15px',
             background: 'rgba(255, 255, 255, 0.98)',
           }}
         >
-          <Card.Header
-            className="py-4"
+          <CardHeader
+            className="py-6"
             style={{
               background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
             }}
           >
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="flex justify-between items-center">
               <Button
                 onClick={handleBack}
-                variant="light"
+                variant="secondary"
                 disabled={isSubmitting || loading}
-                className="px-4"
-                style={{
-                  borderRadius: '25px',
-                  fontWeight: '600',
-                }}
+                className="px-6 rounded-full font-semibold"
               >
                 {now === 0 ? '🏠 Home' : '← Back'}
               </Button>
-              <h1 className="text-white mb-0 fs-2 fw-bold">
+              <h1 className="text-white text-3xl font-bold">
                 ✈️ Plan Your Trip
               </h1>
               <Button
-                variant={now === 100 ? 'warning' : 'light'}
                 onClick={handleNext}
                 disabled={isSubmitting || loading}
-                className="px-4"
-                style={{
-                  borderRadius: '25px',
-                  fontWeight: '600',
-                }}
+                className={`px-6 rounded-full font-semibold ${now === 100 ? 'bg-yellow-500 hover:bg-yellow-600 text-black' : ''}`}
               >
                 {isSubmitting || loading ? (
                   <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                      className="me-2"
-                    />
+                    <Spinner className="mr-2 h-4 w-4" />
                     Saving...
                   </>
                 ) : (
@@ -160,61 +140,55 @@ export const NewTripPage: FC = () => {
                 )}
               </Button>
             </div>
-          </Card.Header>
+          </CardHeader>
 
-          <Card.Body className="p-4">
+          <CardContent className="p-6">
             {/* Progress section */}
-            <div className="mb-4">
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <span className="text-muted fw-semibold">Progress</span>
-                <span className="badge bg-primary">{now}% Complete</span>
+            <div className="mb-6">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-muted-foreground font-semibold">Progress</span>
+                <Badge>{now}% Complete</Badge>
               </div>
-              <ProgressBar
-                animated
-                now={now}
-                variant={getProgressVariant()}
-                style={{ height: '12px', borderRadius: '10px' }}
-              />
+              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-300 ${
+                    now < 40 ? 'bg-red-500' : now < 80 ? 'bg-yellow-500' : 'bg-green-500'
+                  }`}
+                  style={{ width: `${now}%` }}
+                />
+              </div>
             </div>
 
             {/* Current section indicator */}
-            <div className="text-center mb-4">
-              <h3 className="fw-bold text-primary mb-1">
+            <div className="text-center mb-6">
+              <h3 className="font-bold text-primary text-2xl mb-1">
                 {getSectionTitle()}
               </h3>
-              <p className="text-muted">
+              <p className="text-muted-foreground">
                 Step {(now / 20) + 1} of 6
               </p>
             </div>
 
             {/* Form content */}
-            <div
-              className="px-3"
-              style={{
-                minHeight: '400px',
-              }}
-            >
+            <div className="px-3 min-h-[400px]">
               {loading ? (
-                <div className="text-center py-5">
-                  <Spinner animation="border" variant="primary" />
-                  <p className="mt-3 text-muted">Loading...</p>
+                <div className="text-center py-12">
+                  <Spinner className="mx-auto mb-4" />
+                  <p className="text-muted-foreground">Loading...</p>
                 </div>
               ) : (
                 <NewTripForm type={renderForm()} />
               )}
             </div>
-          </Card.Body>
+          </CardContent>
 
-          <Card.Footer
-            className="text-center py-3 bg-light"
-            style={{ borderTop: '2px solid #e9ecef' }}
-          >
-            <small className="text-muted">
+          <CardFooter className="text-center py-4 bg-gray-50 border-t-2">
+            <p className="text-muted-foreground text-sm">
               💡 Tip: You can always come back and edit your trip later
-            </small>
-          </Card.Footer>
+            </p>
+          </CardFooter>
         </Card>
-      </Container>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { Container, Card, Button } from 'react-bootstrap';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Button } from './ui/button';
 
 interface Props {
   children: ReactNode;
@@ -49,55 +50,54 @@ class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <Container className="py-5 min-vh-100 d-flex align-items-center justify-content-center">
-          <Card className="card-modern text-center" style={{ maxWidth: '600px' }}>
-            <Card.Body className="p-5">
-              <div className="mb-4">
-                <h1 className="display-1 text-gradient">😵</h1>
-              </div>
-              <h2 className="mb-3">Oops! Something went wrong</h2>
-              <p className="text-muted mb-4">
+        <div className="min-h-screen flex items-center justify-center p-4">
+          <Card className="max-w-2xl w-full">
+            <CardHeader className="text-center">
+              <div className="text-6xl mb-4">😵</div>
+              <CardTitle className="text-3xl">Oops! Something went wrong</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground text-center">
                 We're sorry, but something unexpected happened. Our team has been notified.
               </p>
 
               {process.env.NODE_ENV === 'development' && this.state.error && (
-                <Card className="mb-4 text-start" bg="light">
-                  <Card.Body>
-                    <h6 className="text-danger">Error Details:</h6>
-                    <pre className="mb-0 text-wrap" style={{ fontSize: '0.875rem' }}>
+                <Card className="bg-muted">
+                  <CardContent className="pt-6">
+                    <h6 className="text-destructive font-semibold mb-2">Error Details:</h6>
+                    <pre className="text-sm overflow-auto whitespace-pre-wrap mb-4">
                       {this.state.error.toString()}
                     </pre>
                     {this.state.errorInfo && (
                       <>
-                        <h6 className="text-danger mt-3">Stack Trace:</h6>
-                        <pre className="mb-0 text-wrap" style={{ fontSize: '0.75rem' }}>
+                        <h6 className="text-destructive font-semibold mb-2">Stack Trace:</h6>
+                        <pre className="text-xs overflow-auto whitespace-pre-wrap">
                           {this.state.errorInfo.componentStack}
                         </pre>
                       </>
                     )}
-                  </Card.Body>
+                  </CardContent>
                 </Card>
               )}
 
-              <div className="d-flex gap-3 justify-content-center">
+              <div className="flex gap-3 justify-center">
                 <Button
-                  variant="primary"
                   size="lg"
                   onClick={this.handleReset}
                 >
                   Go to Home
                 </Button>
                 <Button
-                  variant="outline-secondary"
+                  variant="outline"
                   size="lg"
                   onClick={() => window.location.reload()}
                 >
                   Reload Page
                 </Button>
               </div>
-            </Card.Body>
+            </CardContent>
           </Card>
-        </Container>
+        </div>
       );
     }
 

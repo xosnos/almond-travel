@@ -2,15 +2,6 @@
 
 import React, { FC, useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import {
-  Container,
-  Button,
-  Card,
-  Spinner,
-  Accordion,
-  Badge,
-  Alert,
-} from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import {
   Summary,
@@ -28,6 +19,12 @@ import {
 import { itemBuilder } from '../trip/itemBuilder';
 import { updateTrip } from './tripsAPI';
 import { TripItem } from '../../types';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardHeader } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
+import { Alert, AlertDescription } from '../../components/ui/alert';
+import { Spinner } from '../../components/ui/spinner';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 
 export const TripPage: FC = () => {
   const router = useRouter();
@@ -133,116 +130,100 @@ export const TripPage: FC = () => {
 
   if (!user) {
     return (
-      <Container className="py-5 text-center">
-        <Spinner animation="border" variant="primary" />
-        <p className="mt-3">Redirecting to login...</p>
-      </Container>
+      <div className="container mx-auto py-12 text-center">
+        <Spinner className="mx-auto mb-4" />
+        <p className="text-muted-foreground">Redirecting to login...</p>
+      </div>
     );
   }
 
   if (loading && !trip) {
     return (
-      <Container className="py-5 text-center">
-        <Spinner animation="border" variant="primary" />
-        <p className="mt-3">Loading trip...</p>
-      </Container>
+      <div className="container mx-auto py-12 text-center">
+        <Spinner className="mx-auto mb-4" />
+        <p className="text-muted-foreground">Loading trip...</p>
+      </div>
     );
   }
 
   if (!trip) {
     return (
       <div
-        className="min-vh-100 py-5"
+        className="min-h-screen py-12"
         style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
       >
-        <Container>
-          <Card
-            className="border-0 shadow-lg text-center py-5"
-            style={{ borderRadius: '15px' }}
-          >
-            <Card.Body className="p-5">
-              <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>
+        <div className="container mx-auto px-4">
+          <Card className="shadow-lg text-center py-12 rounded-2xl border-0">
+            <CardContent className="p-12">
+              <div className="text-7xl mb-6">
                 ❌
               </div>
-              <h1 className="fw-bold mb-3">404: Trip Not Found</h1>
-              <p className="text-muted mb-4" style={{ fontSize: '1.1rem' }}>
+              <h1 className="text-3xl font-bold mb-4">404: Trip Not Found</h1>
+              <p className="text-muted-foreground text-lg mb-6">
                 The trip you're looking for doesn't exist or may have been deleted.
               </p>
               <Button
                 onClick={() => router.push('/trips')}
-                variant="primary"
                 size="lg"
-                className="px-5"
-                style={{ borderRadius: '25px', fontWeight: '600' }}
+                className="px-8 rounded-full font-semibold"
               >
                 ← Back to Trips
               </Button>
-            </Card.Body>
+            </CardContent>
           </Card>
-        </Container>
+        </div>
       </div>
     );
   }
 
   return (
     <div
-      className="min-vh-100 py-5"
+      className="min-h-screen py-12"
       style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
     >
-      <Container>
+      <div className="container mx-auto px-4">
         {/* Success message */}
         {showSuccess && (
-          <Alert variant="success" className="shadow-sm mb-4">
-            ✅ Trip saved successfully! Redirecting...
+          <Alert className="shadow-sm mb-6 bg-green-50 border-green-200">
+            <AlertDescription className="text-green-800">
+              ✅ Trip saved successfully! Redirecting...
+            </AlertDescription>
           </Alert>
         )}
 
         {/* Header */}
-        <Card
-          className="mb-4 border-0 shadow-lg"
-          style={{ borderRadius: '15px' }}
-        >
-          <Card.Header
-            className="py-4"
+        <Card className="mb-6 border-0 shadow-lg rounded-2xl">
+          <CardHeader
+            className="py-6"
             style={{
               background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
             }}
           >
-            <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div className="flex justify-between items-center flex-wrap gap-4">
               <Button
                 onClick={handleCancel}
-                variant="light"
+                variant="secondary"
                 disabled={isSaving}
-                className="px-4"
-                style={{ borderRadius: '25px', fontWeight: '600' }}
+                className="px-6 rounded-full font-semibold"
               >
                 ← Cancel
               </Button>
               <div className="text-center text-white">
-                <h1 className="mb-1 fw-bold fs-2">
+                <h1 className="text-3xl font-bold mb-1">
                   ✈️ {trip.name || 'Edit Trip'}
                 </h1>
-                <p className="mb-0" style={{ opacity: 0.9 }}>
+                <p className="opacity-90">
                   🌎 {trip.location || 'No location'}
                 </p>
               </div>
               <Button
-                variant="warning"
                 onClick={handleSave}
                 disabled={isSaving}
-                className="px-4"
-                style={{ borderRadius: '25px', fontWeight: '600' }}
+                className="px-6 rounded-full font-semibold bg-yellow-500 hover:bg-yellow-600 text-black"
               >
                 {isSaving ? (
                   <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                      className="me-2"
-                    />
+                    <Spinner className="mr-2 h-4 w-4" />
                     Saving...
                   </>
                 ) : (
@@ -250,182 +231,126 @@ export const TripPage: FC = () => {
                 )}
               </Button>
             </div>
-          </Card.Header>
+          </CardHeader>
         </Card>
 
         {/* Trip Summary */}
-        <Card
-          className="mb-4 border-0 shadow-lg"
-          style={{ borderRadius: '15px' }}
-        >
-          <Card.Header
-            className="py-3"
+        <Card className="mb-6 border-0 shadow-lg rounded-2xl">
+          <CardHeader
+            className="py-4"
             style={{
               background: 'linear-gradient(90deg, #667eea15 0%, #764ba215 100%)',
               borderBottom: '2px solid #e9ecef',
             }}
           >
-            <h4 className="mb-0 fw-bold">
+            <h4 className="text-xl font-bold">
               📋 Trip Summary
             </h4>
-          </Card.Header>
-          <Card.Body className="p-4">
+          </CardHeader>
+          <CardContent className="p-6">
             <Summary
               name={trip.name}
               location={trip.location}
               handleUpdate={handleSummary}
             />
-          </Card.Body>
+          </CardContent>
         </Card>
 
-        {/* Accordion sections */}
-        <Accordion defaultActiveKey="0" className="shadow-lg" style={{ borderRadius: '15px', overflow: 'hidden' }}>
-          {/* Flights */}
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>
-              <div className="d-flex justify-content-between align-items-center w-100 pe-3">
-                <span className="fw-bold fs-5">
-                  {getSectionIcon('flights')} Flights
-                </span>
-                <Badge bg="primary" pill>
-                  {trip.flights.length}
-                </Badge>
-              </div>
-            </Accordion.Header>
-            <Accordion.Body className="p-4">
+        {/* Tabs sections */}
+        <Card className="shadow-lg rounded-2xl border-0 overflow-hidden">
+          <Tabs defaultValue="flights" className="w-full">
+            <TabsList className="w-full grid grid-cols-5 bg-gradient-to-r from-purple-50 to-indigo-50 p-2 rounded-none">
+              <TabsTrigger value="flights" className="flex items-center gap-2 data-[state=active]:bg-white">
+                <span>{getSectionIcon('flights')} Flights</span>
+                <Badge className="bg-blue-600">{trip.flights.length}</Badge>
+              </TabsTrigger>
+              <TabsTrigger value="hotels" className="flex items-center gap-2 data-[state=active]:bg-white">
+                <span>{getSectionIcon('hotels')} Hotels</span>
+                <Badge className="bg-green-600">{trip.hotels.length}</Badge>
+              </TabsTrigger>
+              <TabsTrigger value="cars" className="flex items-center gap-2 data-[state=active]:bg-white">
+                <span>{getSectionIcon('cars')} Cars</span>
+                <Badge className="bg-cyan-600">{trip.cars.length}</Badge>
+              </TabsTrigger>
+              <TabsTrigger value="activities" className="flex items-center gap-2 data-[state=active]:bg-white">
+                <span>{getSectionIcon('activities')} Activities</span>
+                <Badge className="bg-yellow-600">{trip.activities.length}</Badge>
+              </TabsTrigger>
+              <TabsTrigger value="checklist" className="flex items-center gap-2 data-[state=active]:bg-white">
+                <span>{getSectionIcon('checklist')} Checklist</span>
+                <Badge variant="secondary">{trip.checklist.length}</Badge>
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="flights" className="p-6">
               <Flights
                 items={trip.flights as TripItem[]}
                 handleAdd={handleAdd('flights')}
                 handleRemove={handleRemove('flights')}
                 handleUpdate={handleUpdate('flights')}
               />
-            </Accordion.Body>
-          </Accordion.Item>
+            </TabsContent>
 
-          {/* Hotels */}
-          <Accordion.Item eventKey="1">
-            <Accordion.Header>
-              <div className="d-flex justify-content-between align-items-center w-100 pe-3">
-                <span className="fw-bold fs-5">
-                  {getSectionIcon('hotels')} Hotels
-                </span>
-                <Badge bg="success" pill>
-                  {trip.hotels.length}
-                </Badge>
-              </div>
-            </Accordion.Header>
-            <Accordion.Body className="p-4">
+            <TabsContent value="hotels" className="p-6">
               <Hotels
                 items={trip.hotels as TripItem[]}
                 handleAdd={handleAdd('hotels')}
                 handleRemove={handleRemove('hotels')}
                 handleUpdate={handleUpdate('hotels')}
               />
-            </Accordion.Body>
-          </Accordion.Item>
+            </TabsContent>
 
-          {/* Cars */}
-          <Accordion.Item eventKey="2">
-            <Accordion.Header>
-              <div className="d-flex justify-content-between align-items-center w-100 pe-3">
-                <span className="fw-bold fs-5">
-                  {getSectionIcon('cars')} Rental Cars
-                </span>
-                <Badge bg="info" pill>
-                  {trip.cars.length}
-                </Badge>
-              </div>
-            </Accordion.Header>
-            <Accordion.Body className="p-4">
+            <TabsContent value="cars" className="p-6">
               <Cars
                 items={trip.cars as TripItem[]}
                 handleAdd={handleAdd('cars')}
                 handleRemove={handleRemove('cars')}
                 handleUpdate={handleUpdate('cars')}
               />
-            </Accordion.Body>
-          </Accordion.Item>
+            </TabsContent>
 
-          {/* Activities */}
-          <Accordion.Item eventKey="3">
-            <Accordion.Header>
-              <div className="d-flex justify-content-between align-items-center w-100 pe-3">
-                <span className="fw-bold fs-5">
-                  {getSectionIcon('activities')} Activities
-                </span>
-                <Badge bg="warning" text="dark" pill>
-                  {trip.activities.length}
-                </Badge>
-              </div>
-            </Accordion.Header>
-            <Accordion.Body className="p-4">
+            <TabsContent value="activities" className="p-6">
               <Activities
                 items={trip.activities as TripItem[]}
                 handleAdd={handleAdd('activities')}
                 handleRemove={handleRemove('activities')}
                 handleUpdate={handleUpdate('activities')}
               />
-            </Accordion.Body>
-          </Accordion.Item>
+            </TabsContent>
 
-          {/* Checklist */}
-          <Accordion.Item eventKey="4">
-            <Accordion.Header>
-              <div className="d-flex justify-content-between align-items-center w-100 pe-3">
-                <span className="fw-bold fs-5">
-                  {getSectionIcon('checklist')} Checklist
-                </span>
-                <Badge bg="secondary" pill>
-                  {trip.checklist.length}
-                </Badge>
-              </div>
-            </Accordion.Header>
-            <Accordion.Body className="p-4">
+            <TabsContent value="checklist" className="p-6">
               <Checklist
                 items={trip.checklist as TripItem[]}
                 handleAdd={handleAdd('checklist')}
                 handleRemove={handleRemove('checklist')}
                 handleUpdate={handleUpdate('checklist')}
               />
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+            </TabsContent>
+          </Tabs>
+        </Card>
 
         {/* Footer actions */}
-        <Card
-          className="mt-4 border-0 shadow-lg"
-          style={{ borderRadius: '15px' }}
-        >
-          <Card.Body className="p-4 text-center">
-            <div className="d-flex gap-3 justify-content-center">
+        <Card className="mt-6 border-0 shadow-lg rounded-2xl">
+          <CardContent className="p-6 text-center">
+            <div className="flex gap-4 justify-center">
               <Button
                 onClick={handleCancel}
-                variant="outline-secondary"
+                variant="outline"
                 size="lg"
                 disabled={isSaving}
-                className="px-5"
-                style={{ borderRadius: '25px', fontWeight: '600' }}
+                className="px-8 rounded-full font-semibold"
               >
                 Cancel
               </Button>
               <Button
-                variant="primary"
                 onClick={handleSave}
                 size="lg"
                 disabled={isSaving}
-                className="px-5"
-                style={{ borderRadius: '25px', fontWeight: '600' }}
+                className="px-8 rounded-full font-semibold"
               >
                 {isSaving ? (
                   <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                      className="me-2"
-                    />
+                    <Spinner className="mr-2 h-4 w-4" />
                     Saving...
                   </>
                 ) : (
@@ -433,12 +358,12 @@ export const TripPage: FC = () => {
                 )}
               </Button>
             </div>
-            <p className="text-muted mt-3 mb-0">
+            <p className="text-muted-foreground mt-4">
               💡 All changes are saved to the cloud
             </p>
-          </Card.Body>
+          </CardContent>
         </Card>
-      </Container>
+      </div>
     </div>
   );
 };
