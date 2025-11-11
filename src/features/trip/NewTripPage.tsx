@@ -78,12 +78,6 @@ export const NewTripPage: FC = () => {
     }
   };
 
-  const getProgressVariant = (): string => {
-    if (now < 40) return 'danger';
-    if (now < 80) return 'warning';
-    return 'success';
-  };
-
   const getSectionTitle = (): string => {
     const type = renderForm();
     return type.charAt(0).toUpperCase() + type.slice(1);
