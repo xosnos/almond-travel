@@ -1,7 +1,7 @@
 import { TripItem } from '../../types';
 
 export const itemBuilder: Record<string, TripItem> = {
-  flight: {
+  flights: {
     id: '',
     name: '',
     type: 'flight',
@@ -13,7 +13,7 @@ export const itemBuilder: Record<string, TripItem> = {
     price: '',
     url: '',
   },
-  hotel: {
+  hotels: {
     id: '',
     type: 'hotel',
     name: '',
@@ -23,7 +23,7 @@ export const itemBuilder: Record<string, TripItem> = {
     price: '',
     url: '',
   },
-  car: {
+  cars: {
     id: '',
     name: '',
     type: 'car',
@@ -35,7 +35,7 @@ export const itemBuilder: Record<string, TripItem> = {
     price: '',
     url: '',
   },
-  activity: {
+  activities: {
     id: '',
     type: 'activity',
     name: '',
