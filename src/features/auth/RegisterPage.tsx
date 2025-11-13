@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { handleRegister } from "./authAPI";
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -89,8 +87,6 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navigation />
-
       <main className="flex-1 container mx-auto px-4 py-12">
         <div className="max-w-md mx-auto">
           <Card className="glass-card">
@@ -214,8 +210,6 @@ export const RegisterPage: React.FC = () => {
           </Card>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

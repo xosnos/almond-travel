@@ -1,13 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
 
 export default function AboutPage() {
   return (
     <>
-      <Navigation />
       <div className="py-12">
         <div className="container mx-auto px-4">
           {/* Hero Section */}
@@ -114,7 +111,6 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

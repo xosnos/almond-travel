@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
 import { Plane, ClipboardList, MessageSquare, BookOpen } from 'lucide-react';
 
 interface CardItem {
@@ -64,8 +62,6 @@ const cards: CardItem[] = [
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navigation />
-
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-primary via-secondary to-accent py-20 px-4">
@@ -160,8 +156,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

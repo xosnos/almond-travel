@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 interface FaqItem {
@@ -48,7 +46,6 @@ export default function FaqPage() {
 
   return (
     <>
-      <Navigation />
       <div className="py-12" style={{ background: 'linear-gradient(180deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)' }}>
         <div className="container mx-auto px-4">
           {/* Header */}
@@ -154,7 +151,6 @@ export default function FaqPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

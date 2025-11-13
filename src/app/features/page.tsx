@@ -1,8 +1,5 @@
 'use client';
 
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
-
 interface Feature {
   name: string;
   icon: string;
@@ -84,7 +81,6 @@ const featureCategories: FeatureCategory[] = [
 export default function FeaturesPage() {
   return (
     <>
-      <Navigation />
       <div className="py-12">
         <div className="container mx-auto px-4">
           {/* Header Section */}
@@ -175,7 +171,6 @@ export default function FeaturesPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

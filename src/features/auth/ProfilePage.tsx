@@ -4,8 +4,6 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch';
 import { handleLogout } from './authAPI';
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -34,11 +32,9 @@ export const ProfilePage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Navigation />
         <main className="flex-1 container mx-auto px-4 py-12 flex items-center justify-center">
           <Spinner size="lg" />
         </main>
-        <Footer />
       </div>
     );
   }
@@ -50,8 +46,6 @@ export const ProfilePage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navigation />
-
       <main className="flex-1 container mx-auto px-4 py-12">
         <div className="max-w-2xl mx-auto">
           <Card className="glass-card">
@@ -109,8 +103,6 @@ export const ProfilePage: React.FC = () => {
           </Card>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };
