@@ -1,20 +1,15 @@
 'use client'
 
 import React, { FC, useEffect, useState } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Spinner,
-  Badge,
-  Alert,
-} from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { fetchTrips, removeTrip } from './tripsAPI';
 import { Trip } from '../../types';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardHeader } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
+import { Alert, AlertDescription, AlertTitle } from '../../components/ui/alert';
+import { Spinner } from '../../components/ui/spinner';
 
 export const TripsPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -71,215 +66,176 @@ export const TripsPage: FC = () => {
 
   if (!user) {
     return (
-      <Container className="py-5 text-center">
-        <Spinner animation="border" variant="primary" />
-        <p className="mt-3">Redirecting to login...</p>
-      </Container>
+      <div className="container mx-auto py-12 text-center">
+        <Spinner className="mx-auto mb-4" />
+        <p className="text-muted-foreground">Redirecting to login...</p>
+      </div>
     );
   }
 
   return (
     <div
-      className="min-vh-100 py-5"
+      className="min-h-screen py-12"
       style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
     >
-      <Container>
+      <div className="container mx-auto px-4">
         {/* Header */}
-        <Card
-          className="mb-4 border-0 shadow-lg"
-          style={{ borderRadius: '15px' }}
-        >
-          <Card.Body className="p-4">
-            <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <Card className="mb-6 shadow-lg rounded-2xl border-0">
+          <CardContent className="p-6">
+            <div className="flex justify-between items-center flex-wrap gap-4">
               <Button
                 onClick={() => router.push('/')}
-                variant="outline-primary"
-                className="px-4"
-                style={{ borderRadius: '25px', fontWeight: '600' }}
+                variant="outline"
+                className="px-6 rounded-full font-semibold"
               >
                 🏠 Home
               </Button>
               <div className="text-center">
-                <h1 className="mb-1 fw-bold">
+                <h1 className="text-3xl font-bold mb-1">
                   ✈️ My Trips
                 </h1>
-                <p className="text-muted mb-0">
+                <p className="text-muted-foreground">
                   {trips.length} {trips.length === 1 ? 'trip' : 'trips'} planned
                 </p>
               </div>
               <Button
                 onClick={() => router.push('/new')}
-                variant="success"
-                className="px-4"
-                style={{ borderRadius: '25px', fontWeight: '600' }}
+                className="px-6 rounded-full font-semibold bg-green-600 hover:bg-green-700"
               >
                 ➕ Create New Trip
               </Button>
             </div>
-          </Card.Body>
+          </CardContent>
         </Card>
 
         {/* Error message */}
         {error && (
-          <Alert variant="danger" dismissible>
-            <Alert.Heading>Error</Alert.Heading>
-            <p>{error}</p>
+          <Alert variant="destructive" className="mb-6">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
 
         {/* Loading state */}
         {loading && !deletingIndex ? (
-          <Card
-            className="border-0 shadow-lg text-center py-5"
-            style={{ borderRadius: '15px' }}
-          >
-            <Card.Body>
-              <Spinner animation="border" variant="primary" />
-              <p className="mt-3 text-muted">Loading your trips...</p>
-            </Card.Body>
+          <Card className="shadow-lg text-center py-12 rounded-2xl border-0">
+            <CardContent>
+              <Spinner className="mx-auto mb-4" />
+              <p className="text-muted-foreground">Loading your trips...</p>
+            </CardContent>
           </Card>
         ) : trips.length === 0 ? (
           /* Empty state */
-          <Card
-            className="border-0 shadow-lg text-center py-5"
-            style={{ borderRadius: '15px' }}
-          >
-            <Card.Body className="p-5">
-              <div style={{ fontSize: '4rem', marginBottom: '1.5rem' }}>
+          <Card className="shadow-lg text-center py-12 rounded-2xl border-0">
+            <CardContent className="p-12">
+              <div className="text-7xl mb-6">
                 ✈️
               </div>
-              <h3 className="fw-bold mb-3">No Trips Yet</h3>
-              <p className="text-muted mb-4" style={{ fontSize: '1.1rem' }}>
+              <h3 className="text-2xl font-bold mb-4">No Trips Yet</h3>
+              <p className="text-muted-foreground text-lg mb-6">
                 Start planning your next adventure by creating your first trip!
               </p>
               <Button
                 onClick={() => router.push('/new')}
-                variant="primary"
                 size="lg"
-                className="px-5"
-                style={{ borderRadius: '25px', fontWeight: '600' }}
+                className="px-8 rounded-full font-semibold"
               >
                 ➕ Create Your First Trip
               </Button>
-            </Card.Body>
+            </CardContent>
           </Card>
         ) : (
           /* Trip list */
-          <Row xs={1} md={2} lg={2} className="g-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {trips.map((trip: Trip, index: number) => {
               const itemCount = getTripItemCount(trip);
               return (
-                <Col key={index}>
-                  <Card
-                    className="h-100 border-0 shadow-lg overflow-hidden card-modern"
+                <Card
+                  key={index}
+                  className="h-full border-0 shadow-lg overflow-hidden rounded-2xl transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-2xl cursor-pointer"
+                >
+                  <CardHeader
+                    className="py-4"
                     style={{
-                      borderRadius: '15px',
-                      transform: 'translateY(0)',
-                      transition: 'all 0.3s ease-in-out',
-                      cursor: 'pointer',
-                    }}
-                    onMouseEnter={(e) => {
-                      const card = e.currentTarget;
-                      card.style.transform = 'translateY(-8px)';
-                      card.style.boxShadow = '0 15px 35px rgba(0,0,0,0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      const card = e.currentTarget;
-                      card.style.transform = 'translateY(0)';
-                      card.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
+                      background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
                     }}
                   >
-                    <div
-                      className="card-header py-3"
-                      style={{
-                        background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
-                      }}
-                    >
-                      <div className="d-flex justify-content-between align-items-center">
-                        <Badge bg="light" text="dark" className="px-3 py-2">
-                          Trip #{index + 1}
-                        </Badge>
-                        <Badge bg="warning" text="dark" className="px-3 py-2">
-                          {itemCount} {itemCount === 1 ? 'item' : 'items'}
-                        </Badge>
+                    <div className="flex justify-between items-center">
+                      <Badge variant="secondary" className="px-3 py-1 text-sm">
+                        Trip #{index + 1}
+                      </Badge>
+                      <Badge variant="secondary" className="px-3 py-1 text-sm bg-yellow-500 hover:bg-yellow-600 text-black">
+                        {itemCount} {itemCount === 1 ? 'item' : 'items'}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="p-6">
+                    <div onClick={() => handleView(index)} className="cursor-pointer">
+                      <h3 className="text-2xl font-bold mb-3">
+                        📍 {trip.name || 'Untitled Trip'}
+                      </h3>
+                      <p className="text-lg text-muted-foreground mb-4">
+                        🌎 {trip.location || 'No location set'}
+                      </p>
+
+                      {/* Trip details */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {trip.flights.length > 0 && (
+                          <Badge className="px-2 py-1 bg-blue-600 hover:bg-blue-700">
+                            ✈️ {trip.flights.length}
+                          </Badge>
+                        )}
+                        {trip.hotels.length > 0 && (
+                          <Badge className="px-2 py-1 bg-green-600 hover:bg-green-700">
+                            🏨 {trip.hotels.length}
+                          </Badge>
+                        )}
+                        {trip.cars.length > 0 && (
+                          <Badge className="px-2 py-1 bg-cyan-600 hover:bg-cyan-700">
+                            🚗 {trip.cars.length}
+                          </Badge>
+                        )}
+                        {trip.activities.length > 0 && (
+                          <Badge className="px-2 py-1 bg-yellow-600 hover:bg-yellow-700">
+                            🎯 {trip.activities.length}
+                          </Badge>
+                        )}
+                        {trip.checklist.length > 0 && (
+                          <Badge variant="secondary" className="px-2 py-1">
+                            ✅ {trip.checklist.length}
+                          </Badge>
+                        )}
                       </div>
                     </div>
 
-                    <Card.Body className="p-4">
-                      <div onClick={() => handleView(index)} style={{ cursor: 'pointer' }}>
-                        <Card.Title className="fw-bold mb-3" style={{ fontSize: '1.5rem' }}>
-                          📍 {trip.name || 'Untitled Trip'}
-                        </Card.Title>
-                        <Card.Subtitle className="mb-3 text-muted" style={{ fontSize: '1.1rem' }}>
-                          🌎 {trip.location || 'No location set'}
-                        </Card.Subtitle>
-
-                        {/* Trip details */}
-                        <div className="d-flex flex-wrap gap-2 mb-3">
-                          {trip.flights.length > 0 && (
-                            <Badge bg="primary" className="px-2 py-1">
-                              ✈️ {trip.flights.length}
-                            </Badge>
-                          )}
-                          {trip.hotels.length > 0 && (
-                            <Badge bg="success" className="px-2 py-1">
-                              🏨 {trip.hotels.length}
-                            </Badge>
-                          )}
-                          {trip.cars.length > 0 && (
-                            <Badge bg="info" className="px-2 py-1">
-                              🚗 {trip.cars.length}
-                            </Badge>
-                          )}
-                          {trip.activities.length > 0 && (
-                            <Badge bg="warning" text="dark" className="px-2 py-1">
-                              🎯 {trip.activities.length}
-                            </Badge>
-                          )}
-                          {trip.checklist.length > 0 && (
-                            <Badge bg="secondary" className="px-2 py-1">
-                              ✅ {trip.checklist.length}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="d-flex gap-2 mt-3">
-                        <Button
-                          variant="primary"
-                          onClick={() => handleView(index)}
-                          className="flex-grow-1"
-                          style={{ borderRadius: '25px', fontWeight: '600' }}
-                        >
-                          👁️ View & Edit
-                        </Button>
-                        <Button
-                          variant="outline-danger"
-                          onClick={() => handleRemove(index)}
-                          disabled={deletingIndex === index}
-                          style={{ borderRadius: '25px', fontWeight: '600' }}
-                        >
-                          {deletingIndex === index ? (
-                            <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            '🗑️'
-                          )}
-                        </Button>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
+                    <div className="flex gap-2 mt-4">
+                      <Button
+                        onClick={() => handleView(index)}
+                        className="flex-1 rounded-full font-semibold"
+                      >
+                        👁️ View & Edit
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => handleRemove(index)}
+                        disabled={deletingIndex === index}
+                        className="rounded-full font-semibold border-red-500 text-red-500 hover:bg-red-50"
+                      >
+                        {deletingIndex === index ? (
+                          <Spinner className="h-4 w-4" />
+                        ) : (
+                          '🗑️'
+                        )}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               );
             })}
-          </Row>
+          </div>
         )}
-      </Container>
+      </div>
     </div>
   );
 };

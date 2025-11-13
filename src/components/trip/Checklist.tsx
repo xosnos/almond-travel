@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Form, Spinner } from 'react-bootstrap';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import { TripItem } from '../../types/index';
 
 interface ChecklistProps {
@@ -28,77 +30,62 @@ export const Checklist: React.FC<ChecklistProps> = ({
   };
 
   return (
-    <div className="card card-modern p-4 shadow-sm">
-      <h2 className="mb-4 fw-bold text-primary">Packing Checklist</h2>
+    <div className="rounded-lg border bg-card p-4 shadow-sm">
+      <h2 className="mb-4 text-2xl font-bold text-primary">Packing Checklist</h2>
 
       {error && (
-        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+        <div className="relative mb-4 rounded border border-red-400 bg-red-50 px-4 py-3 text-red-700" role="alert">
           {error}
-          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       )}
 
       <div className="checklist-container">
         {items.length === 0 ? (
-          <div className="alert alert-info mb-3">No items in your checklist. Click "+" to add packing items!</div>
+          <div className="mb-3 rounded border border-blue-400 bg-blue-50 px-4 py-3 text-blue-700">
+            No items in your checklist. Click "+" to add packing items!
+          </div>
         ) : (
           items.map((item, index) => (
             <div
               key={index}
-              className="checklist-item p-3 mb-2 border border-light rounded-3 d-flex justify-content-between align-items-center"
+              className="mb-2 flex items-center justify-between rounded-lg border border-gray-200 p-3 transition-all duration-300"
               style={{
                 backgroundColor: isChecked(item) ? '#e8f5e9' : '#f8f9fa',
-                transition: 'all 0.3s ease',
                 opacity: isChecked(item) ? 0.7 : 1
               }}
             >
-              <div className="d-flex align-items-center gap-3 flex-grow-1">
+              <div className="flex flex-grow items-center gap-3">
                 <Button
-                  className="rounded-circle p-0"
-                  variant={isChecked(item) ? 'success' : 'outline-success'}
+                  variant={isChecked(item) ? 'default' : 'outline'}
+                  size="icon"
                   onClick={() => handleUpdate(index, 'checked', !isChecked(item))}
                   disabled={loading}
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    transition: 'all 0.2s ease',
-                    minWidth: '40px',
-                    minHeight: '40px'
-                  }}
+                  className={`h-10 w-10 min-h-10 min-w-10 rounded-full transition-all ${
+                    isChecked(item) ? 'bg-green-600 hover:bg-green-700' : 'border-green-600 text-green-600 hover:bg-green-50'
+                  }`}
                   title={isChecked(item) ? 'Mark as incomplete' : 'Mark as complete'}
                 >
                   {isChecked(item) ? '✓' : '○'}
                 </Button>
 
-                <Form.Group className="mb-0 flex-grow-1">
-                  <Form.Control
+                <div className="flex-grow">
+                  <Input
                     type="text"
                     placeholder="Enter packing item (e.g., Passport)"
                     value={getFieldValue(item, 'name')}
                     onChange={(e) => handleUpdate(index, 'name', e.target.value)}
                     disabled={loading}
-                    className="border-light shadow-sm"
-                    style={{
-                      textDecoration: isChecked(item) ? 'line-through' : 'none',
-                      backgroundColor: isChecked(item) ? '#f5f5f5' : '#fff',
-                      transition: 'all 0.3s ease'
-                    }}
+                    className={isChecked(item) ? 'line-through bg-gray-100' : ''}
                   />
-                </Form.Group>
+                </div>
               </div>
 
               <Button
-                className="rounded-circle p-0"
-                variant="outline-danger"
+                variant="outline"
+                size="icon"
                 onClick={() => handleRemove(index)}
                 disabled={loading}
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  transition: 'all 0.2s ease',
-                  minWidth: '36px',
-                  minHeight: '36px'
-                }}
+                className="ml-2 h-9 w-9 min-h-9 min-w-9 rounded-full border-red-500 text-red-500 hover:bg-red-50"
                 title="Remove item"
               >
                 ✕
@@ -110,27 +97,15 @@ export const Checklist: React.FC<ChecklistProps> = ({
 
       {/* Checklist Stats */}
       {items.length > 0 && (
-        <div className="mt-3 p-3 bg-light rounded-2">
-          <div className="d-flex justify-content-between align-items-center">
-            <span className="text-muted small">
+        <div className="mt-3 rounded-md bg-gray-100 p-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-600">
               <strong>{items.filter((i) => isChecked(i)).length}</strong> of <strong>{items.length}</strong> items packed
             </span>
-            <div
-              style={{
-                width: '100px',
-                height: '8px',
-                backgroundColor: '#e9ecef',
-                borderRadius: '10px',
-                overflow: 'hidden'
-              }}
-            >
+            <div className="h-2 w-24 overflow-hidden rounded-full bg-gray-300">
               <div
-                style={{
-                  width: `${(items.filter((i) => isChecked(i)).length / items.length) * 100}%`,
-                  height: '100%',
-                  backgroundColor: '#28a745',
-                  transition: 'width 0.3s ease'
-                }}
+                className="h-full bg-green-600 transition-all duration-300"
+                style={{ width: `${(items.filter((i) => isChecked(i)).length / items.length) * 100}%` }}
               ></div>
             </div>
           </div>
@@ -140,24 +115,12 @@ export const Checklist: React.FC<ChecklistProps> = ({
       <Button
         onClick={handleAdd}
         disabled={loading}
-        className="mt-3 rounded-circle p-0"
-        style={{
-          width: '48px',
-          height: '48px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'all 0.3s ease',
-          backgroundColor: '#0d6efd',
-          border: 'none',
-          fontSize: '24px',
-          minWidth: '48px',
-          minHeight: '48px'
-        }}
+        size="icon"
+        className="mt-3 h-12 w-12 rounded-full text-2xl"
         title="Add new packing item"
       >
         {loading ? (
-          <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+          <Spinner className="h-4 w-4" />
         ) : (
           '+'
         )}

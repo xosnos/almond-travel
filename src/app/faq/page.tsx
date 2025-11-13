@@ -1,13 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Collapse,
-} from 'react-bootstrap';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 interface FaqItem {
   id: string;
@@ -51,43 +45,41 @@ export default function FaqPage() {
   };
 
   return (
-    <div className="py-5" style={{ background: 'linear-gradient(180deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)' }}>
-      <Container>
-        {/* Header */}
-        <Row className="mb-5 text-center">
-          <Col lg={12}>
-            <h1 className="display-4 fw-bold mb-3" style={{ color: '#667eea' }}>
-              Frequently Asked Questions
-            </h1>
-            <p className="lead fs-5 text-muted mx-auto" style={{ maxWidth: '600px' }}>
-              Find answers to common questions about Almond Travel and how to get the most out of our platform
-            </p>
-          </Col>
-        </Row>
+    <>
+      <div className="py-12" style={{ background: 'linear-gradient(180deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)' }}>
+        <div className="container mx-auto px-4">
+          {/* Header */}
+          <div className="mb-12 text-center">
+            <div>
+              <h1 className="text-5xl font-bold mb-6" style={{ color: '#667eea' }}>
+                Frequently Asked Questions
+              </h1>
+              <p className="text-xl text-muted-foreground mx-auto max-w-2xl">
+                Find answers to common questions about Almond Travel and how to get the most out of our platform
+              </p>
+            </div>
+          </div>
 
-        {/* FAQ Items */}
-        <Row>
-          <Col lg={8} className="mx-auto">
-            <div className="space-y-3">
+          {/* FAQ Items */}
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-4">
               {faqItems.map((item) => (
                 <Card
                   key={item.id}
-                  className="card-modern shadow-sm border-0 mb-3 overflow-hidden"
+                  className="shadow-sm border-0 overflow-hidden transition-all duration-300"
                   style={{
                     background: 'white',
-                    transition: 'all 0.3s ease',
                   }}
                 >
-                  <Card.Header
+                  <CardHeader
                     onClick={() => toggleOpen(item.id)}
+                    className="cursor-pointer transition-all duration-300"
                     style={{
-                      cursor: 'pointer',
                       background: openId === item.id
                         ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)'
                         : 'white',
-                      borderBottom: openId === item.id ? '2px solid #667eea' : '1px solid #e9ecef',
+                      borderBottom: openId === item.id ? '2px solid #667eea' : '1px solid #e5e7eb',
                       padding: '1.5rem',
-                      transition: 'all 0.3s ease',
                     }}
                     onMouseEnter={(e) => {
                       if (openId !== item.id) {
@@ -100,61 +92,65 @@ export default function FaqPage() {
                       }
                     }}
                   >
-                    <div className="d-flex align-items-center gap-3 mb-0">
+                    <div className="flex items-center gap-4 mb-0">
                       <span style={{ fontSize: '1.5rem' }}>{item.icon}</span>
-                      <div className="flex-grow-1">
+                      <div className="flex-1">
                         <h5
-                          className="fw-bold mb-0"
+                          className="font-bold mb-0 text-xl"
                           style={{ color: '#667eea' }}
                         >
                           {item.question}
                         </h5>
                       </div>
                       <span
+                        className="transition-transform duration-300"
                         style={{
                           fontSize: '1.25rem',
                           color: '#667eea',
                           transform: openId === item.id ? 'rotate(180deg)' : 'rotate(0deg)',
-                          transition: 'transform 0.3s ease',
                         }}
                       >
                         ▼
                       </span>
                     </div>
-                  </Card.Header>
+                  </CardHeader>
 
-                  <Collapse in={openId === item.id}>
-                    <div>
-                      <Card.Body className="pt-4 pb-4">
-                        <p className="text-muted fs-5 mb-0">
-                          {item.answer}
-                        </p>
-                      </Card.Body>
-                    </div>
-                  </Collapse>
+                  <div
+                    className="transition-all duration-300 ease-in-out overflow-hidden"
+                    style={{
+                      maxHeight: openId === item.id ? '500px' : '0',
+                      opacity: openId === item.id ? 1 : 0,
+                    }}
+                  >
+                    <CardContent className="pt-6 pb-6">
+                      <p className="text-muted-foreground text-lg mb-0">
+                        {item.answer}
+                      </p>
+                    </CardContent>
+                  </div>
                 </Card>
               ))}
             </div>
-          </Col>
-        </Row>
+          </div>
 
-        {/* CTA Section */}
-        <Row className="mt-5 text-center">
-          <Col lg={8} className="mx-auto">
-            <div
-              className="p-5 rounded-4 card-modern shadow-sm"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              }}
-            >
-              <h3 className="text-white fw-bold mb-2">Didn't find your answer?</h3>
-              <p className="text-white-75">
-                Check out our articles section or reach out to our support team through the navigation menu
-              </p>
+          {/* CTA Section */}
+          <div className="mt-12 text-center">
+            <div className="max-w-4xl mx-auto">
+              <div
+                className="p-8 rounded-3xl shadow-sm"
+                style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                }}
+              >
+                <h3 className="text-white font-bold mb-2 text-2xl">Didn't find your answer?</h3>
+                <p className="text-white/75">
+                  Check out our articles section or reach out to our support team through the navigation menu
+                </p>
+              </div>
             </div>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

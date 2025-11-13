@@ -1,12 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-} from 'react-bootstrap';
+import Image from 'next/image';
+import { Card, CardDescription, CardTitle } from '@/components/ui/card';
+import { Plane, ClipboardList, MessageSquare, BookOpen } from 'lucide-react';
 
 interface CardItem {
   title: string;
@@ -14,8 +11,9 @@ interface CardItem {
   alt: string;
   text: string;
   link: string;
-  border: 'success' | 'primary' | 'warning' | 'danger';
-  icon: string;
+  icon: React.ComponentType<{ className?: string }>;
+  gradientFrom: string;
+  gradientTo: string;
 }
 
 const cards: CardItem[] = [
@@ -25,8 +23,9 @@ const cards: CardItem[] = [
     alt: 'Create New Trip',
     text: 'Start booking your next trip to the United States!',
     link: '/new',
-    border: 'success',
-    icon: '✈️'
+    icon: Plane,
+    gradientFrom: 'from-green-500',
+    gradientTo: 'to-emerald-600',
   },
   {
     title: 'Manage Existing Trip',
@@ -34,8 +33,9 @@ const cards: CardItem[] = [
     alt: 'Manage Existing Trip',
     text: 'Manage your existing trip and see all your bookings!',
     link: '/trips',
-    border: 'primary',
-    icon: '📋'
+    icon: ClipboardList,
+    gradientFrom: 'from-blue-500',
+    gradientTo: 'to-indigo-600',
   },
   {
     title: 'Forums',
@@ -43,8 +43,9 @@ const cards: CardItem[] = [
     alt: 'Forums',
     text: 'Join our community and talk to other travelers about their experiences!',
     link: '/forums',
-    border: 'warning',
-    icon: '💬'
+    icon: MessageSquare,
+    gradientFrom: 'from-amber-500',
+    gradientTo: 'to-orange-600',
   },
   {
     title: 'Articles',
@@ -52,77 +53,109 @@ const cards: CardItem[] = [
     alt: 'Articles',
     text: 'Learn more about traveling to the United States and how to plan your trip!',
     link: '/articles',
-    border: 'danger',
-    icon: '📚'
+    icon: BookOpen,
+    gradientFrom: 'from-red-500',
+    gradientTo: 'to-pink-600',
   },
 ];
 
 export default function HomePage() {
   return (
-    <div className="min-vh-100" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-      <Container className="py-5">
-        <Row className="mb-5 text-center">
-          <Col>
-            <h1 className="display-3 fw-bold text-white mb-3">
-              Welcome to Almond Travel
-            </h1>
-            <p className="lead text-white-75 fs-5">
-              Your all-in-one platform for planning unforgettable trips to the United States
-            </p>
-          </Col>
-        </Row>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="relative bg-gradient-to-br from-primary via-secondary to-accent py-20 px-4">
+          <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:50px_50px]" />
+          <div className="container mx-auto relative">
+            <div className="text-center space-y-4">
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+                Welcome to Almond Travel
+              </h1>
+              <p className="text-xl text-white/90 max-w-2xl mx-auto">
+                Your all-in-one platform for planning unforgettable trips to the United States
+              </p>
+            </div>
+          </div>
+        </section>
 
-        <Row xs={1} md={2} lg={2} className="g-4 mt-2">
-          {
-            cards.map((card, index) => (
-              <Col key={index} className="d-flex">
-                <Link href={card.link} style={{ cursor: 'pointer', textDecoration: 'none' }} className="w-100">
-                  <Card
-                    border={card.border}
-                    className="h-100 card-modern shadow-lg border-0 overflow-hidden transition-all"
-                    style={{
-                      transform: 'translateY(0)',
-                      transition: 'all 0.3s ease-in-out',
-                    }}
-                    onMouseEnter={(e) => {
-                      const card = e.currentTarget;
-                      card.style.transform = 'translateY(-10px)';
-                      card.style.boxShadow = '0 20px 40px rgba(0,0,0,0.3)';
-                    }}
-                    onMouseLeave={(e) => {
-                      const card = e.currentTarget;
-                      card.style.transform = 'translateY(0)';
-                      card.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
-                    }}
-                  >
-                    <div className="position-relative h-100">
-                      <Card.Img
-                        className="opacity-50"
+        {/* Cards Section */}
+        <section className="container mx-auto px-4 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {cards.map((card, index) => {
+              const Icon = card.icon;
+              return (
+                <Link key={index} href={card.link} className="group">
+                  <Card className="h-full overflow-hidden border-2 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div className="relative h-64 overflow-hidden">
+                      <Image
                         src={card.image}
                         alt={card.alt}
-                        style={{
-                          height: '300px',
-                          objectFit: 'cover',
-                          filter: 'brightness(0.7)',
-                        }}
+                        fill
+                        className="object-cover brightness-75 group-hover:scale-110 transition-transform duration-500"
                       />
-                      <Card.ImgOverlay className="d-flex flex-column justify-content-center align-items-center text-center">
-                        <div className="mb-3 fs-1">{card.icon}</div>
-                        <Card.Title className="text-white fw-bold" style={{ fontSize: '1.8rem' }}>
+                      <div className={`absolute inset-0 bg-gradient-to-br ${card.gradientFrom} ${card.gradientTo} opacity-60 group-hover:opacity-70 transition-opacity`} />
+
+                      {/* Card Content Overlay */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                        <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 mb-4">
+                          <Icon className="w-12 h-12 text-white" />
+                        </div>
+                        <CardTitle className="text-3xl font-bold text-white mb-3">
                           {card.title}
-                        </Card.Title>
-                        <Card.Text className="text-white fw-5" style={{ fontSize: '1.1rem' }}>
+                        </CardTitle>
+                        <CardDescription className="text-lg text-white font-medium">
                           {card.text}
-                        </Card.Text>
-                      </Card.ImgOverlay>
+                        </CardDescription>
+                      </div>
                     </div>
                   </Card>
                 </Link>
-              </Col>
-            ))
-          }
-        </Row>
-      </Container>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="bg-muted/50 py-16 px-4">
+          <div className="container mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">Why Choose Almond Travel?</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                We provide everything you need to plan and manage your perfect trip
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
+                  <Plane className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Easy Planning</h3>
+                <p className="text-muted-foreground">
+                  Plan your entire trip in one place with our intuitive tools
+                </p>
+              </div>
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-secondary/10 mb-4">
+                  <MessageSquare className="w-8 h-8 text-secondary" />
+                </div>
+                <h3 className="text-xl font-semibold">Community Support</h3>
+                <p className="text-muted-foreground">
+                  Connect with fellow travelers and share experiences
+                </p>
+              </div>
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 mb-4">
+                  <BookOpen className="w-8 h-8 text-accent" />
+                </div>
+                <h3 className="text-xl font-semibold">Expert Guides</h3>
+                <p className="text-muted-foreground">
+                  Access comprehensive articles and travel tips
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

@@ -1,18 +1,14 @@
 'use client'
 
 import React, { useEffect } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Spinner,
-  Alert
-} from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '../../hooks/useAppDispatch';
 import { handleLogout } from './authAPI';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
+import { AlertCircle } from 'lucide-react';
 
 export const ProfilePage: React.FC = () => {
   const { user, loading, error } = useAppSelector((state) => state.auth);
@@ -35,11 +31,11 @@ export const ProfilePage: React.FC = () => {
   // Show loading state while checking authentication
   if (loading) {
     return (
-      <Container className="py-5 text-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Container>
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-1 container mx-auto px-4 py-12 flex items-center justify-center">
+          <Spinner size="lg" />
+        </main>
+      </div>
     );
   }
 
@@ -49,60 +45,64 @@ export const ProfilePage: React.FC = () => {
   }
 
   return (
-    <Container className="py-5">
-      <Row className="justify-content-center">
-        <Col md={8} lg={6}>
-          <div className="card-modern">
-            <h1 className="text-center mb-4">Profile</h1>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1 container mx-auto px-4 py-12">
+        <div className="max-w-2xl mx-auto">
+          <Card className="glass-card">
+            <CardHeader>
+              <CardTitle className="text-3xl font-bold text-center">Profile</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {error && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-            {error && (
-              <Alert variant="danger" className="mb-3">
-                {error}
-              </Alert>
-            )}
+              <Card className="border shadow-sm">
+                <CardContent className="pt-6 space-y-4">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="font-bold text-muted-foreground">
+                      Email:
+                    </div>
+                    <div className="col-span-2">
+                      {user.email}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="font-bold text-muted-foreground">
+                      User ID:
+                    </div>
+                    <div className="col-span-2">
+                      <code className="text-muted-foreground text-sm bg-muted px-2 py-1 rounded">{user.uid}</code>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-            <Card className="border-0 shadow-sm mb-4">
-              <Card.Body>
-                <Row className="mb-3">
-                  <Col xs={4} className="fw-bold text-muted">
-                    Email:
-                  </Col>
-                  <Col xs={8}>
-                    {user.email}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={4} className="fw-bold text-muted">
-                    User ID:
-                  </Col>
-                  <Col xs={8}>
-                    <code className="text-muted small">{user.uid}</code>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
-
-            <div className="d-grid gap-2">
-              <Button
-                variant="outline-primary"
-                size="lg"
-                onClick={() => router.push('/trips')}
-                style={{ transition: "all 0.3s ease" }}
-              >
-                View My Trips
-              </Button>
-              <Button
-                variant="outline-danger"
-                size="lg"
-                onClick={handleLogoutClick}
-                style={{ transition: "all 0.3s ease" }}
-              >
-                Logout
-              </Button>
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+              <div className="space-y-3">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full"
+                  onClick={() => router.push('/trips')}
+                >
+                  View My Trips
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="lg"
+                  className="w-full"
+                  onClick={handleLogoutClick}
+                >
+                  Logout
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </div>
   );
 };

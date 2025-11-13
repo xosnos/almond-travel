@@ -1,11 +1,5 @@
 'use client';
 
-import {
-  Container,
-  Row,
-  Col,
-} from 'react-bootstrap';
-
 interface Feature {
   name: string;
   icon: string;
@@ -86,95 +80,97 @@ const featureCategories: FeatureCategory[] = [
 
 export default function FeaturesPage() {
   return (
-    <div className="py-5">
-      <Container>
-        {/* Header Section */}
-        <Row className="mb-5 text-center">
-          <Col lg={12}>
-            <h1 className="display-4 fw-bold mb-3" style={{ color: '#667eea' }}>
-              Our Features
-            </h1>
-            <p className="lead fs-5 text-muted mx-auto" style={{ maxWidth: '600px' }}>
-              Discover all the powerful tools we've built to make your travel planning effortless
-            </p>
-          </Col>
-        </Row>
+    <>
+      <div className="py-12">
+        <div className="container mx-auto px-4">
+          {/* Header Section */}
+          <div className="mb-12 text-center">
+            <div>
+              <h1 className="text-5xl font-bold mb-6" style={{ color: '#667eea' }}>
+                Our Features
+              </h1>
+              <p className="text-xl text-muted-foreground mx-auto max-w-2xl">
+                Discover all the powerful tools we've built to make your travel planning effortless
+              </p>
+            </div>
+          </div>
 
-        {/* Feature Categories */}
-        <Row className="g-5">
-          {featureCategories.map((category, categoryIndex) => (
-            <Col lg={6} key={categoryIndex}>
-              <div
-                className="p-4 rounded-4 h-100 card-modern shadow-sm"
-                style={{
-                  background: category.bgGradient,
-                  borderTop: `4px solid ${category.color}`,
-                }}
-              >
-                <div className="mb-4">
-                  <h2 className="fw-bold d-flex align-items-center gap-3" style={{ color: category.color }}>
-                    <span style={{ fontSize: '2rem' }}>{category.icon}</span>
-                    {category.title}
-                  </h2>
-                </div>
+          {/* Feature Categories */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {featureCategories.map((category, categoryIndex) => (
+              <div key={categoryIndex}>
+                <div
+                  className="p-6 rounded-3xl h-full shadow-sm"
+                  style={{
+                    background: category.bgGradient,
+                    borderTop: `4px solid ${category.color}`,
+                  }}
+                >
+                  <div className="mb-6">
+                    <h2 className="font-bold flex items-center gap-4 text-3xl" style={{ color: category.color }}>
+                      <span style={{ fontSize: '2rem' }}>{category.icon}</span>
+                      {category.title}
+                    </h2>
+                  </div>
 
-                <div className="row g-3">
-                  {category.features.map((feature, featureIndex) => (
-                    <Col xs={12} key={featureIndex}>
-                      <div
-                        className="p-3 rounded-3 transition-all"
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.5)',
-                          cursor: 'pointer',
-                          transition: 'all 0.3s ease',
-                          backdropFilter: 'blur(10px)',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)';
-                          e.currentTarget.style.transform = 'translateX(5px)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.5)';
-                          e.currentTarget.style.transform = 'translateX(0)';
-                        }}
-                      >
-                        <div className="d-flex gap-3 align-items-start">
-                          <div style={{ fontSize: '1.5rem' }}>{feature.icon}</div>
-                          <div className="flex-grow-1">
-                            <h5 className="fw-bold mb-1" style={{ color: category.color }}>
-                              {feature.name}
-                            </h5>
-                            <p className="text-muted small mb-0">
-                              {feature.description}
-                            </p>
+                  <div className="space-y-4">
+                    {category.features.map((feature, featureIndex) => (
+                      <div key={featureIndex}>
+                        <div
+                          className="p-4 rounded-2xl transition-all"
+                          style={{
+                            background: 'rgba(255, 255, 255, 0.5)',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            backdropFilter: 'blur(10px)',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)';
+                            e.currentTarget.style.transform = 'translateX(5px)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.5)';
+                            e.currentTarget.style.transform = 'translateX(0)';
+                          }}
+                        >
+                          <div className="flex gap-4 items-start">
+                            <div style={{ fontSize: '1.5rem' }}>{feature.icon}</div>
+                            <div className="flex-1">
+                              <h5 className="font-bold mb-1 text-lg" style={{ color: category.color }}>
+                                {feature.name}
+                              </h5>
+                              <p className="text-muted-foreground text-sm mb-0">
+                                {feature.description}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </Col>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </Col>
-          ))}
-        </Row>
+            ))}
+          </div>
 
-        {/* Call to Action */}
-        <Row className="mt-5 text-center">
-          <Col lg={10} className="mx-auto">
-            <div
-              className="p-5 rounded-4 card-modern shadow-sm"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              }}
-            >
-              <h3 className="text-white fw-bold mb-2">Ready to Start Your Journey?</h3>
-              <p className="text-white-75">
-                Start planning your unforgettable trip to the United States today!
-              </p>
+          {/* Call to Action */}
+          <div className="mt-12 text-center">
+            <div className="max-w-5xl mx-auto">
+              <div
+                className="p-8 rounded-3xl shadow-sm"
+                style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                }}
+              >
+                <h3 className="text-white font-bold mb-2 text-2xl">Ready to Start Your Journey?</h3>
+                <p className="text-white/75">
+                  Start planning your unforgettable trip to the United States today!
+                </p>
+              </div>
             </div>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

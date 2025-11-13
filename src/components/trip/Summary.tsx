@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface SummaryProps {
   name: string;
@@ -17,49 +18,42 @@ export const Summary: React.FC<SummaryProps> = ({
   error = null
 }) => {
   return (
-    <div className="card card-modern p-4 shadow-sm">
-      <h2 className="mb-4 fw-bold text-primary">Trip Summary</h2>
+    <div className="rounded-lg border bg-card p-4 shadow-sm">
+      <h2 className="mb-4 text-2xl font-bold text-primary">Trip Summary</h2>
 
       {error && (
-        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+        <div className="relative mb-4 rounded border border-red-400 bg-red-50 px-4 py-3 text-red-700" role="alert">
           {error}
-          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       )}
 
-      <Form>
-        <Form.Group controlId="formGroupName" className="mb-3">
-          <Form.Label className="fw-semibold">Trip Name</Form.Label>
-          <Form.Control
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="formGroupName" className="font-semibold">Trip Name</Label>
+          <Input
+            id="formGroupName"
             type="text"
             placeholder="Enter trip name (e.g., Summer Vacation 2024)"
             value={name}
             onChange={(e) => handleUpdate('name', e.target.value)}
             disabled={loading}
-            className="border-light shadow-sm"
-            style={{
-              transition: 'all 0.3s ease',
-              borderColor: error ? '#dc3545' : undefined
-            }}
+            className={error ? 'border-red-500' : ''}
           />
-        </Form.Group>
+        </div>
 
-        <Form.Group controlId="formGroupLocation" className="mb-0">
-          <Form.Label className="fw-semibold">Location</Form.Label>
-          <Form.Control
+        <div className="space-y-2">
+          <Label htmlFor="formGroupLocation" className="font-semibold">Location</Label>
+          <Input
+            id="formGroupLocation"
             type="text"
             placeholder="Enter trip location (e.g., Tokyo, Japan)"
             value={location}
             onChange={(e) => handleUpdate('location', e.target.value)}
             disabled={loading}
-            className="border-light shadow-sm"
-            style={{
-              transition: 'all 0.3s ease',
-              borderColor: error ? '#dc3545' : undefined
-            }}
+            className={error ? 'border-red-500' : ''}
           />
-        </Form.Group>
-      </Form>
+        </div>
+      </div>
     </div>
   );
 };

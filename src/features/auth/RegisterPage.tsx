@@ -3,9 +3,16 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Container, Row, Col, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { handleRegister } from "./authAPI";
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Spinner } from '@/components/ui/spinner';
+import { AlertCircle } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -79,129 +86,130 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <Container className="py-5">
-      <Row className="justify-content-center">
-        <Col md={6} lg={5}>
-          <div className="card-modern">
-            <h1 className="text-center mb-4">Register</h1>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1 container mx-auto px-4 py-12">
+        <div className="max-w-md mx-auto">
+          <Card className="glass-card">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-3xl font-bold text-center">Register</CardTitle>
+              <CardDescription className="text-center">
+                Create a new account to get started
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {error && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-            {error && (
-              <Alert variant="danger" className="mb-3">
-                {error}
-              </Alert>
-            )}
+              <form onSubmit={handleRegisterSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (emailError) validateEmail(e.target.value);
+                    }}
+                    onBlur={(e) => validateEmail(e.target.value)}
+                    disabled={loading}
+                    className={emailError ? "border-destructive" : ""}
+                  />
+                  {emailError && (
+                    <p className="text-sm text-destructive">{emailError}</p>
+                  )}
+                  <p className="text-xs text-muted-foreground">
+                    We'll never share your email with anyone else.
+                  </p>
+                </div>
 
-            <Form onSubmit={handleRegisterSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (emailError) validateEmail(e.target.value);
-                  }}
-                  onBlur={(e) => validateEmail(e.target.value)}
-                  isInvalid={!!emailError}
-                  disabled={loading}
-                  style={{ transition: "border-color 0.3s ease" }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {emailError}
-                </Form.Control.Feedback>
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Password (at least 6 characters)"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      if (passwordError) validatePassword(e.target.value);
+                      if (confirmPassword) validateConfirmPassword(confirmPassword);
+                    }}
+                    onBlur={(e) => validatePassword(e.target.value)}
+                    disabled={loading}
+                    className={passwordError ? "border-destructive" : ""}
+                  />
+                  {passwordError && (
+                    <p className="text-sm text-destructive">{passwordError}</p>
+                  )}
+                </div>
 
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Password (at least 6 characters)"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    if (passwordError) validatePassword(e.target.value);
-                    if (confirmPassword) validateConfirmPassword(confirmPassword);
-                  }}
-                  onBlur={(e) => validatePassword(e.target.value)}
-                  isInvalid={!!passwordError}
-                  disabled={loading}
-                  style={{ transition: "border-color 0.3s ease" }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {passwordError}
-                </Form.Control.Feedback>
-              </Form.Group>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input
+                    id="confirmPassword"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Confirm password"
+                    value={confirmPassword}
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
+                      if (confirmPasswordError) validateConfirmPassword(e.target.value);
+                    }}
+                    onBlur={(e) => validateConfirmPassword(e.target.value)}
+                    disabled={loading}
+                    className={confirmPasswordError ? "border-destructive" : ""}
+                  />
+                  {confirmPasswordError && (
+                    <p className="text-sm text-destructive">{confirmPasswordError}</p>
+                  )}
+                </div>
 
-              <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Confirm password"
-                  value={confirmPassword}
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                    if (confirmPasswordError) validateConfirmPassword(e.target.value);
-                  }}
-                  onBlur={(e) => validateConfirmPassword(e.target.value)}
-                  isInvalid={!!confirmPasswordError}
-                  disabled={loading}
-                  style={{ transition: "border-color 0.3s ease" }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {confirmPasswordError}
-                </Form.Control.Feedback>
-              </Form.Group>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="show-password"
+                    checked={showPassword}
+                    onCheckedChange={(checked) => setShowPassword(checked as boolean)}
+                    disabled={loading}
+                  />
+                  <Label
+                    htmlFor="show-password"
+                    className="text-sm font-normal cursor-pointer"
+                  >
+                    Show password
+                  </Label>
+                </div>
 
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check
-                  type="checkbox"
-                  label="Show password"
-                  checked={showPassword}
-                  onChange={(e) => setShowPassword(e.target.checked)}
-                  disabled={loading}
-                />
-              </Form.Group>
-
-              <Form.Group className="my-4">
                 <Button
-                  variant="primary"
                   type="submit"
-                  className="w-100"
+                  className="w-full"
                   disabled={loading || !!emailError || !!passwordError || !!confirmPasswordError}
-                  style={{ transition: "all 0.3s ease" }}
                 >
                   {loading ? (
                     <>
-                      <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                        className="me-2"
-                      />
+                      <Spinner size="sm" className="mr-2" />
                       Creating account...
                     </>
                   ) : (
                     'Sign up'
                   )}
                 </Button>
-              </Form.Group>
-            </Form>
+              </form>
 
-            <div className="text-center mt-4">
-              Have an account?{' '}
-              <Link href="/login" className="text-decoration-none">
-                Sign in
-              </Link>
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+              <div className="text-center text-sm">
+                Have an account?{' '}
+                <Link href="/login" className="text-primary hover:underline font-medium">
+                  Sign in
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </div>
   );
 };

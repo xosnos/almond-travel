@@ -2,9 +2,15 @@
 
 import React, { useState, FormEvent } from "react";
 import Link from "next/link";
-import { Container, Row, Col, Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { handleReset } from "./authAPI";
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
+import { AlertCircle, CheckCircle } from 'lucide-react';
 
 export const ResetPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -43,87 +49,84 @@ export const ResetPage: React.FC = () => {
   };
 
   return (
-    <Container className="py-5">
-      <Row className="justify-content-center">
-        <Col md={6} lg={5}>
-          <div className="card-modern">
-            <h1 className="text-center mb-4">Reset Password</h1>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1 container mx-auto px-4 py-12">
+        <div className="max-w-md mx-auto">
+          <Card className="glass-card">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-3xl font-bold text-center">Reset Password</CardTitle>
+              <CardDescription className="text-center">
+                Enter your email to receive a password reset link
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {error && !sent && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-            {error && !sent && (
-              <Alert variant="danger" className="mb-3">
-                {error}
-              </Alert>
-            )}
+              {sent && (
+                <Alert className="border-green-500 bg-green-50 dark:bg-green-950">
+                  <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  <div>
+                    <h5 className="font-semibold text-green-800 dark:text-green-200 mb-1">Email Sent!</h5>
+                    <AlertDescription className="text-green-700 dark:text-green-300">
+                      If an account exists with <strong>{email}</strong>, you will receive a password reset email shortly.
+                      Please check your inbox and follow the instructions.
+                    </AlertDescription>
+                  </div>
+                </Alert>
+              )}
 
-            {sent && (
-              <Alert variant="success" className="mb-3">
-                <Alert.Heading>Email Sent!</Alert.Heading>
-                <p className="mb-0">
-                  If an account exists with <strong>{email}</strong>, you will receive a password reset email shortly.
-                  Please check your inbox and follow the instructions.
-                </p>
-              </Alert>
-            )}
+              {!sent ? (
+                <>
+                  <p className="text-muted-foreground text-sm">
+                    Enter your email address and we'll send you a link to reset your password.
+                  </p>
 
-            {!sent ? (
-              <>
-                <p className="text-muted mb-4">
-                  Enter your email address and we'll send you a link to reset your password.
-                </p>
+                  <form onSubmit={handleResetSubmit} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email address</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="Enter email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          if (emailError) validateEmail(e.target.value);
+                        }}
+                        onBlur={(e) => validateEmail(e.target.value)}
+                        disabled={loading}
+                        className={emailError ? "border-destructive" : ""}
+                      />
+                      {emailError && (
+                        <p className="text-sm text-destructive">{emailError}</p>
+                      )}
+                    </div>
 
-                <Form onSubmit={handleResetSubmit}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        if (emailError) validateEmail(e.target.value);
-                      }}
-                      onBlur={(e) => validateEmail(e.target.value)}
-                      isInvalid={!!emailError}
-                      disabled={loading}
-                      style={{ transition: "border-color 0.3s ease" }}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {emailError}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <Form.Group className="my-4">
                     <Button
-                      variant="primary"
                       type="submit"
-                      className="w-100"
+                      className="w-full"
                       disabled={loading || !!emailError || !email}
-                      style={{ transition: "all 0.3s ease" }}
                     >
                       {loading ? (
                         <>
-                          <Spinner
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                            className="me-2"
-                          />
+                          <Spinner size="sm" className="mr-2" />
                           Sending email...
                         </>
                       ) : (
                         'Send password reset email'
                       )}
                     </Button>
-                  </Form.Group>
-                </Form>
-              </>
-            ) : (
-              <div className="text-center">
+                  </form>
+                </>
+              ) : (
                 <Button
-                  variant="primary"
-                  className="w-100 mb-3"
+                  variant="outline"
+                  className="w-full"
                   onClick={() => {
                     setSent(false);
                     setEmail("");
@@ -132,18 +135,18 @@ export const ResetPage: React.FC = () => {
                 >
                   Send another reset email
                 </Button>
-              </div>
-            )}
+              )}
 
-            <div className="text-center mt-4">
-              Go back to{' '}
-              <Link href="/login" className="text-decoration-none">
-                login
-              </Link>
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+              <div className="text-center text-sm">
+                Go back to{' '}
+                <Link href="/login" className="text-primary hover:underline font-medium">
+                  login
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+    </div>
   );
 };

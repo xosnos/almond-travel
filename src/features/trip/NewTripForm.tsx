@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { Card, Badge } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import {
   SkyScannerWidget,
@@ -18,6 +17,8 @@ import {
 } from './tripSlice';
 import { itemBuilder } from './itemBuilder';
 import { TripItem } from '../../types';
+import { Card, CardContent } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
 
 type FormType = 'flights' | 'hotels' | 'cars' | 'activities' | 'checklist' | 'summary';
 
@@ -103,52 +104,44 @@ export const NewTripForm: FC<NewTripFormProps> = ({ type }) => {
     <div className="new-trip-form">
       {/* Section header */}
       <Card
-        className="mb-4 border-0 shadow-sm"
+        className="mb-6 border-0 shadow-sm rounded-xl"
         style={{
-          borderRadius: '12px',
           background: 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)',
         }}
       >
-        <Card.Body className="p-4">
-          <div className="d-flex justify-content-between align-items-center">
+        <CardContent className="p-6">
+          <div className="flex justify-between items-center">
             <div>
-              <h2 className="mb-2 fw-bold">
-                <span className="me-2" style={{ fontSize: '1.5rem' }}>
+              <h2 className="text-2xl font-bold mb-2">
+                <span className="mr-2 text-2xl">
                   {getSectionIcon()}
                 </span>
                 {type.toUpperCase()}
               </h2>
-              <p className="text-muted mb-0">
+              <p className="text-muted-foreground">
                 {getSectionDescription()}
               </p>
             </div>
             {type !== 'summary' && getItemCount() > 0 && (
-              <Badge
-                bg="primary"
-                pill
-                style={{
-                  fontSize: '1rem',
-                  padding: '0.5rem 1rem',
-                }}
-              >
+              <Badge className="text-base px-4 py-2">
                 {getItemCount()} {getItemCount() === 1 ? 'item' : 'items'}
               </Badge>
             )}
           </div>
-        </Card.Body>
+        </CardContent>
       </Card>
 
       {/* Form content */}
       <div className="form-content">
         {type === 'flights' && (
           <div className="section-content">
-            <Card className="mb-4 border-0 shadow-sm" style={{ borderRadius: '12px' }}>
-              <Card.Body className="p-4">
-                <h5 className="mb-3 fw-semibold text-primary">
+            <Card className="mb-6 border-0 shadow-sm rounded-xl">
+              <CardContent className="p-6">
+                <h5 className="text-lg font-semibold text-primary mb-4">
                   🔍 Search Flights
                 </h5>
                 <SkyScannerWidget type="flights" />
-              </Card.Body>
+              </CardContent>
             </Card>
             <Flights
               items={items as TripItem[]}
@@ -161,13 +154,13 @@ export const NewTripForm: FC<NewTripFormProps> = ({ type }) => {
 
         {type === 'hotels' && (
           <div className="section-content">
-            <Card className="mb-4 border-0 shadow-sm" style={{ borderRadius: '12px' }}>
-              <Card.Body className="p-4">
-                <h5 className="mb-3 fw-semibold text-primary">
+            <Card className="mb-6 border-0 shadow-sm rounded-xl">
+              <CardContent className="p-6">
+                <h5 className="text-lg font-semibold text-primary mb-4">
                   🔍 Search Hotels
                 </h5>
                 <SkyScannerWidget type="hotels" />
-              </Card.Body>
+              </CardContent>
             </Card>
             <Hotels
               items={items as TripItem[]}
@@ -180,13 +173,13 @@ export const NewTripForm: FC<NewTripFormProps> = ({ type }) => {
 
         {type === 'cars' && (
           <div className="section-content">
-            <Card className="mb-4 border-0 shadow-sm" style={{ borderRadius: '12px' }}>
-              <Card.Body className="p-4">
-                <h5 className="mb-3 fw-semibold text-primary">
+            <Card className="mb-6 border-0 shadow-sm rounded-xl">
+              <CardContent className="p-6">
+                <h5 className="text-lg font-semibold text-primary mb-4">
                   🔍 Search Rental Cars
                 </h5>
                 <SkyScannerWidget type="cars" />
-              </Card.Body>
+              </CardContent>
             </Card>
             <Cars
               items={items as TripItem[]}
@@ -199,13 +192,13 @@ export const NewTripForm: FC<NewTripFormProps> = ({ type }) => {
 
         {type === 'activities' && (
           <div className="section-content">
-            <Card className="mb-4 border-0 shadow-sm" style={{ borderRadius: '12px' }}>
-              <Card.Body className="p-4">
-                <h5 className="mb-3 fw-semibold text-primary">
+            <Card className="mb-6 border-0 shadow-sm rounded-xl">
+              <CardContent className="p-6">
+                <h5 className="text-lg font-semibold text-primary mb-4">
                   🔍 Discover Activities
                 </h5>
                 <ActivitySearch />
-              </Card.Body>
+              </CardContent>
             </Card>
             <Activities
               items={items as TripItem[]}
@@ -218,29 +211,29 @@ export const NewTripForm: FC<NewTripFormProps> = ({ type }) => {
 
         {type === 'checklist' && (
           <div className="section-content">
-            <Card className="border-0 shadow-sm" style={{ borderRadius: '12px' }}>
-              <Card.Body className="p-4">
+            <Card className="border-0 shadow-sm rounded-xl">
+              <CardContent className="p-6">
                 <Checklist
                   items={items as TripItem[]}
                   handleAdd={handleAdd}
                   handleRemove={handleRemove}
                   handleUpdate={handleUpdate}
                 />
-              </Card.Body>
+              </CardContent>
             </Card>
           </div>
         )}
 
         {type === 'summary' && (
           <div className="section-content">
-            <Card className="border-0 shadow-sm" style={{ borderRadius: '12px' }}>
-              <Card.Body className="p-4">
+            <Card className="border-0 shadow-sm rounded-xl">
+              <CardContent className="p-6">
                 <Summary
                   name={name}
                   location={location}
                   handleUpdate={handleSummary}
                 />
-              </Card.Body>
+              </CardContent>
             </Card>
           </div>
         )}
@@ -249,21 +242,20 @@ export const NewTripForm: FC<NewTripFormProps> = ({ type }) => {
       {/* Empty state for items */}
       {type !== 'summary' && getItemCount() === 0 && (
         <Card
-          className="mt-4 border-0 text-center py-5"
+          className="mt-6 border-0 text-center py-12 rounded-xl"
           style={{
-            borderRadius: '12px',
             background: '#f8f9fa',
           }}
         >
-          <Card.Body>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
+          <CardContent>
+            <div className="text-5xl mb-4">
               {getSectionIcon()}
             </div>
-            <h5 className="text-muted mb-2">No items added yet</h5>
-            <p className="text-muted small mb-0">
+            <h5 className="text-muted-foreground font-semibold mb-2">No items added yet</h5>
+            <p className="text-muted-foreground text-sm">
               Click the button below to add your first {type.slice(0, -1)}
             </p>
-          </Card.Body>
+          </CardContent>
         </Card>
       )}
     </div>

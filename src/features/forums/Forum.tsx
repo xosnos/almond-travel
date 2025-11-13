@@ -2,15 +2,11 @@
 
 import React, { FC, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import {
-  Container,
-  Button,
-  Card,
-  Form,
-  Spinner,
-  Alert,
-  Badge,
-} from 'react-bootstrap';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { addResponse } from './forumsAPI';
 import { updateResponse } from './forumsSlice';
@@ -48,49 +44,36 @@ export const ResponseBuilder: FC = () => {
   }
 
   return (
-    <Card className="card-modern mb-4">
-      <Card.Header className="bg-primary text-white">
-        <h5 className="mb-0">Post a Reply</h5>
-      </Card.Header>
-      <Card.Body>
-        <Form>
-          <Form.Group controlId="formDescription">
-            <Form.Control
-              as="textarea"
-              rows={4}
-              placeholder="Share your thoughts or answer..."
-              value={newResponse.description}
-              onChange={(e) => handleUpdate('description', e.target.value)}
-              disabled={loading}
-            />
-          </Form.Group>
-        </Form>
-      </Card.Body>
-      <Card.Footer className="bg-light">
-        <div className="d-flex justify-content-end">
-          <Button
-            variant="primary"
-            onClick={handleSubmit}
-            disabled={loading || !newResponse.description.trim()}
-          >
-            {loading ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                  className="me-2"
-                />
-                Posting...
-              </>
-            ) : (
-              'Post Reply'
-            )}
-          </Button>
-        </div>
-      </Card.Footer>
+    <Card className="mb-4">
+      <CardHeader className="bg-primary text-primary-foreground">
+        <CardTitle className="text-lg">Post a Reply</CardTitle>
+      </CardHeader>
+      <CardContent className="pt-6">
+        <textarea
+          id="formDescription"
+          rows={4}
+          placeholder="Share your thoughts or answer..."
+          value={newResponse.description}
+          onChange={(e) => handleUpdate('description', e.target.value)}
+          disabled={loading}
+          className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        />
+      </CardContent>
+      <CardFooter className="bg-muted/50 flex justify-end">
+        <Button
+          onClick={handleSubmit}
+          disabled={loading || !newResponse.description.trim()}
+        >
+          {loading ? (
+            <>
+              <Spinner size="sm" className="mr-2" />
+              Posting...
+            </>
+          ) : (
+            'Post Reply'
+          )}
+        </Button>
+      </CardFooter>
     </Card>
   );
 };
@@ -122,28 +105,28 @@ export const Forum: FC = () => {
 
   if (loading || !forum) {
     return (
-      <Container className="py-5">
-        <div className="text-center py-5">
-          <Spinner animation="border" variant="primary" style={{ width: '3rem', height: '3rem' }} />
-          <p className="mt-3 text-muted fs-5">Loading forum...</p>
+      <div className="container mx-auto px-4 py-12">
+        <div className="text-center py-12">
+          <Spinner size="lg" />
+          <p className="mt-4 text-muted-foreground text-lg">Loading forum...</p>
         </div>
-      </Container>
+      </div>
     );
   }
 
   return (
-    <Container className="py-5">
-      <div className='d-flex justify-content-between align-items-center mb-4'>
+    <div className="container mx-auto px-4 py-12">
+      <div className="flex justify-between items-center mb-8">
         <Button
           onClick={() => router.push(`/forums/${state}`)}
-          variant="outline-primary"
+          variant="outline"
           size="lg"
         >
           Back
         </Button>
-        <h2 className="fw-bold m-0">{state}</h2>
+        <h2 className="text-3xl font-bold">{state}</h2>
         <Button
-          variant={user ? 'outline-secondary' : 'outline-primary'}
+          variant={user ? 'outline' : 'outline'}
           size="lg"
           onClick={() => !user && router.push('/login')}
           disabled={!!user}
@@ -153,72 +136,74 @@ export const Forum: FC = () => {
       </div>
 
       {error && (
-        <Alert variant="danger" dismissible>
-          <Alert.Heading>Error</Alert.Heading>
-          <p>{error}</p>
+        <Alert variant="destructive" className="mb-4">
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
       {/* Original Post */}
-      <Card className="card-modern mb-4">
-        <Card.Header className="bg-light border-bottom">
-          <div className="d-flex justify-content-between align-items-center">
-            <Badge bg="primary" className="badge-modern">Original Post</Badge>
-            <Badge bg="secondary" className="badge-modern">
+      <Card className="mb-4">
+        <CardHeader className="bg-muted/50 border-b">
+          <div className="flex justify-between items-center">
+            <Badge variant="default" className="text-xs">Original Post</Badge>
+            <Badge variant="secondary" className="text-xs">
               {forum.responses?.length || 0} {forum.responses?.length === 1 ? 'Reply' : 'Replies'}
             </Badge>
           </div>
-        </Card.Header>
-        <Card.Body className="p-4">
-          <Card.Title className="fs-3 fw-bold mb-3">{forum.title}</Card.Title>
-          <Card.Text className="fs-5 text-secondary" style={{ whiteSpace: 'pre-wrap' }}>
+        </CardHeader>
+        <CardContent className="p-6">
+          <h3 className="text-3xl font-bold mb-4">{forum.title}</h3>
+          <p className="text-lg text-muted-foreground whitespace-pre-wrap">
             {forum.description}
-          </Card.Text>
-        </Card.Body>
-        <Card.Footer className="bg-light">
-          <div className='d-flex justify-content-between align-items-center'>
-            <div className="d-flex align-items-center">
-              <i className="bi bi-person-circle me-2 text-primary" style={{ fontSize: '1.5rem' }}></i>
+          </p>
+        </CardContent>
+        <CardFooter className="bg-muted/50">
+          <div className="flex justify-between items-center w-full">
+            <div className="flex items-center gap-3">
+              <i className="bi bi-person-circle text-primary text-2xl"></i>
               <div>
-                <div className="fw-semibold">{forum.author || forum.user || 'Anonymous'}</div>
-                <small className="text-muted">
-                  <i className="bi bi-clock me-1"></i>
+                <div className="font-semibold">{forum.author || forum.user || 'Anonymous'}</div>
+                <span className="text-sm text-muted-foreground">
+                  <i className="bi bi-clock mr-1"></i>
                   {formatDate(forum.createdAt || forum.timePosted || '')}
-                </small>
+                </span>
               </div>
             </div>
           </div>
-        </Card.Footer>
+        </CardFooter>
       </Card>
 
       {/* Responses Section */}
       {forum.responses && forum.responses.length > 0 && (
         <div className="mb-4">
-          <h4 className="fw-bold mb-3">
-            <i className="bi bi-chat-left-text me-2"></i>
+          <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <i className="bi bi-chat-left-text"></i>
             Responses
           </h4>
-          {forum.responses.map((response: ForumResponse, idx: number) => (
-            <Card key={response.id || idx} className="card-modern mb-3">
-              <Card.Body className="p-4">
-                <Card.Text style={{ whiteSpace: 'pre-wrap' }}>
-                  {response.content || response.description}
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer className="bg-light">
-                <div className='d-flex justify-content-between align-items-center'>
-                  <div className="d-flex align-items-center">
-                    <i className="bi bi-person-circle me-2 text-secondary"></i>
-                    <span className="fw-semibold">{response.author || response.user || 'Anonymous'}</span>
+          <div className="space-y-3">
+            {forum.responses.map((response: ForumResponse, idx: number) => (
+              <Card key={response.id || idx}>
+                <CardContent className="p-6">
+                  <p className="whitespace-pre-wrap">
+                    {response.content || response.description}
+                  </p>
+                </CardContent>
+                <CardFooter className="bg-muted/50">
+                  <div className="flex justify-between items-center w-full">
+                    <div className="flex items-center gap-2">
+                      <i className="bi bi-person-circle text-muted-foreground"></i>
+                      <span className="font-semibold">{response.author || response.user || 'Anonymous'}</span>
+                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      <i className="bi bi-clock mr-1"></i>
+                      {formatDate(response.createdAt || response.timePosted || '')}
+                    </span>
                   </div>
-                  <small className="text-muted">
-                    <i className="bi bi-clock me-1"></i>
-                    {formatDate(response.createdAt || response.timePosted || '')}
-                  </small>
-                </div>
-              </Card.Footer>
-            </Card>
-          ))}
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       )}
 
@@ -226,15 +211,15 @@ export const Forum: FC = () => {
       {user ? (
         <ResponseBuilder />
       ) : (
-        <Card className="card-modern text-center py-4">
-          <Card.Body>
-            <p className="text-muted mb-3">You must be logged in to post a reply</p>
-            <Button variant="primary" size="lg" onClick={() => router.push('/login')}>
+        <Card className="text-center py-8">
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground">You must be logged in to post a reply</p>
+            <Button size="lg" onClick={() => router.push('/login')}>
               Login to Reply
             </Button>
-          </Card.Body>
+          </CardContent>
         </Card>
       )}
-    </Container>
+    </div>
   );
 };
