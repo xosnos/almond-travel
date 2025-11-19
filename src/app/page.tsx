@@ -1,14 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import { Plane, ClipboardList, MessageSquare, BookOpen } from 'lucide-react';
 
 interface CardItem {
   title: string;
-  image: string;
-  alt: string;
   text: string;
   link: string;
   icon: React.ComponentType<{ className?: string }>;
@@ -19,8 +16,6 @@ interface CardItem {
 const cards: CardItem[] = [
   {
     title: 'Create New Trip',
-    image: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-    alt: 'Create New Trip',
     text: 'Start booking your next trip to the United States!',
     link: '/new',
     icon: Plane,
@@ -29,8 +24,6 @@ const cards: CardItem[] = [
   },
   {
     title: 'Manage Existing Trip',
-    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1421&q=80',
-    alt: 'Manage Existing Trip',
     text: 'Manage your existing trip and see all your bookings!',
     link: '/trips',
     icon: ClipboardList,
@@ -39,8 +32,6 @@ const cards: CardItem[] = [
   },
   {
     title: 'Forums',
-    image: 'https://images.unsplash.com/photo-1598618589929-b1433d05cfc6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-    alt: 'Forums',
     text: 'Join our community and talk to other travelers about their experiences!',
     link: '/forums',
     icon: MessageSquare,
@@ -49,8 +40,6 @@ const cards: CardItem[] = [
   },
   {
     title: 'Articles',
-    image: 'https://images.unsplash.com/photo-1521295121783-8a321d551ad2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-    alt: 'Articles',
     text: 'Learn more about traveling to the United States and how to plan your trip!',
     link: '/articles',
     icon: BookOpen,
@@ -87,15 +76,9 @@ export default function HomePage() {
                 <Link key={index} href={card.link} className="group">
                   <Card className="h-full overflow-hidden border-2 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                     <div className="relative h-64 overflow-hidden">
-                      <Image
-                        src={card.image}
-                        alt={card.alt}
-                        fill
-                        className="object-cover brightness-75 group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className={`absolute inset-0 bg-gradient-to-br ${card.gradientFrom} ${card.gradientTo} opacity-60 group-hover:opacity-70 transition-opacity`} />
+                      <div className={`absolute inset-0 bg-gradient-to-br ${card.gradientFrom} ${card.gradientTo} group-hover:opacity-90 transition-opacity`} />
 
-                      {/* Card Content Overlay */}
+                      {/* Card Content */}
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
                         <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 mb-4">
                           <Icon className="w-12 h-12 text-white" />
