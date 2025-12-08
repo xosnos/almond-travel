@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { fetchTrips, removeTrip } from './tripsAPI';

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';

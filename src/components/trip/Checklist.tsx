@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
@@ -60,9 +60,8 @@ export const Checklist: React.FC<ChecklistProps> = ({
                   size="icon"
                   onClick={() => handleUpdate(index, 'checked', !isChecked(item))}
                   disabled={loading}
-                  className={`h-10 w-10 min-h-10 min-w-10 rounded-full transition-all ${
-                    isChecked(item) ? 'bg-green-600 hover:bg-green-700' : 'border-green-600 text-green-600 hover:bg-green-50'
-                  }`}
+                  className={`h-10 w-10 min-h-10 min-w-10 rounded-full transition-all ${isChecked(item) ? 'bg-green-600 hover:bg-green-700' : 'border-green-600 text-green-600 hover:bg-green-50'
+                    }`}
                   title={isChecked(item) ? 'Mark as incomplete' : 'Mark as complete'}
                 >
                   {isChecked(item) ? '✓' : '○'}

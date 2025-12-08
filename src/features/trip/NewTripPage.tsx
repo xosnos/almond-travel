@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { NewTripForm } from './NewTripForm';
@@ -145,9 +145,8 @@ export const NewTripPage: FC = () => {
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                 <div
-                  className={`h-full rounded-full transition-all duration-300 ${
-                    now < 40 ? 'bg-red-500' : now < 80 ? 'bg-yellow-500' : 'bg-green-500'
-                  }`}
+                  className={`h-full rounded-full transition-all duration-300 ${now < 40 ? 'bg-red-500' : now < 80 ? 'bg-yellow-500' : 'bg-green-500'
+                    }`}
                   style={{ width: `${now}%` }}
                 />
               </div>
